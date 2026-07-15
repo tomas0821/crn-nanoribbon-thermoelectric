@@ -11,9 +11,23 @@
       `scripts/fig3_sk_transmission.py`. Faithful Fig. 3 done (see run below). *(2026-07-14)*
 - [x] Compute thermoelectric integrals **S, PF, κ_e, ZT** from T(E) (Cutler–Mott/Onsager) → Figs. 4–5.
       Done: `crnte/thermo.py`, `scripts/fig45_thermoelectric.py`. See run below. *(2026-07-14)*
+- [x] Sweep ribbon **widths N = 8, 14, 20** + edge comparison → `scripts/fig6_width_edge_vacancy.py`,
+      Fig. 6, Table 2. *(2026-07-14)*
+- [x] **Geometry figure** (Fig. 1) → `scripts/fig1_geometry.py`. *(2026-07-14)*
+- [x] **Manuscript** (elsarticle LaTeX, Physica E) + **private GitHub repo** for Overleaf. *(2026-07-14)*
+      Repo: https://github.com/tomas0821/crn-nanoribbon-thermoelectric (set Overleaf main doc to
+      `manuscript/manuscript.tex`).
+
+### Still open (future work)
 - [ ] Self-consistent mean-field **U at the ribbon edges** (inequivalent Cr sites) → spin-resolved
-      edge bands; cross-check the DMRG J₁ ≈ 10–12 meV, J₂ ≈ −2–0 meV/Cr.
-- [ ] Sweep ribbon **widths N = 8, 14, 20** (match the DMRG paper) for direct comparability.
+      edge bands; cross-check the DMRG J₁ ≈ 10–12 meV, J₂ ≈ −2–0 meV/Cr. (Transport currently uses
+      the bulk exchange splitting for all Cr, including edge atoms.)
+- [ ] **Edge-vacancy ZT enhancement** the Sevinçli–Cuniberti way — requires an explicit *phonon*
+      transport calculation (our κ_ph is an external ballistic estimate, so electronic vacancies
+      alone leave ZT unchanged; the panel was dropped as it would be misleading).
+- [ ] Parameter-sensitivity sweep (vary SK params ±10%, report ZT spread) to firm up rigor.
+- [ ] Fill author affiliation / acknowledgements in the manuscript; verify the two `%VERIFY`
+      references in `manuscript/refs.bib`.
 
 ---
 
@@ -47,7 +61,169 @@ electronic κ_e; figure of merit ZT = S²GT/(κ_e + κ_ph), vs μ, T, ribbon wid
 
 ---
 
+## Manuscript & repository
+
+- **Manuscript:** `manuscript/manuscript.tex` — Elsevier `elsarticle` class, targeted at *Physica E*.
+  Compiles cleanly (12 pp, 6 figures, 2 tables). The class + bib style (`elsarticle.cls`,
+  `elsarticle-num.bst`) are bundled so it builds anywhere, including Overleaf.
+- **Private GitHub repo:** <https://github.com/tomas0821/crn-nanoribbon-thermoelectric>.
+  To view in **Overleaf**: *New Project → Import from GitHub* → this repo, then set the main
+  document to `manuscript/manuscript.tex`. (Copyrighted reference PDFs and build artifacts are
+  git-ignored; Overleaf rebuilds the PDF.)
+- **To rebuild everything from scratch:** create the Kwant venv (see `env`/`requirements.txt`),
+  then run `scripts/fig1_geometry.py` … `scripts/fig6_width_edge_vacancy.py` with
+  `~/venvs/crn-te/bin/python`. Transmissions cache under `data/` (git-ignored).
+
+---
+
+## Results — a textbook explanation
+
+This section walks through the physics from the ground up, so a newcomer can follow *why* each
+result looks the way it does. Read it alongside Figs. 1–6.
+
+### 1. Why CrN nanoribbons, and why they should be good thermoelectrics
+A thermoelectric converts a temperature difference into a voltage. Its quality is the
+dimensionless **figure of merit** `ZT = S²G T /(κ_e + κ_ph)`, where `S` is the Seebeck
+coefficient (thermopower), `G` the electrical conductance, and `κ_e`, `κ_ph` the electronic and
+phonon thermal conductances. To make `ZT` large you want, simultaneously, a **large `S`**, a
+**large `G`**, and a **small thermal conductance** — but these fight each other (the
+Wiedemann–Franz law ties `κ_e` to `G`, and a large `G` usually means a small `S`).
+
+The escape route, known since Mahan & Sofo, is a **sharp feature in the transmission near the
+Fermi level**: if the number of conducting channels `T(E)` changes rapidly with energy right at
+`E_F`, you get a big thermopower *without* killing the conductance. Hexagonal CrN is a natural
+candidate because it is a **half-metal**: one spin channel is metallic (supplies `G`) and the
+other is a wide-gap insulator, and the metallic channel has a **sharp band edge** just above
+`E_F`. That is exactly the ingredient the theory says you want.
+
+### 2. The building block: the half-metallic h-CrN monolayer (Fig. 2)
+CrN in its 2D honeycomb form (Fig. 1a) is a **ferromagnetic half-metal**. Physically, each Cr²⁺
+ion carries a local moment of `3 μ_B` (three aligned `d` electrons). The strong on-site exchange
+(Hubbard `U`) splits the Cr `d` levels by spins: the **majority** (spin-up) `d` states sit near
+`E_F`, while the **minority** (spin-down) `d` states are pushed ~4 eV higher, opening a large gap
+for that spin. The result (Fig. 2): at `E_F` there are states for one spin only → **100% spin
+polarization**.
+
+Our tight-binding model keeps only the orbitals that matter near `E_F` (the out-of-plane Cr
+`d_z², d_xz, d_yz` and N `p_z`; the in-plane σ bonds sit 5 eV below and are spectators). A useful
+piece of intuition falls out of the Slater–Koster algebra: **N `p_z` hybridizes only with Cr
+`d_xz, d_yz`** (forming bonding/antibonding π bands), while **`d_z²` is non-bonding** — it stays a
+flat band. The band that actually crosses `E_F` is the **π-antibonding** combination.
+
+### 3. From bands to transmission: the ribbon is a spin filter (Fig. 3)
+Cut the sheet into a ribbon and attach leads. In the **Landauer picture**, conductance is just
+counting quantum channels: `G = (e²/h)·T(E)`, where `T(E)` is the number of propagating modes at
+energy `E`. For a perfect ribbon `T(E)` is a **staircase of integers** (Fig. 3) — each step is one
+more subband becoming available.
+
+The half-metal shows up dramatically here: over a wide window around `E_F`, the **minority
+`T(E) = 0`** (gap) while the **majority `T(E)` is several quanta**. So a current driven near `E_F`
+is carried by one spin only — the ribbon is an **intrinsic spin filter**. Crucially, the majority
+transmission has a **sharp edge just above `E_F`**: it drops from ~14 channels to 0 within ~0.2
+eV. Hold that thought — it is the engine of the thermopower.
+
+### 4. Turning transmission into thermopower (Fig. 4)
+The thermoelectric coefficients are **energy-weighted averages of `T(E)`** over the "Fermi
+window" `−∂f/∂E` (a bell curve ~`±2k_BT` wide centred on `μ`). The key formulas (Onsager /
+Cutler–Mott):
+
+```
+L_n(μ,T) = ∫ (−∂f/∂E)(E−μ)ⁿ T(E) dE
+G = (e²/h) L₀,   S = −(1/eT) L₁/L₀,   κ_e = (1/hT)(L₂ − L₁²/L₀)
+```
+
+The Seebeck coefficient `S ∝ L₁/L₀` measures the **asymmetry** of `T(E)` about `μ`: if there are
+equally many conducting states just above and below `μ`, hot carriers going one way cancel those
+going the other and `S = 0`. A large `S` requires `T(E)` to be **lopsided** across `μ`.
+
+This is exactly what Fig. 4 shows. When `μ` sits in the **metallic region below `E_F`**, `T(E)` is
+large and smooth → nearly symmetric → `S ≈ 0`. As `μ` is pushed up toward the **sharp band
+edge**, the window suddenly sees "many states below, none above" → strongly lopsided → `S` shoots
+up to hundreds of μV/K. (Deep inside the gap `S` formally diverges, but there `G → 0`, so it is
+useless for power — see below.) Lower temperature gives a *sharper* window, hence the higher peak
+`S` at 100 K than at 500 K.
+
+### 5. Power factor and the figure of merit (Fig. 5)
+The **power factor `S²G`** rewards you only where `S` *and* `G` are both decent. Fig. 5(a): it
+peaks right **at the band edge, `μ − E_F ≈ +0.2 eV`** — close enough to the edge for a big `S`,
+but still with live conducting channels for a finite `G`. That single number, `μ ≈ +0.2 eV`, is
+the **optimal doping** and it recurs everywhere.
+
+For `ZT` we must divide by the thermal conductance. Two contributions:
+- **`κ_e`** (electrons) is fixed by the same `T(E)` — no freedom.
+- **`κ_ph`** (phonons) is the wild card. We do **not** compute it (that needs phonon transport);
+  we estimate it ballistically as `κ_ph ≈ 4κ₀(T) ≈ 1.1 nW/K` at 300 K, where `κ₀ = π²k_B²T/3h` is
+  the **thermal-conductance quantum**, and then bracket it (½× … 2×).
+
+A subtlety worth internalizing (Fig. 5b): the **purely electronic** `ZT_e` (setting `κ_ph = 0`)
+**diverges inside the gap**, because there both `S²G → 0` and `κ_e → 0`, and their ratio blows up.
+This is a mathematical artifact, *not* a real `ZT` of 100. Once a physical `κ_ph` is included, the
+divergence is cured and **`ZT` peaks at the band edge**, coincident with the power-factor maximum.
+This is why we always report `ZT` with a `κ_ph` bracket and treat `ZT_e` only as an upper bound.
+
+**Headline number:** zigzag `N≈14`, 300 K, ballistic `κ_ph`: **`ZT ≈ 0.48`** (bracket 0.26–0.85),
+rising with temperature (Fig. 5c).
+
+### 6. Design rules (Fig. 6)
+Putting it together, the knobs a fabricator can turn:
+- **Doping:** always aim for `μ − E_F ≈ +0.2 eV` (light *n*-type). This is where the sharp edge
+  sits, for every ribbon.
+- **Edge type:** **zigzag beats armchair** by ~2× (`ZT` 0.48 vs 0.28 at `N=14`), because zigzag
+  ribbons expose more majority conducting channels at the band edge.
+- **Width:** at fixed `κ_ph`, wider ribbons give higher `ZT` (0.30 → 0.48 → 0.64 for N = 8, 14,
+  20) — more parallel electronic channels on the same phonon background. **Caveat:** a real
+  `κ_ph` grows with width too, so this trend is an *electronic* trend and would be tempered by
+  width-dependent phonons; read it as "ZT is robust and modestly improving across N = 8–20."
+- **Temperature:** `ZT` rises monotonically with `T` (Fig. 6d), approaching ~0.9 for the widest
+  ribbon at elevated temperature.
+
+### 7. The one-sentence takeaway
+*Hexagonal CrN nanoribbons are intrinsic spin filters whose sharp half-metallic band edge, reached
+by light electron doping, yields a fully spin-polarized thermoelectric current with `ZT ~ 0.3–0.6`
+at room temperature (approaching unity when hot) — largest for wide zigzag ribbons.*
+
+### Caveats to keep honest (stated in the paper)
+1. TB parameters are **fitted to a published band figure**, not fresh DFT → results are
+   semi-quantitative (checked for robustness).
+2. **`κ_ph` is estimated**, not computed → absolute `ZT` carries that uncertainty (bracketed).
+3. Edge Cr use the **bulk exchange**; a site-resolved self-consistent edge treatment (and the
+   phonon-scattering route to `ZT` enhancement) are future work.
+
+---
+
 ## Simulation Logs
+
+### Run: design_rules — 2026-07-14
+
+Width / edge / temperature design rules (Fig. 6), fitted SK ribbons, ballistic κ_ph.
+
+| Parameter | Value |
+|-----------|-------|
+| configs | zigzag N=8,14,20; armchair N=14 |
+| μ sweep / grid | −0.5…+0.6 eV / T(E) on −0.8…+1.0 eV (cached) |
+| κ_ph | ballistic 4κ₀(T) |
+
+**Final values (peak ZT @300 K):** zigzag N=8/14/20 → **0.30 / 0.48 / 0.64**; armchair N=14 → 0.28
+(all at optimal μ−E_F ≈ +0.20 eV). Zigzag ≈ 2× armchair; ZT rises with width and with T.
+
+**Notes:** Optimal doping is edge-/width-independent (+0.2 eV, the majority band edge). The
+edge-vacancy panel was dropped: our κ_ph is external, so electronic vacancies alone leave ZT
+unchanged (the Sevinçli–Cuniberti enhancement needs phonon transport). Width trend carries a
+fixed-κ_ph caveat. Script: `scripts/fig6_width_edge_vacancy.py`; Table 2 in `data/table2.txt`.
+
+![Design rules: width, edge, temperature](figures/fig6_width_edge_vacancy.png)
+
+---
+
+### Run: geometry_figure — 2026-07-14
+
+Schematic of the monolayer + zigzag/armchair ribbons (Fig. 1), pure-matplotlib, no Kwant.
+Shows Cr/N sublattices, lattice vectors, unit cell, width convention N, ferromagnetic Cr edge
+moments, and the periodic (transport) direction. Script: `scripts/fig1_geometry.py`.
+
+![Geometry of h-CrN and its nanoribbons](figures/fig1_geometry.png)
+
+---
 
 ### Run: monolayer_sk_bands — 2026-07-14
 
