@@ -69,5 +69,11 @@ or transport paper exists.**
   cited in Methods.
 
 Bottom line: the "first thermoelectric / phase-coherent Landauer study of CrN nanoribbons" claim
-holds. Still advisable to (a) do one final re-check immediately before submission and (b) confirm
-Semantic Scholar once it is not rate-limited.
+holds. Still advisable to do one final re-check immediately before submission.
+
+**Semantic Scholar now checked too (2026-07-15).** The toolkit was given an S2 API key
+(auto-throttled to 1 req/sec; key in `~/.config/lit-gap-toolkit/s2_api_key`, read via
+env `SEMANTIC_SCHOLAR_API_KEY`). S2 no longer 429s and **also confirms CLEAN**: its only CrN hit
+is the thin-film alloy thesis; all nanoribbon-thermoelectric hits are other materials
+(blue-phosphorene, graphene, MoS₂, SnS…). → **All four databases now agree** (Crossref, OpenAlex,
+arXiv, Semantic Scholar), closing the one gap that was open in every prior check.
