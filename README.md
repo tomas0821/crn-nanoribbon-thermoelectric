@@ -16,9 +16,14 @@ uv pip install --python ~/venvs/crn-te/bin/python --no-build-isolation kwant
 Run everything with `~/venvs/crn-te/bin/python`.
 
 ## Layout
-- `crnte/` — package: TB model, bands, (later) transport + thermoelectric integrals.
-- `scripts/` — one script per manuscript figure (`fig2_*`, `fig3_*`, …).
+- `crnte/` — package: TB model, bands, transport + thermoelectric integrals.
+- `scripts/` — one script per manuscript figure (`fig1_*` … `fig7_*`), plus `verify.py`,
+  `sensitivity.py`, `convergence.py`.
 - `figures/` — generated figures.
+- `manuscript/` — Elsevier `elsarticle` LaTeX (self-contained; class + bst bundled).
+- `derivations/` — `derivations.tex`: complete step-by-step derivation of every formula
+  (geometry, Slater–Koster selection rules, Onsager coefficients + units, ZTₑ identity, Mott /
+  Wiedemann–Franz, two-spin combination incl. the bipolar κ term, phonon quantum).
 
 ## Status
 Provisional **effective** honeycomb model (Cr/N sublattices, spin-split Cr, one NN hopping),

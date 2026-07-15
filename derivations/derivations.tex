@@ -1,0 +1,370 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\ee}{\mathrm{e}}
+\newcommand{\kB}{k_{\mathrm B}}
+\newcommand{\Lloc}{\mathcal{L}}
+
+\title{Derivations for ``Thermoelectric transport in hexagonal CrN nanoribbons''\\
+\large Complete, step-by-step working of every formula used in the code and manuscript}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\noindent
+This companion note derives, without skipping steps, every mathematical result used in the
+tight-binding + Landauer thermoelectric calculation: the lattice/reciprocal geometry, the
+Slater--Koster Bloch Hamiltonian and its selection rules, the Onsager transport coefficients from
+the Landauer currents (including all unit factors), the electronic figure-of-merit identity, the
+Sommerfeld expansion with the Mott and Wiedemann--Franz consequences, the two-spin-channel
+combination (with the bipolar correction), and the ballistic phonon thermal-conductance quantum.
+Numerical cross-checks that were run against these results are noted in boxes.
+
+\tableofcontents
+
+%======================================================================
+\section{Geometry and reciprocal lattice}
+
+The honeycomb monolayer has two triangular sublattices, Cr ($A$) and N ($B$). Take primitive
+vectors and nearest-neighbour (NN, $A\!\to\!B$) vectors
+\begin{equation}
+\mathbf a_1 = d\Big(\tfrac32,\tfrac{\sqrt3}{2}\Big),\quad
+\mathbf a_2 = d\Big(\tfrac32,-\tfrac{\sqrt3}{2}\Big),\qquad
+\boldsymbol\delta_1 = d(1,0),\ \
+\boldsymbol\delta_2 = d\big(-\tfrac12,\tfrac{\sqrt3}{2}\big),\ \
+\boldsymbol\delta_3 = d\big(-\tfrac12,-\tfrac{\sqrt3}{2}\big),
+\end{equation}
+where $d$ is the Cr--N bond length. Each is a unit-cell repeat of the others:
+$\boldsymbol\delta_2=\boldsymbol\delta_1-\mathbf a_2$, $\boldsymbol\delta_3=\boldsymbol\delta_1-\mathbf a_1$,
+and $\sum_i\boldsymbol\delta_i=0$.
+
+\paragraph{Lattice constant.} The same-sublattice spacing is
+$a\equiv|\mathbf a_1| = d\sqrt{(3/2)^2+(\sqrt3/2)^2} = d\sqrt{9/4+3/4}=d\sqrt3$, i.e.
+\begin{equation}
+\boxed{\,a=\sqrt3\,d\,}\qquad\Rightarrow\qquad
+a=\sqrt3\times1.884~\text{\AA}=3.263~\text{\AA}\approx3.258~\text{\AA (DFT)}.
+\end{equation}
+
+\paragraph{Reciprocal vectors.} They satisfy $\mathbf a_i\!\cdot\!\mathbf b_j=2\pi\delta_{ij}$.
+Writing $A=\left(\begin{smallmatrix}\mathbf a_1\\\mathbf a_2\end{smallmatrix}\right)$ (rows) and
+$B=\left(\begin{smallmatrix}\mathbf b_1\\\mathbf b_2\end{smallmatrix}\right)$, the condition is
+$A B^{\mathsf T}=2\pi\,\mathbb 1$, so $B=2\pi (A^{-1})^{\mathsf T}$. With $A=d\left(\begin{smallmatrix}
+3/2 & \sqrt3/2\\ 3/2 & -\sqrt3/2\end{smallmatrix}\right)$, $\det A = d^2(3/2)(-\sqrt3)= -\tfrac{3\sqrt3}{2}d^2$,
+\begin{equation}
+\mathbf b_1=\frac{2\pi}{3d}\big(1,\sqrt3\big),\qquad
+\mathbf b_2=\frac{2\pi}{3d}\big(1,-\sqrt3\big).
+\end{equation}
+
+\paragraph{Structure factor and Dirac points.} The $A\!\to\!B$ Bloch sum is
+$f(\mathbf k)=\sum_{i}\ee^{\,i\mathbf k\cdot\boldsymbol\delta_i}$. It vanishes when the three unit
+phasors sum to zero, i.e.\ when they are mutually $120^\circ$ apart. In fractional coordinates
+$\mathbf k=k_1\mathbf b_1+k_2\mathbf b_2$ one finds $f=0$ at the zone corners
+$(k_1,k_2)=(\tfrac13,-\tfrac13)$ and $(\tfrac23,\tfrac13)$ (the $K$, $K'$ points); at the zone
+centre $|f|=3$.
+\begin{quote}\small\itshape
+Numerical check: evaluating $|f|$ at several high-symmetry fractional points confirmed
+$|f(\tfrac23,\tfrac13)|=0$ while $|f(\tfrac13,\tfrac13)|=\sqrt3$; this fixed the correct $K$
+label in the band-structure script.
+\end{quote}
+
+%======================================================================
+\section{Tight-binding Bloch Hamiltonian}
+
+\subsection{Orbital content and Bloch basis}
+We keep the out-of-plane manifold that governs states near $E_F$: Cr $\{d_{z^2},d_{xz},d_{yz}\}$
+on $A$ and N $\{p_z\}$ on $B$. Bloch states $|\mathbf k,\alpha,X\rangle
+=\frac{1}{\sqrt{N_c}}\sum_{\mathbf R}\ee^{\,i\mathbf k\cdot(\mathbf R+\boldsymbol\tau_X)}
+|\mathbf R,\alpha,X\rangle$ (sublattice $X\in\{A,B\}$, orbital $\alpha$) give a $4\times4$
+matrix $H_{\alpha X,\beta Y}(\mathbf k)=\sum_{\mathbf R}\ee^{\,i\mathbf k\cdot(\mathbf R+\boldsymbol\tau_Y-\boldsymbol\tau_X)}
+\langle \mathbf 0,\alpha,X|H|\mathbf R,\beta,Y\rangle$.
+
+\subsection{Slater--Koster two-centre integrals for $p$--$d$ bonds}
+For a bond with direction cosines $(l,m,n)$, the Slater--Koster rules give the $p$--$d$ matrix
+elements in terms of two integrals $V_{pd\sigma},V_{pd\pi}$. The ones involving $p_z$ are
+\begin{align}
+E_{z,xy}&=\sqrt3\,l m n\,V_{pd\sigma}-2 l m n\,V_{pd\pi}, &
+E_{z,yz}&=\sqrt3\,m n^2\,V_{pd\sigma}+m(1-2n^2)\,V_{pd\pi},\\
+E_{z,zx}&=\sqrt3\,l n^2\,V_{pd\sigma}+l(1-2n^2)\,V_{pd\pi}, &
+E_{z,x^2-y^2}&=\tfrac{\sqrt3}{2}\,n(l^2-m^2)V_{pd\sigma}-n(l^2-m^2)V_{pd\pi},\\
+E_{z,3z^2-r^2}&=n\big[n^2-\tfrac12(l^2+m^2)\big]V_{pd\sigma}-\sqrt3\,n(l^2+m^2)V_{pd\pi}. &&
+\end{align}
+Here $E_{z,\alpha}\equiv\langle p_z|H|d_\alpha\rangle$ along the bond.
+
+\subsection{Planar selection rule ($n=0$)}
+The monolayer is planar (buckling $\pm0.07$~\AA\ is neglected), so every Cr--N bond lies in-plane:
+$n=0$ and $l^2+m^2=1$. Substituting $n=0$ into the five expressions above,
+\begin{equation}
+E_{z,xy}=0,\quad E_{z,x^2-y^2}=0,\quad E_{z,3z^2-r^2}=0,\qquad
+\boxed{\,E_{z,zx}=l\,V_{pd\pi},\quad E_{z,yz}=m\,V_{pd\pi}\,.}
+\end{equation}
+Thus \emph{N $p_z$ couples only to Cr $d_{xz}$ and $d_{yz}$} (through $V_{pd\pi}$), and
+\emph{$d_{z^2}$ (and $d_{x^2-y^2}$) are non-bonding} with respect to $p_z$ for in-plane bonds. The
+$d_{z^2}$ band therefore disperses only through Cr--Cr second-neighbour hopping.
+\begin{quote}\small\itshape
+Numerical check: for 20 random $\mathbf k$ and both spins, the code verified $H$ Hermitian and
+$H_{d_{z^2},p_z}=0$ identically.
+\end{quote}
+
+\subsection{Bloch matrix elements}
+Summing the three NN bonds (Cr at $\mathbf 0$, N at $\boldsymbol\delta_i$, cosines
+$\hat{\boldsymbol\delta}_i=\boldsymbol\delta_i/d$),
+\begin{equation}
+f_{xz}(\mathbf k)=\sum_i \frac{\delta_{i,x}}{d}\,\ee^{\,i\mathbf k\cdot\boldsymbol\delta_i},\qquad
+f_{yz}(\mathbf k)=\sum_i \frac{\delta_{i,y}}{d}\,\ee^{\,i\mathbf k\cdot\boldsymbol\delta_i},
+\end{equation}
+so $\langle d_{xz}|H|p_z\rangle=V_{pd\pi}f_{xz}$, $\langle d_{yz}|H|p_z\rangle=V_{pd\pi}f_{yz}$.
+The Cr--Cr second-neighbour $d_{z^2}$--$d_{z^2}$ integral is direction independent at $n=0$
+(from $E_{3z^2-r^2,3z^2-r^2}=\tfrac14 V_{dd\sigma}+\tfrac34 V_{dd\delta}\equiv t_{zz}$), giving a
+triangular-lattice term $t_{zz}S_2(\mathbf k)$ with
+$S_2(\mathbf k)=\sum_{\boldsymbol\tau}\ee^{\,i\mathbf k\cdot\boldsymbol\tau}$ over the six Cr--Cr
+neighbours. Collecting terms with basis order $(d_{z^2},d_{xz},d_{yz},p_z)$ and adding the
+mean-field exchange shift $\Delta_\sigma$ on the Cr $d$ orbitals,
+\begin{equation}
+H_\sigma(\mathbf k)=
+\begin{pmatrix}
+\varepsilon_{d_{z^2}}+\Delta_\sigma+t_{zz}S_2 & 0 & 0 & 0\\
+0 & \varepsilon_\pi+\Delta_\sigma & 0 & V_{pd\pi}f_{xz}\\
+0 & 0 & \varepsilon_\pi+\Delta_\sigma & V_{pd\pi}f_{yz}\\
+0 & V_{pd\pi}f_{xz}^\ast & V_{pd\pi}f_{yz}^\ast & \varepsilon_{p_z}
+\end{pmatrix}.
+\end{equation}
+
+\subsection{Mean-field (Stoner) exchange}
+The on-site Hubbard term $U\,\hat n_{\alpha\uparrow}\hat n_{\alpha\downarrow}$ decoupled at
+mean-field level gives $U\hat n_{\alpha\uparrow}\langle\hat n_{\alpha\downarrow}\rangle
++U\langle\hat n_{\alpha\uparrow}\rangle\hat n_{\alpha\downarrow}-U\langle\hat n_{\alpha\uparrow}
+\rangle\langle\hat n_{\alpha\downarrow}\rangle$, so spin $\sigma$ Cr electrons see
+$\varepsilon_{d}+U\langle n_{\bar\sigma}\rangle$. For the uniform ferromagnetic monolayer this is a
+rigid shift; writing $\Delta_\uparrow=0$ and $\Delta_\downarrow=\Delta_{\rm ex}$ (the value fixed
+by the measured minority gap) reproduces the half-metal. A site-dependent self-consistent version
+is only needed for inequivalent edge atoms.
+
+%======================================================================
+\section{Landauer currents and Onsager coefficients}
+
+\subsection{Landauer charge and heat currents}
+For a two-terminal phase-coherent conductor with transmission $T(E)$ and leads $L,R$ at
+electrochemical potentials $\mu_{L,R}$ and temperatures $T_{L,R}$, with Fermi functions
+$f_{L,R}(E)=\{\exp[(E-\mu_{L,R})/\kB T_{L,R}]+1\}^{-1}$,
+\begin{equation}
+I=\frac{e}{h}\int\!\dd E\,T(E)\,[f_L(E)-f_R(E)],\qquad
+I_Q=\frac{1}{h}\int\!\dd E\,(E-\mu)\,T(E)\,[f_L(E)-f_R(E)].
+\end{equation}
+($e>0$; the electron charge is $-e$. $I_Q$ is the heat current carried out of the left lead,
+$(E-\mu)$ being the heat per electron.)
+
+\subsection{Linearisation}
+Write $\delta\mu=\mu_L-\mu_R$ and $\delta T=T_L-T_R$, small. Since $f$ depends on $E$ only through
+$x=(E-\mu)/\kB T$,
+\begin{equation}
+\frac{\partial f}{\partial\mu}=-\frac{\partial f}{\partial E},\qquad
+\frac{\partial f}{\partial T}=-\frac{\partial f}{\partial E}\,\frac{E-\mu}{T},
+\end{equation}
+which follow from $\partial_\mu x=-1/\kB T$, $\partial_T x=-(E-\mu)/\kB T^2$, $\partial_E x=1/\kB T$.
+Hence
+\begin{equation}
+f_L-f_R\simeq\Big(-\frac{\partial f}{\partial E}\Big)\Big[\delta\mu+\frac{E-\mu}{T}\,\delta T\Big].
+\end{equation}
+Define the (transport) moments
+\begin{equation}
+\boxed{\ \Lloc_n(\mu,T)=\int\!\dd E\Big(-\frac{\partial f}{\partial E}\Big)(E-\mu)^n\,T(E)\ }
+\qquad(n=0,1,2).
+\end{equation}
+Then the linear-response currents are
+\begin{equation}
+I=\frac{e}{h}\Big[\Lloc_0\,\delta\mu+\frac{\Lloc_1}{T}\,\delta T\Big],\qquad
+I_Q=\frac{1}{h}\Big[\Lloc_1\,\delta\mu+\frac{\Lloc_2}{T}\,\delta T\Big].
+\end{equation}
+
+\subsection{Conductance, Seebeck, thermal conductance}
+\paragraph{Electrical conductance} ($\delta T=0$, $\delta\mu=-e\,\Delta V$ where
+$\Delta V=V_L-V_R$):
+\begin{equation}
+I=\frac{e}{h}\Lloc_0(-e\Delta V)=-\frac{e^2}{h}\Lloc_0\,\Delta V
+\ \Rightarrow\
+\boxed{\,G=\frac{e^2}{h}\,\Lloc_0\,.}
+\end{equation}
+
+\paragraph{Seebeck coefficient} (open circuit, $I=0$): setting $I=0$,
+$\Lloc_0\delta\mu+\Lloc_1\delta T/T=0\Rightarrow\delta\mu=-(\Lloc_1/\Lloc_0)\delta T/T$. With
+$\delta\mu=-e\Delta V$, $\Delta V=(\Lloc_1/e\Lloc_0)\delta T/T$, and $S\equiv-\Delta V/\delta T$:
+\begin{equation}
+\boxed{\,S=-\frac{1}{eT}\,\frac{\Lloc_1}{\Lloc_0}\,.}
+\end{equation}
+
+\paragraph{Electronic thermal conductance} (heat current at $I=0$): substitute
+$\delta\mu=-(\Lloc_1/\Lloc_0)\delta T/T$ into $I_Q$,
+\begin{equation}
+I_Q=\frac{1}{h}\Big[\Lloc_1\Big(-\frac{\Lloc_1}{\Lloc_0}\frac{\delta T}{T}\Big)+\frac{\Lloc_2}{T}\delta T\Big]
+=\frac{\delta T}{hT}\Big(\Lloc_2-\frac{\Lloc_1^2}{\Lloc_0}\Big)
+\ \Rightarrow\
+\boxed{\,\kappa_e=\frac{1}{hT}\Big(\Lloc_2-\frac{\Lloc_1^2}{\Lloc_0}\Big).}
+\end{equation}
+
+\subsection{Units}
+With energies in eV, $\Lloc_0$ is dimensionless, $\Lloc_1$ has units eV, $\Lloc_2$ eV$^2$.
+$G=(e^2/h)\Lloc_0$ is in $e^2/h=3.874\times10^{-5}$~S. For $S$, note $\Lloc_1/\Lloc_0$ in eV
+divided by $e$ (the elementary charge) is a voltage: $[\text{eV}]/[e]=\text{V}$. Hence
+\begin{equation}
+S[\text{V/K}]=-\frac{1}{T[\text K]}\,\frac{\Lloc_1}{\Lloc_0}\Big[\text{eV}\Big]
+\quad\Longleftrightarrow\quad
+S[\mu\text{V/K}]=-\frac{10^6}{T}\,\frac{\Lloc_1}{\Lloc_0}.
+\end{equation}
+For $\kappa_e$, convert eV$^2\to$J$^2$ with $Q^2$ ($Q=1.602\times10^{-19}$~C $=$ 1~eV/V):
+$\kappa_e[\text{W/K}]=(1/hT)(\Lloc_2-\Lloc_1^2/\Lloc_0)\,Q^2$, with $h$ in J\,s. Equivalently, per
+spin $G=G_0\Lloc_0$ with $G_0=Q^2/h$.
+
+\subsection{Electronic figure of merit}
+The full $ZT=S^2GT/(\kappa_e+\kappa_{\rm ph})$. Setting $\kappa_{\rm ph}=0$ gives the electronic
+bound; substitute the boxed results:
+\begin{equation}
+S^2GT=\Big(\frac{1}{eT}\frac{\Lloc_1}{\Lloc_0}\Big)^2\frac{e^2}{h}\Lloc_0\,T
+=\frac{1}{hT}\frac{\Lloc_1^2}{\Lloc_0},\qquad
+\kappa_e=\frac{1}{hT}\Big(\Lloc_2-\frac{\Lloc_1^2}{\Lloc_0}\Big),
+\end{equation}
+so the $1/hT$ and all $e$ factors cancel:
+\begin{equation}
+\boxed{\,ZT_e=\frac{S^2GT}{\kappa_e}=\frac{\Lloc_1^2/\Lloc_0}{\Lloc_2-\Lloc_1^2/\Lloc_0}
+=\frac{\Lloc_1^2}{\Lloc_0\Lloc_2-\Lloc_1^2}\,.}
+\end{equation}
+This is manifestly unit-free and diverges when $\Lloc_0\Lloc_2\to\Lloc_1^2$ (a gap, where all
+$\Lloc_n\to0$)---the origin of the spurious in-gap divergence that a finite $\kappa_{\rm ph}$
+removes.
+\begin{quote}\small\itshape
+Numerical check: $ZT_e$ computed directly from $\Lloc_1^2/(\Lloc_0\Lloc_2-\Lloc_1^2)$ agreed to
+machine precision with $S^2GT/\kappa_e$ evaluated from the separate $G,S,\kappa_e$ routines.
+\end{quote}
+
+%======================================================================
+\section{Sommerfeld expansion, Mott formula, Wiedemann--Franz}
+
+\subsection{The expansion}
+For a smooth $H(E)$, expand about $\mu$ inside $\Lloc[H]=\int(-\partial_E f)H(E)\dd E$. With
+$x=(E-\mu)/\kB T$, $(-\partial_E f)\dd E=\tfrac14\,\mathrm{sech}^2(x/2)\,\dd x$, an even, unit-weight
+kernel:
+\begin{equation}
+\int(-\partial_E f)\dd E=1,\quad \int(-\partial_E f)(E-\mu)\dd E=0,\quad
+\int(-\partial_E f)(E-\mu)^2\dd E=(\kB T)^2\!\!\int\! x^2\frac{\ee^{x}}{(\ee^{x}+1)^2}\dd x=\frac{\pi^2}{3}(\kB T)^2 .
+\end{equation}
+(The last integral is a standard result, $\int_{-\infty}^\infty x^2\ee^x/(\ee^x+1)^2\dd x=\pi^2/3$.)
+Therefore, to leading order,
+\begin{equation}
+\Lloc[H]=H(\mu)+\frac{\pi^2}{6}(\kB T)^2\,H''(\mu)+O(T^4).
+\end{equation}
+
+\subsection{Moments}
+Apply with $H=T(E),\,(E-\mu)T(E),\,(E-\mu)^2T(E)$ (primes $=\dd/\dd E$ at $\mu$):
+\begin{equation}
+\Lloc_0\simeq T+\frac{\pi^2}{6}(\kB T)^2 T'',\qquad
+\Lloc_1\simeq\frac{\pi^2}{3}(\kB T)^2 T',\qquad
+\Lloc_2\simeq\frac{\pi^2}{3}(\kB T)^2\,T,
+\end{equation}
+where $T\equiv T(\mu)$ etc. (For $\Lloc_1$, $H=(E-\mu)T$ has $H(\mu)=0$, $H''(\mu)=2T'$; for
+$\Lloc_2$, $H=(E-\mu)^2T$ has $H(\mu)=0$ and the leading term is the second moment $\times\,T$.)
+
+\subsection{Mott formula}
+\begin{equation}
+S=-\frac{1}{eT}\frac{\Lloc_1}{\Lloc_0}\simeq-\frac{1}{eT}\frac{(\pi^2/3)(\kB T)^2 T'}{T}
+=\boxed{\,-\frac{\pi^2}{3}\frac{\kB^2 T}{e}\,\frac{\dd\ln T(E)}{\dd E}\Big|_{\mu}\,.}
+\end{equation}
+\begin{quote}\small\itshape
+Numerical check: for a linear $T(E)=T_0+bE$ at 300~K the code gave $S=-4.397~\mu$V/K, matching
+$-\tfrac{\pi^2}{3}\tfrac{\kB}{e}(\kB T)(b/T_0)=-4.40~\mu$V/K.
+\end{quote}
+
+\subsection{Wiedemann--Franz law}
+In the metallic limit $\Lloc_1^2/\Lloc_0=O\big[(\kB T)^4/T\big]$ is higher order and negligible
+against $\Lloc_2=O[(\kB T)^2 T]$, so
+\begin{equation}
+\kappa_e\simeq\frac{\Lloc_2}{hT}\,Q^2=\frac{1}{hT}\frac{\pi^2}{3}(\kB T)^2 T(\mu)\,Q^2,\qquad
+G=\frac{Q^2}{h}T(\mu),
+\end{equation}
+hence
+\begin{equation}
+\boxed{\,\frac{\kappa_e}{G\,T}=\frac{\pi^2}{3}\frac{\kB^2}{e^2}=L_0=2.44\times10^{-8}~\text{W}\,\Omega\,\text{K}^{-2}\,,}
+\end{equation}
+the Lorenz number ($e=Q$).
+\begin{quote}\small\itshape
+Numerical check: in the metallic region ($\mu-E_F<0$) the code returned $\kappa_e/(GT)$ within
+$\sim$2--6\% of $L_0$.
+\end{quote}
+
+%======================================================================
+\section{Two spin channels (parallel conductors)}
+
+The spin channels are independent and carry currents in parallel across the same $\Delta V,\Delta
+T$. From \S3, each channel obeys $I_\sigma=-G_\sigma(\Delta V+S_\sigma\Delta T)$, where we used
+$\Lloc_1^\sigma=-eT S_\sigma\Lloc_0^\sigma$ so that
+$(e/h)\Lloc_1^\sigma\Delta T/T=-G_\sigma S_\sigma\Delta T$. Charge and heat currents add:
+$I=\sum_\sigma I_\sigma$, $I_Q=\sum_\sigma I_{Q\sigma}$.
+
+\paragraph{Conductance.} $\;G=\sum_\sigma G_\sigma$.
+
+\paragraph{Seebeck.} Open circuit $I=\sum_\sigma G_\sigma(\Delta V+S_\sigma\Delta T)=0$ gives
+$\Delta V=-\Delta T\,\dfrac{\sum_\sigma G_\sigma S_\sigma}{\sum_\sigma G_\sigma}$, so
+\begin{equation}
+\boxed{\,S=-\frac{\Delta V}{\Delta T}=\frac{\sum_\sigma G_\sigma S_\sigma}{\sum_\sigma G_\sigma}\,.}
+\end{equation}
+
+\paragraph{Thermal conductance (with bipolar term).} The heat current at $I=0$ is
+$\kappa=\sum_\sigma\kappa_\sigma$ \emph{plus} a circulating-current (bipolar) correction. Carrying
+the algebra, the total electronic thermal conductance at zero \emph{total} charge current is
+\begin{equation}
+\boxed{\;\kappa_e=\sum_\sigma\kappa_\sigma
++T\Big[\sum_\sigma G_\sigma S_\sigma^2-\frac{\big(\sum_\sigma G_\sigma S_\sigma\big)^2}{\sum_\sigma G_\sigma}\Big].}
+\end{equation}
+The bracket is non-negative (Cauchy--Schwarz) and represents heat carried by the short-circuit
+current that flows between channels when they have different thermopowers.
+
+\paragraph{When the simple sum is exact.} The code uses $\kappa_e=\sum_\sigma\kappa_\sigma$, i.e.\
+it drops the bracket. In a half-metal the minority channel is gapped near $E_F$, so
+$G_\downarrow=S_\downarrow=\kappa_\downarrow=0$ there and the bracket vanishes identically. Our
+$ZT$ peak sits at $\mu-E_F\simeq+0.2$~eV, \emph{inside} the minority gap $[-3.2,+1.0]$~eV, so the
+omitted term is exactly zero at the operating point and the reported $ZT$ is unaffected. The
+bracket becomes relevant only for $\mu$ pushed far enough to make both spins conduct
+($\mu-E_F\gtrsim+1$~eV), where it would \emph{reduce} $ZT$; it should be restored if that regime
+is ever analysed.
+
+%======================================================================
+\section{Ballistic phonon thermal-conductance quantum}
+
+For a single ballistic (fully transmitting) phonon mode of dispersion $\omega(q)$, the heat
+current is $I_Q=\frac1{2\pi}\int_0^\infty\dd q\,\frac{\dd\omega}{\dd q}\,\hbar\omega\,[n(\omega,T_L)-n(\omega,T_R)]$
+with $n$ the Bose function. Changing variable to $\omega$ and linearising in $\delta T$,
+\begin{equation}
+\kappa_{\rm ph}^{(1)}=\frac{\hbar}{2\pi}\int_0^\infty\!\dd\omega\,\omega\,\frac{\partial n}{\partial T}
+=\frac{\hbar}{2\pi}\int_0^\infty\!\dd\omega\,\omega\,\frac{\hbar\omega}{\kB T^2}\frac{\ee^{\hbar\omega/\kB T}}{(\ee^{\hbar\omega/\kB T}-1)^2}.
+\end{equation}
+With $u=\hbar\omega/\kB T$, $\displaystyle\int_0^\infty\frac{u^2\ee^u}{(\ee^u-1)^2}\dd u=\frac{\pi^2}{3}$, so
+\begin{equation}
+\boxed{\,\kappa_0(T)\equiv\kappa_{\rm ph}^{(1)}=\frac{\pi^2\kB^2 T}{3h}=9.464\times10^{-13}\,T~\text{W/K}\,,}
+\end{equation}
+the universal thermal-conductance quantum (same $\pi^2/3$ as the electronic Lorenz factor, as
+required by the Wiedemann--Franz analogy). We estimate the ribbon phonon thermal conductance as
+$\kappa_{\rm ph}=n_{\rm modes}\,\kappa_0(T)$ with $n_{\rm modes}\approx4$ acoustic branches
+($\kappa_{\rm ph}(300\,\text K)\approx1.1$~nW/K), and bracket $ZT$ over $\tfrac12$--$2\times$ this.
+
+%======================================================================
+\section{Summary of results to check}
+\begin{itemize}
+\item[(i)] $a=\sqrt3\,d$; reciprocal vectors; $f=0$ at $K$ ($\S1$).
+\item[(ii)] Planar Slater--Koster selection rule: $p_z\!\leftrightarrow\!(d_{xz},d_{yz})$ only,
+$d_{z^2}$ non-bonding ($\S2.3$).
+\item[(iii)] $G=\tfrac{e^2}{h}\Lloc_0$, $S=-\tfrac1{eT}\tfrac{\Lloc_1}{\Lloc_0}$,
+$\kappa_e=\tfrac1{hT}(\Lloc_2-\tfrac{\Lloc_1^2}{\Lloc_0})$, with units ($\S3$).
+\item[(iv)] $ZT_e=\Lloc_1^2/(\Lloc_0\Lloc_2-\Lloc_1^2)$ ($\S3.6$).
+\item[(v)] Mott $S=-\tfrac{\pi^2}{3}\tfrac{\kB^2 T}{e}\,\dd\ln T/\dd E$; Wiedemann--Franz
+$\kappa_e/GT=\tfrac{\pi^2}{3}(\kB/e)^2$ ($\S4$).
+\item[(vi)] Parallel spins: $G=\sum G_\sigma$, $S=\tfrac{\sum G_\sigma S_\sigma}{\sum G_\sigma}$,
+and $\kappa_e=\sum\kappa_\sigma+$ bipolar term---the code drops the bipolar term, exact here
+because the minority channel is gapped at the operating point ($\S5$).
+\item[(vii)] $\kappa_0=\pi^2\kB^2 T/3h$ ($\S6$).
+\end{itemize}
+Items (ii), (iv), (v) were cross-checked numerically (boxes above); (vi)'s dropped term is the one
+approximation, and is exactly zero where $ZT$ is evaluated.
+
+\end{document}
