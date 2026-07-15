@@ -1,0 +1,5 @@
+edge  N  config  peakZT  mu-E_F(eV)
+zigzag  8  pristine  0.297  +0.19
+zigzag  14  pristine  0.484  +0.20
+zigzag  20  pristine  0.637  +0.20
+armchair  14  pristine  0.275  +0.19
