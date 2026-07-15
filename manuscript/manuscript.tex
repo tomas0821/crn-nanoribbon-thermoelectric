@@ -225,7 +225,12 @@ spin-Seebeck elements.
 \subsection{Scope and limitations}
 Three limitations are stated transparently. First, the tight-binding parameters are fitted to a
 published band structure rather than to a fresh ab-initio calculation; the conclusions are
-semi-quantitative and were checked for robustness against parameter variation. Second,
+therefore semi-quantitative. We have verified their robustness explicitly: varying every
+tight-binding parameter and the exchange splitting by $\pm10\%$ changes the peak $ZT$ by at most
+$\sim\!10\%$ (from the baseline $0.48$ to within $[0.43,0.51]$), and the sensitivity is dominated
+by the single, physically transparent hopping $V_{pd\pi}$ that sets the transport band edge, while
+the exchange splitting, the $d_{z^2}$ energy and the second-neighbour hopping are essentially
+irrelevant near $E_F$ (Fig.~\ref{fig:sensitivity}). Second,
 $\kappa_{\rm ph}$ is estimated ballistically, not computed; absolute $ZT$ values carry the
 corresponding uncertainty, which we bracket explicitly. Third, the edge Cr atoms are treated with
 the bulk exchange splitting; a site-resolved self-consistent mean-field treatment of the magnetic
@@ -353,6 +358,15 @@ the band edge. (c) $ZT(T)$ at the optimal doping. Zigzag ribbon, $N\approx14$.}
 (d) $ZT(T)$ at optimal doping for the three widths.}
 \label{fig:designrules}
 \end{figure*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\columnwidth]{fig7_sensitivity.png}
+\caption{Robustness of the peak figure of merit (zigzag $N=14$, $300$~K) to a $\pm10\%$ variation
+of each model parameter. The peak $ZT$ stays within $[0.43,0.51]$ about the baseline $0.48$; the
+dominant sensitivity is to the Cr--N hopping $V_{pd\pi}$ that sets the majority band edge.}
+\label{fig:sensitivity}
+\end{figure}
 
 %% ------------------------------------------------------------------
 \bibliographystyle{elsarticle-num}

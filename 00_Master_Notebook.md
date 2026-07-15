@@ -25,7 +25,9 @@
 - [ ] **Edge-vacancy ZT enhancement** the Sevinçli–Cuniberti way — requires an explicit *phonon*
       transport calculation (our κ_ph is an external ballistic estimate, so electronic vacancies
       alone leave ZT unchanged; the panel was dropped as it would be misleading).
-- [ ] Parameter-sensitivity sweep (vary SK params ±10%, report ZT spread) to firm up rigor.
+- [x] Parameter-sensitivity sweep + internal verification → `scripts/sensitivity.py`,
+      `scripts/verify.py`, Fig. 7. Peak ZT robust: `[0.43, 0.51]` under ±10% on every parameter.
+      Wiedemann–Franz and monolayer↔ribbon band consistency both pass. *(2026-07-15)*
 - [ ] Fill author affiliation / acknowledgements in the manuscript; verify the two `%VERIFY`
       references in `manuscript/refs.bib`.
 
@@ -192,6 +194,25 @@ at room temperature (approaching unity when hot) — largest for wide zigzag rib
 ---
 
 ## Simulation Logs
+
+### Run: verification_and_sensitivity — 2026-07-15
+
+Correctness checks + parameter-sensitivity of the headline ZT.
+
+**Internal verification (`scripts/verify.py`):**
+| Check | Result |
+|-------|--------|
+| Wiedemann–Franz `κ_e/(GT)` (metallic region) | 2.44–2.49×10⁻⁸ WΩ/K² — within 2% of Lorenz number ✓ |
+| monolayer `build_H` vs wide-ribbon Kwant bands | identical ranges (maj [−5.99,+0.19], min [−4.82,+2.62]); minority gap 4.20 eV ✓ |
+
+**Sensitivity (`scripts/sensitivity.py`, zigzag N=14, 300 K):** baseline peak ZT = 0.481;
+±10% on every SK parameter → spread **[0.431, 0.514]** (−10%…+7%). Dominated by `V_pdπ`
+(the Cr–N hopping setting the band edge); `Δ_ex`, `ε_dz²`, `ε_pz`, `t_zz` are negligible near E_F.
+→ The ZT conclusion is robust to the fitted parametrization. Data: `data/sensitivity.txt`.
+
+![Sensitivity of peak ZT to ±10% parameter variation](figures/fig7_sensitivity.png)
+
+---
 
 ### Run: design_rules — 2026-07-14
 
