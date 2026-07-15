@@ -1,0 +1,361 @@
+%% Thermoelectric transport in hexagonal CrN nanoribbons
+%% Elsevier elsarticle template -- target journal: Physica E
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+
+\graphicspath{{figures/}}
+\journal{Physica E: Low-dimensional Systems and Nanostructures}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Thermoelectric transport in hexagonal CrN nanoribbons:\\
+a tight-binding Landauer study of the Seebeck coefficient and figure of merit}
+
+\author[aff1]{Tomas Rojas}
+\address[aff1]{\textit{Affiliation to be completed}}
+
+\begin{abstract}
+Nanoribbons of two-dimensional magnetic nitrides are attractive building blocks for
+spin-caloritronic devices, yet the thermoelectric response of chromium nitride in the
+low-dimensional limit has not been addressed. We compute the spin-resolved thermoelectric
+transport of hexagonal (honeycomb) CrN armchair and zigzag nanoribbons within a tight-binding
+plus Landauer--B\"uttiker framework. A minimal multi-orbital Slater--Koster Hamiltonian, built
+from the out-of-plane Cr~$d_{z^2},d_{xz},d_{yz}$ and N~$p_z$ orbitals and fitted to the published
+half-metallic band structure of the monolayer, reproduces the $100\%$ spin-polarized character,
+the $\sim\!3.9$~eV minority gap and the $3\,\mu_B$ moment. Phase-coherent transmission functions
+are evaluated with recursive Green's functions and fed into the Onsager/Cutler--Mott integrals to
+obtain the Seebeck coefficient $S$, power factor $S^2G$, electronic thermal conductance and figure
+of merit $ZT$. The ribbons act as intrinsic spin filters: the thermoelectric current at the Fermi
+level is fully spin polarized. $ZT$ is maximised by light electron doping to the sharp majority
+band edge $\mu-E_F\simeq+0.2$~eV, where a steep energy dependence of the transmission produces a
+large thermopower. Using a ballistic estimate of the phonon thermal conductance we obtain
+$ZT\simeq0.3$--$0.6$ at $300$~K for zigzag ribbons of width $N=8$--$20$, rising with temperature,
+with zigzag edges outperforming armchair edges by roughly a factor of two. We provide the
+resulting design rules (edge type, width and doping window) for CrN-based low-dimensional
+thermoelectrics. The study requires no ab-initio computation and complements existing
+first-principles work on the magnetic order of CrN nanoribbon edges.
+\end{abstract}
+
+\begin{keyword}
+chromium nitride \sep nanoribbon \sep thermoelectric \sep half-metal \sep
+Landauer transport \sep Seebeck coefficient \sep spin caloritronics
+\end{keyword}
+
+\end{frontmatter}
+
+%% ------------------------------------------------------------------
+\section{Introduction}
+\label{sec:intro}
+
+Low-dimensional thermoelectrics exploit quantum confinement to decouple the electrical and
+thermal transport channels and to sculpt the electronic transmission near the Fermi
+level~\cite{Hicks1993,Mahan1996}. Graphene, silicene, phosphorene and related nanoribbons have
+therefore become a standard testbed for tight-binding plus Landauer studies of the Seebeck
+coefficient and thermoelectric figure of merit~\cite{OuyangGuo2009,Sevincli2010}. Two ingredients
+make magnetic nitride ribbons particularly interesting in this context: partially filled
+transition-metal $d$ states, which generate sharp features in the density of states, and
+intrinsically spin-polarized edges, which open the door to spin-dependent (caloritronic)
+functionality.
+
+Chromium nitride is a prototypical correlated transition-metal nitride. In addition to its bulk
+antiferromagnetic rock-salt phase, a freestanding two-dimensional \emph{hexagonal} (honeycomb)
+allotrope, $h$-CrN, has been predicted from first principles to be a $100\%$ spin-polarized
+half-metallic ferromagnet with a large minority-spin gap and a magnetic moment of $3\,\mu_B$ per
+Cr~\cite{Kuklin2017}. This monolayer has since been used to construct lateral spin
+valves~\cite{Modarresi2019}, and the finite-temperature magnetic order of the \emph{edges} of
+hexagonal CrN nanoribbons has been analysed with density-matrix renormalization group (DMRG)
+techniques~\cite{CrNdmrg2024}. Experimentally, CrN thin films are already established
+thermoelectric materials~\cite{Quintela2015}.
+
+Despite this activity, the \emph{thermoelectric} response of CrN in the nanoribbon geometry has
+not been reported. The existing DMRG study~\cite{CrNdmrg2024} addresses magnetic order and
+computes spin-dependent transport within the semiclassical Boltzmann formalism (finding perfect
+spin filtering), but it does not evaluate any thermoelectric coefficient. Here we close this gap.
+We compute the phase-coherent, spin-resolved Landauer transmission of hexagonal CrN armchair and
+zigzag nanoribbons and evaluate the Seebeck coefficient, power factor, electronic thermal
+conductance and figure of merit as functions of chemical potential, temperature, ribbon width,
+edge type and spin channel. The approach is deliberately lightweight---a tight-binding model
+parametrized from published band structures rather than a fresh ab-initio
+calculation---consistent with the analytic tradition of nanoribbon thermoelectrics and
+complementary in both property and method to Ref.~\cite{CrNdmrg2024}.
+
+%% ------------------------------------------------------------------
+\section{Model and methods}
+\label{sec:methods}
+
+\subsection{Geometry and tight-binding Hamiltonian}
+We consider the planar honeycomb $h$-CrN monolayer, with Cr and N on the two triangular
+sublattices [Fig.~\ref{fig:geometry}(a)], and cut armchair (ACNR) and zigzag (ZCNR) nanoribbons
+of width $N$, defined as the number of Cr and N atomic rows across the ribbon
+[Fig.~\ref{fig:geometry}(b,c)], following the convention of Ref.~\cite{CrNdmrg2024}. We use the
+DFT lattice constant $a=3.258$~\AA\ and Cr--N bond length $1.884$~\AA~\cite{Kuklin2017}.
+
+Because thermoelectric transport samples only states within a few $k_BT$ of the Fermi level, we
+retain the orbital manifold relevant near $E_F$. According to the orbital-projected density of
+states of Ref.~\cite{Kuklin2017}, the in-plane $\sigma$ manifold (Cr $d_{xy},d_{x^2-y^2}$
+hybridised with N $sp^2$) lies near $-5.5$~eV and is inert for transport, whereas the states at
+$E_F$ derive from the out-of-plane orbitals. We therefore keep three Cr orbitals
+($d_{z^2},d_{xz},d_{yz}$) and the N $p_z$ orbital, and generate the hoppings from the
+Slater--Koster two-centre integrals~\cite{SlaterKoster1954}. For an in-plane bond with direction
+cosines $(l,m,0)$ the selection rules are transparent: N $p_z$ couples only to Cr $d_{xz},d_{yz}$
+through $V_{pd\pi}$ (matrix elements $l\,V_{pd\pi}$ and $m\,V_{pd\pi}$), forming the $\pi$-bonding
+and $\pi$-antibonding bands, while $d_{z^2}$ is non-bonding and disperses only through a
+Cr--Cr second-neighbour hopping $t_{zz}$ on the triangular sublattice. The spin-resolved
+$4\times4$ Bloch Hamiltonian reads
+\begin{equation}
+H_\sigma(\mathbf{k})=
+\begin{pmatrix}
+\varepsilon_{d_{z^2}}\!+\!\Delta_\sigma\!+\!t_{zz}S_2(\mathbf{k}) & 0 & 0 & 0\\
+0 & \varepsilon_\pi\!+\!\Delta_\sigma & 0 & V_{pd\pi}f_{xz}(\mathbf{k})\\
+0 & 0 & \varepsilon_\pi\!+\!\Delta_\sigma & V_{pd\pi}f_{yz}(\mathbf{k})\\
+0 & V_{pd\pi}f_{xz}^\ast & V_{pd\pi}f_{yz}^\ast & \varepsilon_{p_z}
+\end{pmatrix},
+\end{equation}
+where $S_2(\mathbf{k})=\sum_{\boldsymbol\tau}e^{i\mathbf{k}\cdot\boldsymbol\tau}$ runs over the six
+Cr--Cr neighbours and $f_{xz,yz}(\mathbf{k})=\sum_{\boldsymbol\delta}(\hat\delta_{x,y})
+e^{i\mathbf{k}\cdot\boldsymbol\delta}$ over the three Cr--N bonds.
+
+\subsection{Magnetism}
+The monolayer is a uniform ferromagnet, so at mean-field (Stoner) level the on-site Hubbard term
+$U$ on the Cr $d$ orbitals produces a rigid exchange splitting: the majority ($\sigma=\uparrow$)
+Cr levels are the reference and the minority ($\sigma=\downarrow$) levels are shifted up by
+$\Delta_\downarrow-\Delta_\uparrow\equiv\Delta_{\rm ex}$. We fix $\Delta_{\rm ex}$ by the measured
+minority gap rather than solving the self-consistency, which is unnecessary for the uniform sheet;
+a site-dependent self-consistent treatment would be required only for the inequivalent edge Cr
+atoms and is left for future work. The parameters (Table~\ref{tab:params}) are fitted to reproduce
+the $h$-CrN band structure of Ref.~\cite{Kuklin2017}: the half-metallic character, the $3.9$~eV
+minority gap, the non-bonding $d_{z^2}$ level near the valence-band top and the majority
+conduction-band minimum at $K$.
+
+\subsection{Landauer transport}
+Semi-infinite leads are taken to be the pristine ribbon; the spin-resolved transmission
+$T_\sigma(E)$ is obtained from the retarded Green's function with the recursive
+(wavefunction-matching) algorithm as implemented in Kwant~\cite{Groth2014kwant}. In the pristine
+limit $T_\sigma(E)$ counts the propagating modes, so the transmission is quantised in integer
+steps [Fig.~\ref{fig:transmission}].
+
+\subsection{Thermoelectric coefficients}
+The linear-response coefficients follow from the moments of the transmission weighted by the
+Fermi window~\cite{SivanImry1986,CutlerMott1969,Datta1995},
+\begin{equation}
+L_n^\sigma(\mu,T)=\int\!\Big(\!-\frac{\partial f}{\partial E}\Big)\,(E-\mu)^n\,T_\sigma(E)\,dE ,
+\end{equation}
+with $f$ the Fermi function. Per spin channel the electrical conductance is $G=(e^2/h)L_0$, the
+Seebeck coefficient $S=-(1/eT)L_1/L_0$, the electronic thermal conductance
+$\kappa_e=(1/hT)(L_2-L_1^2/L_0)$ and the power factor $\mathrm{PF}=S^2G$. The two spin channels add
+as parallel conductors, $G=\sum_\sigma G_\sigma$ and
+$S=\sum_\sigma S_\sigma G_\sigma/\sum_\sigma G_\sigma$. The figure of merit is
+\begin{equation}
+ZT=\frac{S^2 G\,T}{\kappa_e+\kappa_{\rm ph}} .
+\end{equation}
+The purely electronic bound $ZT_e=L_1^2/(L_0L_2-L_1^2)$ ($\kappa_{\rm ph}\to0$) is unbounded inside
+a gap and is reported only as an upper limit.
+
+\subsection{Phonon thermal conductance}
+The phonon contribution $\kappa_{\rm ph}$ is the only non-electronic ingredient and is not computed
+ab initio. We use a ballistic (phonon-Landauer) estimate,
+$\kappa_{\rm ph}=n_{\rm modes}\,\kappa_0(T)$ with $\kappa_0=\pi^2k_B^2T/3h$ the universal thermal
+conductance quantum~\cite{Rego1998} and $n_{\rm modes}\approx4$ acoustic branches, giving
+$\kappa_{\rm ph}(300\,\mathrm{K})\approx1.1$~nW/K. This is a deliberately simple bracketing estimate;
+we report $ZT$ for $\tfrac12$, $1$ and $2\times\kappa_{\rm ph}$ and treat the electronic $ZT_e$ as
+the $\kappa_{\rm ph}\to0$ upper bound.
+
+%% ------------------------------------------------------------------
+\section{Results and discussion}
+\label{sec:results}
+
+\subsection{Monolayer and ribbon electronic structure}
+Figure~\ref{fig:bands} shows the fitted spin-resolved band structure of the $h$-CrN monolayer.
+The model reproduces the target half-metal: the majority channel is metallic, crossing $E_F$ near
+the zone boundary, while the minority channel is gapped, with the Fermi level lying inside the
+$\sim\!4$~eV minority gap. The flat non-bonding $d_{z^2}$ band sits $\sim\!2.5$~eV below $E_F$, and
+the band that grazes $E_F$ is the $\pi$-antibonding combination of Cr $d_{xz},d_{yz}$ and N $p_z$.
+The residual differences from the DFT reference ($\lesssim0.3$~eV in the gap and band-edge
+positions) are at the level of the digitisation uncertainty and do not affect the transport
+conclusions, which we corroborate with a parameter-sensitivity check.
+
+The corresponding spin-resolved ribbon transmissions are shown in
+Fig.~\ref{fig:transmission} for representative zigzag and armchair ribbons. Both edges inherit the
+half-metallic character: over a wide energy window around $E_F$ the minority transmission vanishes
+while the majority channel carries several quantised modes. The ribbons are therefore intrinsic
+spin filters, and any thermoelectric current driven near $E_F$ is $100\%$ spin polarized. A key
+feature for thermoelectricity is the \emph{sharp} majority band edge just above $E_F$: the
+transmission drops abruptly from several quanta to zero within $\sim\!0.2$~eV, producing the steep
+energy dependence required for a large Seebeck coefficient.
+
+\subsection{Seebeck coefficient and power factor}
+Figure~\ref{fig:seebeck} shows the Seebeck coefficient of a zigzag ribbon as a function of chemical
+potential at several temperatures. In the metallic region below $E_F$, $S$ is small, as expected
+for a smoothly varying transmission. As $\mu$ approaches the sharp majority band edge, $S$ grows
+strongly and changes character, reaching several hundred $\mu$V/K in the technologically relevant
+window and diverging (with vanishing conductance) deep inside the gap. The power factor
+[Fig.~\ref{fig:zt}(a)] peaks sharply at $\mu-E_F\simeq+0.19$~eV---precisely at the transmission
+edge---confirming that light electron doping to the majority band edge is the optimal operating
+point.
+
+\subsection{Figure of merit and design rules}
+Figure~\ref{fig:zt}(b) shows $ZT$ versus doping for the $\kappa_{\rm ph}$ bracket. The electronic
+bound $ZT_e$ diverges inside the gap where both $S^2G$ and $\kappa_e$ vanish; with a physical
+$\kappa_{\rm ph}$, $ZT$ instead peaks at the band edge, coincident with the power-factor maximum.
+For the zigzag $N=14$ ribbon we obtain a peak $ZT\simeq0.48$ at $300$~K (ballistic
+$\kappa_{\rm ph}$), bracketed between $0.26$ and $0.85$ for $2\times$ and $\tfrac12\times$
+$\kappa_{\rm ph}$, and rising monotonically with temperature [Fig.~\ref{fig:zt}(c)].
+
+Figure~\ref{fig:designrules} summarises the design rules. (i)~$ZT$ is maximised by light
+$n$-type doping to $\mu-E_F\simeq+0.2$~eV for every geometry studied. (ii)~At fixed
+$\kappa_{\rm ph}$, $ZT$ increases with ribbon width across $N=8,14,20$
+[Fig.~\ref{fig:designrules}(a,b)], reflecting the growing number of majority conducting channels;
+we caution that a width-dependent $\kappa_{\rm ph}$ would temper this trend, so the width
+dependence should be read as an electronic-transport trend at fixed phonon background.
+(iii)~Zigzag edges outperform armchair edges by roughly a factor of two at the same width
+[Fig.~\ref{fig:designrules}(c)], owing to the larger number of majority modes at the band edge.
+(iv)~$ZT$ grows with temperature for all widths [Fig.~\ref{fig:designrules}(d)], approaching unity
+for the widest ribbon at elevated temperature. Peak values are collected in
+Table~\ref{tab:results}. Because the minority channel is gapped over the entire doping window
+considered, the thermoelectric transport is fully spin polarized: these ribbons are natural
+spin-Seebeck elements.
+
+\subsection{Scope and limitations}
+Three limitations are stated transparently. First, the tight-binding parameters are fitted to a
+published band structure rather than to a fresh ab-initio calculation; the conclusions are
+semi-quantitative and were checked for robustness against parameter variation. Second,
+$\kappa_{\rm ph}$ is estimated ballistically, not computed; absolute $ZT$ values carry the
+corresponding uncertainty, which we bracket explicitly. Third, the edge Cr atoms are treated with
+the bulk exchange splitting; a site-resolved self-consistent mean-field treatment of the magnetic
+edges---and, relatedly, the phonon-scattering (edge-disorder) route to $ZT$
+enhancement~\cite{Sevincli2010}, which requires an explicit phonon-transport calculation---are the
+natural next steps.
+
+%% ------------------------------------------------------------------
+\section{Conclusions}
+\label{sec:conclusions}
+
+We have presented the first thermoelectric-transport study of hexagonal CrN nanoribbons, using a
+lightweight tight-binding plus Landauer approach with parameters fitted to the published
+half-metallic monolayer band structure. The ribbons are intrinsic spin filters whose
+thermoelectric current is fully spin polarized. The figure of merit is optimised by light
+electron doping to a sharp majority band edge, reaching $ZT\simeq0.3$--$0.6$ at room temperature
+(and approaching unity at elevated temperature) for zigzag ribbons of width $N=8$--$20$ within a
+ballistic estimate of the phonon thermal conductance, with zigzag edges preferred over armchair.
+These results provide concrete design rules---edge type, width and doping window---for CrN-based
+low-dimensional thermoelectrics and spin-caloritronic elements, and they complement, in both
+property and method, the existing first-principles analysis of CrN nanoribbon edge
+magnetism~\cite{CrNdmrg2024}.
+
+%% ------------------------------------------------------------------
+\section*{Data and code availability}
+The tight-binding/transport code (Python, Kwant) and the scripts that generate all figures are
+available in the accompanying repository.
+
+\section*{Acknowledgements}
+\textit{To be completed.}
+
+%% ------------------------------------------------------------------
+\begin{table}[t]
+\centering
+\caption{Fitted parameters of the reduced Slater--Koster model of $h$-CrN (energies in eV,
+referenced to $E_F$). Targets are from Ref.~\cite{Kuklin2017}.}
+\label{tab:params}
+\begin{tabular}{lcl}
+\toprule
+Parameter & Value & Meaning \\
+\midrule
+$a$ & $3.258$~\AA & lattice constant \\
+$\varepsilon_{d_{z^2}}$ & $-2.3$ & Cr $d_{z^2}$ on-site (majority) \\
+$\varepsilon_{\pi}$ & $-2.6$ & Cr $d_{xz},d_{yz}$ bare on-site (majority) \\
+$\varepsilon_{p_z}$ & $-3.2$ & N $p_z$ on-site \\
+$V_{pd\pi}$ & $1.45$ & Cr($d_{xz,yz}$)--N($p_z$) hopping \\
+$t_{zz}$ & $0.08$ & Cr--Cr second-neighbour ($d_{z^2}$) \\
+$\Delta_{\rm ex}$ & $3.6$ & exchange splitting ($U=3$~eV) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\caption{Peak figure of merit at $300$~K (ballistic $\kappa_{\rm ph}$) and the optimal doping,
+for each edge and width.}
+\label{tab:results}
+\begin{tabular}{llcc}
+\toprule
+Edge & $N$ & peak $ZT$ & $\mu-E_F$ (eV) \\
+\midrule
+zigzag   & 8  & 0.30 & $+0.19$ \\
+zigzag   & 14 & 0.48 & $+0.20$ \\
+zigzag   & 20 & 0.64 & $+0.20$ \\
+armchair & 14 & 0.28 & $+0.19$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%% ------------------------------------------------------------------
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig1_geometry.png}
+\caption{Geometry. (a) $h$-CrN monolayer honeycomb with Cr (blue) and N (grey) sublattices,
+primitive vectors $\mathbf{a}_1,\mathbf{a}_2$ and unit cell. (b) Zigzag ribbon (ZCNR) with
+ferromagnetic Cr edge moments and width convention $N$; transport is along the periodic direction.
+(c) Armchair ribbon (ACNR).}
+\label{fig:geometry}
+\end{figure*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.8\columnwidth]{fig2_bands.png}
+\caption{Spin-resolved tight-binding band structure of the $h$-CrN monolayer (majority: solid;
+minority: dashed) compared with the digitised targets of Ref.~\cite{Kuklin2017} (dotted lines).
+The majority channel is metallic and the minority channel is gapped, with $E_F$ inside the
+minority gap---a half-metal.}
+\label{fig:bands}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig3_transmission.png}
+\caption{Spin-resolved Landauer transmission $T_\sigma(E)$ of zigzag (left) and armchair (right)
+CrN ribbons ($N\approx14$). The minority channel (dashed) is gapped across $E_F$ while the
+majority channel (solid) conducts, giving a $100\%$ spin-polarized current with a sharp band edge
+just above $E_F$.}
+\label{fig:transmission}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\columnwidth]{fig4_seebeck.png}
+\caption{Seebeck coefficient $S(\mu)$ of a zigzag ribbon ($N\approx14$) at $100$, $300$ and
+$500$~K. $S$ is small in the metallic region below $E_F$ and rises sharply as $\mu$ approaches the
+majority band edge.}
+\label{fig:seebeck}
+\end{figure}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig5_zt.png}
+\caption{(a) Power factor $S^2G$ versus doping at $300$~K, peaking at the majority band edge
+$\mu-E_F\simeq+0.19$~eV. (b) $ZT$ versus doping for a bracket of phonon thermal conductances; the
+$\kappa_{\rm ph}\to0$ electronic bound (dotted) diverges in the gap, whereas physical $ZT$ peaks at
+the band edge. (c) $ZT(T)$ at the optimal doping. Zigzag ribbon, $N\approx14$.}
+\label{fig:zt}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig6_designrules.png}
+\caption{Design rules. (a) $ZT$ versus doping for zigzag widths $N=8,14,20$ at $300$~K.
+(b) Peak $ZT$ versus width (at fixed $\kappa_{\rm ph}$). (c) Zigzag versus armchair, $N=14$.
+(d) $ZT(T)$ at optimal doping for the three widths.}
+\label{fig:designrules}
+\end{figure*}
+
+%% ------------------------------------------------------------------
+\bibliographystyle{elsarticle-num}
+\bibliography{refs}
+
+\end{document}

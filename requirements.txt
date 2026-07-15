@@ -1,0 +1,12 @@
+# CrN nanoribbon thermoelectric — Python deps (lightweight, NO DFT).
+# IMPORTANT: build in an isolated venv on Python 3.11/3.12 (system 3.14 can't build Kwant).
+# Kwant's C build needs numpy<2 (NumPy 2 removed the PyArray_Descr.subarray C field).
+# Reproduce with uv:
+#   uv venv ~/venvs/crn-te --python 3.12
+#   uv pip install --python ~/venvs/crn-te/bin/python -r requirements.txt
+#   uv pip install --python ~/venvs/crn-te/bin/python --no-build-isolation kwant
+numpy<2
+scipy
+matplotlib
+tinyarray
+# kwant  -> install separately with --no-build-isolation (see above); needed from Fig 3 (transport) on.
