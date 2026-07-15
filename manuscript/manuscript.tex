@@ -139,7 +139,11 @@ Semi-infinite leads are taken to be the pristine ribbon; the spin-resolved trans
 $T_\sigma(E)$ is obtained from the retarded Green's function with the recursive
 (wavefunction-matching) algorithm as implemented in Kwant~\cite{Groth2014kwant}. In the pristine
 limit $T_\sigma(E)$ counts the propagating modes, so the transmission is quantised in integer
-steps [Fig.~\ref{fig:transmission}].
+steps [Fig.~\ref{fig:transmission}]. We verified numerical convergence: the pristine transmission,
+and hence all coefficients, is independent of the scattering-region length, and the peak $ZT$ at
+$300$~K is stable to within $\sim\!3\%$ for energy-grid spacings $\le0.01$~eV (we use $0.005$~eV).
+Low-temperature ($\lesssim100$~K) values require finer grids owing to the narrow Fermi window and
+are not the focus here.
 
 \subsection{Thermoelectric coefficients}
 The linear-response coefficients follow from the moments of the transmission weighted by the

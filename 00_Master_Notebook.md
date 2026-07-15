@@ -210,7 +210,21 @@ Correctness checks + parameter-sensitivity of the headline ZT.
 (the Cr–N hopping setting the band edge); `Δ_ex`, `ε_dz²`, `ε_pz`, `t_zz` are negligible near E_F.
 → The ZT conclusion is robust to the fitted parametrization. Data: `data/sensitivity.txt`.
 
+**Numerical convergence (`scripts/convergence.py`):**
+- **Length independence:** peak ZT = 0.4772 for length = 1/2/3/4 cells — *exactly identical*
+  (pristine ballistic transmission = mode count, as it must be). Strong correctness check.
+- **Energy grid @300 K:** peak ZT on a plateau ~0.47–0.48 for dE ≤ 0.01 eV; production dE=0.005
+  is converged (≈3% residual to dE=0.0025). Coarsest 0.02 eV under-resolves the sharp edge.
+- **Low-T caveat:** at 100 K the narrow Fermi window makes the edge integral grid-demanding;
+  peak ZT still drifting at dE=0.0025 → low-T absolute values need finer grids. Headline results
+  (300 K+) are in the converged regime.
+
 ![Sensitivity of peak ZT to ±10% parameter variation](figures/fig7_sensitivity.png)
+![Numerical convergence: energy grid and ribbon length](figures/fig8_convergence.png)
+
+**Deeper novelty re-check (2026-07-15):** STILL CLEAN — toolkit (Crossref/OpenAlex/arXiv) + web
+searches confirm no CrN nanoribbon thermoelectric/transport paper; prior CrN thermoelectric art is
+thin-film/bulk/alloy only. See `NOVELTY_CHECK.md`.
 
 ---
 
