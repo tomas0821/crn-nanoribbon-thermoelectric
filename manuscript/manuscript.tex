@@ -36,8 +36,9 @@ of merit $ZT$. The ribbons act as intrinsic spin filters: the thermoelectric cur
 level is fully spin polarized. $ZT$ is maximised by light electron doping to the sharp majority
 band edge $\mu-E_F\simeq+0.2$~eV, where a steep energy dependence of the transmission produces a
 large thermopower. Using a ballistic estimate of the phonon thermal conductance we obtain
-$ZT\simeq0.3$--$0.6$ at $300$~K for zigzag ribbons of width $N=8$--$20$, rising with temperature,
-with zigzag edges outperforming armchair edges by roughly a factor of two. We provide the
+$ZT\simeq0.2$--$0.3$ at $300$~K for ribbons of width $N=8$--$20$ (the number of atomic rows
+across), rising with temperature; at matched width the zigzag and armchair edges give comparable
+figures of merit. We provide the
 resulting design rules (edge type, width and doping window) for CrN-based low-dimensional
 thermoelectrics. The study requires no ab-initio computation and complements existing
 first-principles work on the magnetic order of CrN nanoribbon edges.
@@ -220,9 +221,10 @@ point.
 Figure~\ref{fig:zt}(b) shows $ZT$ versus doping for the $\kappa_{\rm ph}$ bracket. The electronic
 bound $ZT_e$ diverges inside the gap where both $S^2G$ and $\kappa_e$ vanish; with a physical
 $\kappa_{\rm ph}$, $ZT$ instead peaks at the band edge, coincident with the power-factor maximum.
-For the zigzag $N=14$ ribbon we obtain a peak $ZT\simeq0.48$ at $300$~K (ballistic
-$\kappa_{\rm ph}$), bracketed between $0.26$ and $0.85$ for $2\times$ and $\tfrac12\times$
-$\kappa_{\rm ph}$, and rising monotonically with temperature [Fig.~\ref{fig:zt}(c)].
+For the zigzag $N=14$ ribbon we obtain a peak $ZT\simeq0.23$ at $300$~K (ballistic
+$\kappa_{\rm ph}$), bracketed between $0.12$ and $0.44$ for $2\times$ and $\tfrac12\times$
+$\kappa_{\rm ph}$, and rising monotonically with temperature to $\simeq0.37$ at $700$~K
+[Fig.~\ref{fig:zt}(c)].
 
 Figure~\ref{fig:designrules} summarises the design rules. (i)~$ZT$ is maximised by light
 $n$-type doping to $\mu-E_F\simeq+0.2$~eV for every geometry studied. (ii)~At fixed
@@ -230,10 +232,13 @@ $\kappa_{\rm ph}$, $ZT$ increases with ribbon width across $N=8,14,20$
 [Fig.~\ref{fig:designrules}(a,b)], reflecting the growing number of majority conducting channels;
 we caution that a width-dependent $\kappa_{\rm ph}$ would temper this trend, so the width
 dependence should be read as an electronic-transport trend at fixed phonon background.
-(iii)~Zigzag edges outperform armchair edges by roughly a factor of two at the same width
-[Fig.~\ref{fig:designrules}(c)], owing to the larger number of majority modes at the band edge.
-(iv)~$ZT$ grows with temperature for all widths [Fig.~\ref{fig:designrules}(d)], approaching unity
-for the widest ribbon at elevated temperature. Peak values are collected in
+(iii)~At \emph{matched} width the two edge types give comparable $ZT$---for $N=8,14,20$ we find
+zigzag $0.19,0.24,0.32$ versus armchair $0.19,0.25,0.36$ [Fig.~\ref{fig:designrules}(b,c)], the
+armchair edge being marginally higher at larger width. Edge type is thus a weak lever, in contrast
+to width and temperature; a large apparent zigzag advantage appears only if ribbons of unequal
+physical width are compared. (iv)~$ZT$ grows with temperature for all widths
+[Fig.~\ref{fig:designrules}(d)]; for the zigzag $N=14$ ribbon it rises from $0.23$ at $300$~K to
+$\simeq0.37$ at $700$~K. Peak values are collected in
 Table~\ref{tab:results}. Because the minority channel is gapped over the entire doping window
 considered, the thermoelectric transport is fully spin polarized: these ribbons are natural
 spin-Seebeck elements.
@@ -243,7 +248,7 @@ Three limitations are stated transparently. First, the tight-binding parameters 
 published band structure rather than to a fresh ab-initio calculation; the conclusions are
 therefore semi-quantitative. We have verified their robustness explicitly: varying every
 tight-binding parameter and the exchange splitting by $\pm10\%$ changes the peak $ZT$ by at most
-$\sim\!10\%$ (from the baseline $0.48$ to within $[0.43,0.51]$), and the sensitivity is dominated
+$\sim\!5\%$ (from the baseline $0.24$ to within $[0.23,0.24]$), and the sensitivity is dominated
 by the single, physically transparent hopping $V_{pd\pi}$ that sets the transport band edge, while
 the exchange splitting, the $d_{z^2}$ energy and the second-neighbour hopping are essentially
 irrelevant near $E_F$ (Fig.~\ref{fig:sensitivity}). Second,
@@ -262,10 +267,10 @@ We have presented the first thermoelectric-transport study of hexagonal CrN nano
 lightweight tight-binding plus Landauer approach with parameters fitted to the published
 half-metallic monolayer band structure. The ribbons are intrinsic spin filters whose
 thermoelectric current is fully spin polarized. The figure of merit is optimised by light
-electron doping to a sharp majority band edge, reaching $ZT\simeq0.3$--$0.6$ at room temperature
-(and approaching unity at elevated temperature) for zigzag ribbons of width $N=8$--$20$ within a
-ballistic estimate of the phonon thermal conductance, with zigzag edges preferred over armchair.
-These results provide concrete design rules---edge type, width and doping window---for CrN-based
+electron doping to a sharp majority band edge, reaching $ZT\simeq0.2$--$0.3$ at room temperature
+(rising with temperature) for ribbons of width $N=8$--$20$ within a ballistic estimate of the
+phonon thermal conductance; zigzag and armchair edges perform comparably at matched width. These
+results provide concrete design rules---width, doping window and temperature---for CrN-based
 low-dimensional thermoelectrics and spin-caloritronic elements, and they complement, in both
 property and method, the existing first-principles analysis of CrN nanoribbon edge
 magnetism~\cite{CrNdmrg2023}.
@@ -308,10 +313,12 @@ for each edge and width.}
 \toprule
 Edge & $N$ & peak $ZT$ & $\mu-E_F$ (eV) \\
 \midrule
-zigzag   & 8  & 0.30 & $+0.19$ \\
-zigzag   & 14 & 0.48 & $+0.20$ \\
-zigzag   & 20 & 0.64 & $+0.20$ \\
-armchair & 14 & 0.28 & $+0.19$ \\
+zigzag   & 8  & 0.19 & $+0.15$ \\
+zigzag   & 14 & 0.24 & $+0.19$ \\
+zigzag   & 20 & 0.32 & $+0.20$ \\
+armchair & 8  & 0.19 & $+0.16$ \\
+armchair & 14 & 0.25 & $+0.20$ \\
+armchair & 20 & 0.36 & $+0.20$ \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -370,8 +377,9 @@ the band edge. (c) $ZT(T)$ at the optimal doping. Zigzag ribbon, $N\approx14$.}
 \centering
 \includegraphics[width=\textwidth]{fig6_designrules.png}
 \caption{Design rules. (a) $ZT$ versus doping for zigzag widths $N=8,14,20$ at $300$~K.
-(b) Peak $ZT$ versus width (at fixed $\kappa_{\rm ph}$). (c) Zigzag versus armchair, $N=14$.
-(d) $ZT(T)$ at optimal doping for the three widths.}
+(b) Peak $ZT$ versus width for both edge types at matched $N$ (at fixed $\kappa_{\rm ph}$).
+(c) Zigzag versus armchair at matched width $N=14$. (d) $ZT(T)$ at optimal doping for the three
+zigzag widths.}
 \label{fig:designrules}
 \end{figure*}
 
@@ -379,7 +387,7 @@ the band edge. (c) $ZT(T)$ at the optimal doping. Zigzag ribbon, $N\approx14$.}
 \centering
 \includegraphics[width=0.85\columnwidth]{fig7_sensitivity.png}
 \caption{Robustness of the peak figure of merit (zigzag $N=14$, $300$~K) to a $\pm10\%$ variation
-of each model parameter. The peak $ZT$ stays within $[0.43,0.51]$ about the baseline $0.48$; the
+of each model parameter. The peak $ZT$ stays within $[0.23,0.24]$ about the baseline $0.24$; the
 dominant sensitivity is to the Cr--N hopping $V_{pd\pi}$ that sets the majority band edge.}
 \label{fig:sensitivity}
 \end{figure}

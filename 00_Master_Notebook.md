@@ -26,7 +26,7 @@
       transport calculation (our κ_ph is an external ballistic estimate, so electronic vacancies
       alone leave ZT unchanged; the panel was dropped as it would be misleading).
 - [x] Parameter-sensitivity sweep + internal verification → `scripts/sensitivity.py`,
-      `scripts/verify.py`, Fig. 7. Peak ZT robust: `[0.43, 0.51]` under ±10% on every parameter.
+      `scripts/verify.py`, Fig. 7. Peak ZT robust: `[0.23, 0.24]` under ±10% on every parameter.
       Wiedemann–Franz and monolayer↔ribbon band consistency both pass. *(2026-07-15)*
 - [ ] Fill author affiliation / acknowledgements in the manuscript; verify the two `%VERIFY`
       references in `manuscript/refs.bib`.
@@ -163,26 +163,28 @@ This is a mathematical artifact, *not* a real `ZT` of 100. Once a physical `κ_p
 divergence is cured and **`ZT` peaks at the band edge**, coincident with the power-factor maximum.
 This is why we always report `ZT` with a `κ_ph` bracket and treat `ZT_e` only as an upper bound.
 
-**Headline number:** zigzag `N≈14`, 300 K, ballistic `κ_ph`: **`ZT ≈ 0.48`** (bracket 0.26–0.85),
+**Headline number:** zigzag `N=14`, 300 K, ballistic `κ_ph`: **`ZT ≈ 0.23`** (bracket 0.12–0.44),
 rising with temperature (Fig. 5c).
 
 ### 6. Design rules (Fig. 6)
 Putting it together, the knobs a fabricator can turn:
 - **Doping:** always aim for `μ − E_F ≈ +0.2 eV` (light *n*-type). This is where the sharp edge
   sits, for every ribbon.
-- **Edge type:** **zigzag beats armchair** by ~2× (`ZT` 0.48 vs 0.28 at `N=14`), because zigzag
-  ribbons expose more majority conducting channels at the band edge.
-- **Width:** at fixed `κ_ph`, wider ribbons give higher `ZT` (0.30 → 0.48 → 0.64 for N = 8, 14,
+- **Edge type:** at *matched* width, zigzag and armchair are **comparable** (armchair marginally
+  higher: zigzag 0.19/0.24/0.32 vs armchair 0.19/0.25/0.36 for N=8/14/20). Edge type is a weak
+  lever. *(The earlier "zigzag beats armchair ~2×" was a width artifact — see the N-convention
+  correction below.)*
+- **Width:** at fixed `κ_ph`, wider ribbons give higher `ZT` (0.19 → 0.24 → 0.32 for N = 8, 14,
   20) — more parallel electronic channels on the same phonon background. **Caveat:** a real
-  `κ_ph` grows with width too, so this trend is an *electronic* trend and would be tempered by
-  width-dependent phonons; read it as "ZT is robust and modestly improving across N = 8–20."
+  `κ_ph` grows with width too, so read it as an *electronic* trend at fixed phonon background.
 - **Temperature:** `ZT` rises monotonically with `T` (Fig. 6d), approaching ~0.9 for the widest
   ribbon at elevated temperature.
 
 ### 7. The one-sentence takeaway
 *Hexagonal CrN nanoribbons are intrinsic spin filters whose sharp half-metallic band edge, reached
-by light electron doping, yields a fully spin-polarized thermoelectric current with `ZT ~ 0.3–0.6`
-at room temperature (approaching unity when hot) — largest for wide zigzag ribbons.*
+by light electron doping, yields a fully spin-polarized thermoelectric current with `ZT ~ 0.2–0.3`
+at room temperature (rising with temperature) — increasing with width, and comparable for zigzag
+and armchair edges.*
 
 ### Caveats to keep honest (stated in the paper)
 1. TB parameters are **fitted to a published band figure**, not fresh DFT → results are
@@ -195,6 +197,25 @@ at room temperature (approaching unity when hot) — largest for wide zigzag rib
 
 ## Simulation Logs
 
+### Run: N-convention correction — 2026-07-15 ⚠ IMPORTANT
+
+Discovered that the `width` parameter in `build_ribbon_sk` was **not** the atomic-row count N: it
+gave `2·width+1` rows (zigzag) and `width+1` (armchair), so "N=14" was really a **29-row zigzag vs
+15-row armchair** — different physical widths. Fixed `build_ribbon_sk` so `width` = N = number of
+Cr+N atomic rows (matching the manuscript's DMRG convention); verified both edges give exactly N
+rows. Cleared caches and **re-ran Figs. 3–8 + sensitivity + convergence + verify**.
+
+**Consequences (all now corrected in the manuscript):**
+- Headline ZT is **lower** (narrower true ribbons): zigzag N=14 peak ZT **0.48 → 0.23** at 300 K.
+- **Edge comparison REVERSED.** At matched N the edges are comparable (armchair marginally higher):
+  zigzag 0.19/0.24/0.32 vs armchair 0.19/0.25/0.36 for N=8/14/20. The old "zigzag ~2× armchair"
+  was **entirely a width artifact**. Edge type is a weak lever; width and T are the strong ones.
+- All checks still pass: sensitivity spread [0.23,0.24]; convergence length-exact + 300 K converged;
+  Wiedemann–Franz and monolayer↔ribbon consistency OK. Physics story (spin filter, band-edge
+  optimum, ZT↑ with width & T) unchanged.
+
+---
+
 ### Run: verification_and_sensitivity — 2026-07-15
 
 Correctness checks + parameter-sensitivity of the headline ZT.
@@ -205,15 +226,15 @@ Correctness checks + parameter-sensitivity of the headline ZT.
 | Wiedemann–Franz `κ_e/(GT)` (metallic region) | 2.44–2.49×10⁻⁸ WΩ/K² — within 2% of Lorenz number ✓ |
 | monolayer `build_H` vs wide-ribbon Kwant bands | identical ranges (maj [−5.99,+0.19], min [−4.82,+2.62]); minority gap 4.20 eV ✓ |
 
-**Sensitivity (`scripts/sensitivity.py`, zigzag N=14, 300 K):** baseline peak ZT = 0.481;
-±10% on every SK parameter → spread **[0.431, 0.514]** (−10%…+7%). Dominated by `V_pdπ`
+**Sensitivity (`scripts/sensitivity.py`, zigzag N=14, 300 K):** baseline peak ZT = 0.241;
+±10% on every SK parameter → spread **[0.229, 0.241]** (−5%…0%). Dominated by `V_pdπ`
 (the Cr–N hopping setting the band edge); `Δ_ex`, `ε_dz²`, `ε_pz`, `t_zz` are negligible near E_F.
 → The ZT conclusion is robust to the fitted parametrization. Data: `data/sensitivity.txt`.
 
 **Numerical convergence (`scripts/convergence.py`):**
 - **Length independence:** peak ZT = 0.4772 for length = 1/2/3/4 cells — *exactly identical*
   (pristine ballistic transmission = mode count, as it must be). Strong correctness check.
-- **Energy grid @300 K:** peak ZT on a plateau ~0.47–0.48 for dE ≤ 0.01 eV; production dE=0.005
+- **Energy grid @300 K:** peak ZT on a plateau ~0.23–0.24 for dE ≤ 0.01 eV; production dE=0.005
   is converged (≈3% residual to dE=0.0025). Coarsest 0.02 eV under-resolves the sharp edge.
 - **Low-T caveat:** at 100 K the narrow Fermi window makes the edge integral grid-demanding;
   peak ZT still drifting at dE=0.0025 → low-T absolute values need finer grids. Headline results
@@ -238,8 +259,9 @@ Width / edge / temperature design rules (Fig. 6), fitted SK ribbons, ballistic �
 | μ sweep / grid | −0.5…+0.6 eV / T(E) on −0.8…+1.0 eV (cached) |
 | κ_ph | ballistic 4κ₀(T) |
 
-**Final values (peak ZT @300 K):** zigzag N=8/14/20 → **0.30 / 0.48 / 0.64**; armchair N=14 → 0.28
-(all at optimal μ−E_F ≈ +0.20 eV). Zigzag ≈ 2× armchair; ZT rises with width and with T.
+**Final values (peak ZT @300 K):** zigzag N=8/14/20 → **0.19 / 0.24 / 0.32**; armchair N=8/14/20 →
+**0.19 / 0.25 / 0.36** (optimal μ−E_F ≈ +0.2 eV). Edges comparable at matched N (armchair marginally
+higher); ZT rises with width and T (N=20 → ~0.5 at 700 K). *(N = atomic rows; see correction below.)*
 
 **Notes:** Optimal doping is edge-/width-independent (+0.2 eV, the majority band edge). The
 edge-vacancy panel was dropped: our κ_ph is external, so electronic vacancies alone leave ZT
@@ -309,10 +331,10 @@ CrN ribbon, fitted SK model. **This is the paper's headline result (Figs. 4–5)
 **Final values (300 K):**
 | Observable | Value |
 |------------|-------|
-| peak power factor S²G | 2.18 pW/K² at μ−E_F = +0.19 eV (band edge) |
-| peak ZT (ballistic κ_ph) | **0.48** at μ−E_F = +0.20 eV |
-| ZT bracket (2×–0.5× κ_ph) | 0.26 – 0.85 |
-| ZT(700 K), band-edge doping | ~0.4 – 1.2 (κ_ph bracket) |
+| peak power factor S²G | 0.96 pW/K² at μ−E_F = +0.18 eV (band edge) |
+| peak ZT (ballistic κ_ph) | **0.23** at μ−E_F = +0.19 eV |
+| ZT bracket (2×–0.5× κ_ph) | 0.12 – 0.44 |
+| ZT(700 K), band-edge doping | ~0.37 (N=14, ballistic κ_ph) |
 | usable Seebeck at band edge | ~200–300 μV/K |
 
 **Notes:** ZT peaks **right at the sharp majority transmission edge** (steep dT/dE at E_F) — the

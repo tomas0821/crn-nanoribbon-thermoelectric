@@ -75,15 +75,22 @@ def main():
     axs[0, 0].set_xlabel(r"$\mu - E_F$ (eV)"); axs[0, 0].set_ylabel("ZT")
     axs[0, 0].legend(frameon=False); axs[0, 0].axvline(0, color="0.8", lw=0.6, ls=":")
 
-    axs[0, 1].plot(widths, peak_zt, "o-", color="C4", lw=1.8, ms=8)
-    for N, z in zip(widths, peak_zt):
-        axs[0, 1].annotate(f"{z:.2f}", (N, z), textcoords="offset points", xytext=(0, 8),
-                           ha="center", fontsize=9)
-    axs[0, 1].set_title("(b) peak ZT vs width")
+    # (b) peak ZT vs width -- BOTH edges at matched N (fair edge comparison)
+    arm_peak = []
+    for N in widths:
+        Tu, Td = get_TE(p, "armchair", N)
+        zt = zt_of_mu(Tu, Td)
+        i = int(np.argmax(zt))
+        arm_peak.append(zt[i])
+        if N != 14:
+            rows.append(("armchair", N, "pristine", zt[i], MU[i]))
+    axs[0, 1].plot(widths, peak_zt, "o-", color="C2", lw=1.8, ms=8, label="zigzag")
+    axs[0, 1].plot(widths, arm_peak, "s--", color="C1", lw=1.8, ms=8, label="armchair")
+    axs[0, 1].set_title("(b) peak ZT vs width, both edges")
     axs[0, 1].set_xlabel("ribbon width N"); axs[0, 1].set_ylabel("peak ZT (300 K)")
-    axs[0, 1].set_xticks(widths)
+    axs[0, 1].set_xticks(widths); axs[0, 1].legend(frameon=False)
 
-    # (c) zigzag vs armchair, N=14
+    # (c) zigzag vs armchair at matched N=14
     for edge, col in (("zigzag", "C2"), ("armchair", "C1")):
         Tu, Td = get_TE(p, edge, 14)
         zt = zt_of_mu(Tu, Td)

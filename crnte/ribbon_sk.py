@@ -29,11 +29,36 @@ def _lattice(a: float):
     return lat, cr, nn, d
 
 
+def _transverse_bound(edge: str, N: int, a: float):
+    """Transverse (lo, hi) bound that contains EXACTLY N atomic rows (Cr and N) across the ribbon.
+
+    N is the number of Cr+N atomic rows across the non-periodic direction -- the DMRG-paper
+    width convention. Rows are the distinct transverse coordinates of the honeycomb sites; we
+    keep the N closest to the ribbon centre (a connected strip) and bound just outside them.
+    """
+    d = a / _SQRT3
+    pv0 = np.array([a, 0.0])
+    pv1 = np.array([a / 2.0, a * _SQRT3 / 2.0])
+    tc = 1 if edge == "zigzag" else 0            # transverse coordinate: y (zigzag), x (armchair)
+    R = 2 * N + 6
+    coords = set()
+    for n in range(-R, R + 1):
+        for m in range(-R, R + 1):
+            base = n * pv0 + m * pv1
+            coords.add(round(base[tc], 4))               # Cr row
+            coords.add(round(base[tc] + (0.0 if tc == 0 else d), 4))  # N row (offset (0,d))
+    rows = np.array(sorted(coords))
+    sel = np.sort(rows[np.argsort(np.abs(rows))[:N]])    # N rows closest to centre
+    eps = 0.2 * d
+    return sel[0] - eps, sel[-1] + eps
+
+
 def build_ribbon_sk(edge: str, width: int, p: SKParams, spin: int,
                     length: int = 2, vacancy: float = 0.0, seed: int = 0
                     ) -> kwant.system.FiniteSystem:
     """Finalized two-lead CrN ribbon on the SK model. spin = +1 majority / -1 minority.
 
+    ``width`` is N, the number of Cr+N atomic rows across the ribbon (DMRG-paper convention).
     vacancy: fraction (0..~0.3) of edge Cr sites removed from the SCATTERING region (leads stay
     pristine) to model edge disorder / vacancies. seed fixes the random removal.
     """
@@ -58,22 +83,21 @@ def build_ribbon_sk(edge: str, width: int, p: SKParams, spin: int,
         l, m = bond[0] / d, bond[1] / d
         return p.pdpi * np.array([[0.0, l, m]], dtype=complex)   # 1x3
 
-    # --- geometry: axis + transverse width bound (same conventions as the cartoon ribbon) ---
+    # --- geometry: axis + transverse bound holding exactly N (=width) atomic rows ---
+    lo, hi = _transverse_bound(edge, width, a)
     if edge == "zigzag":
         axis = np.array([a, 0.0])
-        W = width * (d * 1.5) / 2.0 + d * 0.3
 
         def in_width(pos):
-            return -W <= pos[1] <= W
+            return lo <= pos[1] <= hi
 
         def scat_shape(pos):
             return in_width(pos) and 0.0 <= pos[0] < length * a
     elif edge == "armchair":
         axis = np.array([0.0, a * _SQRT3])
-        W = width * (d * _SQRT3 / 2.0) / 2.0 + d * 0.3
 
         def in_width(pos):
-            return -W <= pos[0] <= W
+            return lo <= pos[0] <= hi
 
         def scat_shape(pos):
             return in_width(pos) and 0.0 <= pos[1] < length * a * _SQRT3
