@@ -73,16 +73,25 @@ def sweep_mu(E_eV, TE, mu_array, T_K):
     return out
 
 
-def combine_spins(cup, cdn):
-    """Combine two spin channels as parallel conductors (arrays or scalars).
+def combine_spins(cup, cdn, T_K):
+    """Combine two spin channels as parallel conductors at temperature T_K (arrays or scalars).
 
-    G_tot = G_up + G_dn;  S_tot = (S_up G_up + S_dn G_dn)/G_tot;  kappa_tot = kappa_up + kappa_dn.
-    Returns dict with G, S, kappa_e, PF, ZT_e (electronic, kappa_ph=0).
+    G_tot   = G_up + G_dn
+    S_tot   = (sum_s G_s S_s) / G_tot
+    kappa_e = (kappa_up + kappa_dn) + T * [ sum_s G_s S_s^2 - (sum_s G_s S_s)^2 / G_tot ]
+
+    The bracket is the bipolar (circulating-current) term for parallel thermoelectric channels
+    (non-negative by Cauchy-Schwarz); it vanishes for a single conducting channel or when the two
+    channels have equal thermopower, and is exactly zero where the minority channel is gapped.
+    Returns dict with G, S, kappa_e, PF.
     """
     G = cup["G"] + cdn["G"]
     Gsafe = np.where(G > 0, G, 1.0)
-    S = (cup["S"] * cup["G"] + cdn["S"] * cdn["G"]) / Gsafe
-    kappa_e = cup["kappa_e"] + cdn["kappa_e"]
+    GS = cup["S"] * cup["G"] + cdn["S"] * cdn["G"]          # sum_s G_s S_s
+    GS2 = cup["S"] ** 2 * cup["G"] + cdn["S"] ** 2 * cdn["G"]  # sum_s G_s S_s^2
+    S = GS / Gsafe
+    bipolar = T_K * (GS2 - GS ** 2 / Gsafe)
+    kappa_e = cup["kappa_e"] + cdn["kappa_e"] + bipolar
     PF = S * S * G
     return dict(G=G, S=S, kappa_e=kappa_e, PF=PF)
 

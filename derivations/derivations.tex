@@ -320,14 +320,14 @@ the algebra, the total electronic thermal conductance at zero \emph{total} charg
 The bracket is non-negative (Cauchy--Schwarz) and represents heat carried by the short-circuit
 current that flows between channels when they have different thermopowers.
 
-\paragraph{When the simple sum is exact.} The code uses $\kappa_e=\sum_\sigma\kappa_\sigma$, i.e.\
-it drops the bracket. In a half-metal the minority channel is gapped near $E_F$, so
+\paragraph{Magnitude here.} The code (\texttt{combine\_spins}) evaluates the full expression above,
+including the bracket. In a half-metal the minority channel is gapped near $E_F$, so
 $G_\downarrow=S_\downarrow=\kappa_\downarrow=0$ there and the bracket vanishes identically. Our
 $ZT$ peak sits at $\mu-E_F\simeq+0.2$~eV, \emph{inside} the minority gap $[-3.2,+1.0]$~eV, so the
-omitted term is exactly zero at the operating point and the reported $ZT$ is unaffected. The
-bracket becomes relevant only for $\mu$ pushed far enough to make both spins conduct
-($\mu-E_F\gtrsim+1$~eV), where it would \emph{reduce} $ZT$; it should be restored if that regime
-is ever analysed.
+bipolar term is exactly zero at the operating point: including it leaves the reported $ZT$
+unchanged (verified numerically---the headline peak $ZT=0.233$ is identical with and without the
+term). The bracket becomes relevant only for $\mu$ pushed far enough to make both spins conduct
+($\mu-E_F\gtrsim+1$~eV), where it \emph{reduces} $ZT$.
 
 %======================================================================
 \section{Ballistic phonon thermal-conductance quantum}
@@ -360,11 +360,11 @@ $\kappa_e=\tfrac1{hT}(\Lloc_2-\tfrac{\Lloc_1^2}{\Lloc_0})$, with units ($\S3$).
 \item[(v)] Mott $S=-\tfrac{\pi^2}{3}\tfrac{\kB^2 T}{e}\,\dd\ln T/\dd E$; Wiedemann--Franz
 $\kappa_e/GT=\tfrac{\pi^2}{3}(\kB/e)^2$ ($\S4$).
 \item[(vi)] Parallel spins: $G=\sum G_\sigma$, $S=\tfrac{\sum G_\sigma S_\sigma}{\sum G_\sigma}$,
-and $\kappa_e=\sum\kappa_\sigma+$ bipolar term---the code drops the bipolar term, exact here
-because the minority channel is gapped at the operating point ($\S5$).
+and $\kappa_e=\sum\kappa_\sigma+$ bipolar term---the code now evaluates the full expression; the
+bipolar term is exactly zero at the operating point (minority channel gapped) ($\S5$).
 \item[(vii)] $\kappa_0=\pi^2\kB^2 T/3h$ ($\S6$).
 \end{itemize}
-Items (ii), (iv), (v) were cross-checked numerically (boxes above); (vi)'s dropped term is the one
-approximation, and is exactly zero where $ZT$ is evaluated.
+Items (ii), (iv), (v) and the bipolar term were cross-checked numerically (boxes above); every
+formula used in the code is now derived here in full.
 
 \end{document}

@@ -167,8 +167,10 @@ L_n^\sigma(\mu,T)=\int\!\Big(\!-\frac{\partial f}{\partial E}\Big)\,(E-\mu)^n\,T
 with $f$ the Fermi function. Per spin channel the electrical conductance is $G=(e^2/h)L_0$, the
 Seebeck coefficient $S=-(1/eT)L_1/L_0$, the electronic thermal conductance
 $\kappa_e=(1/hT)(L_2-L_1^2/L_0)$ and the power factor $\mathrm{PF}=S^2G$. The two spin channels add
-as parallel conductors, $G=\sum_\sigma G_\sigma$ and
-$S=\sum_\sigma S_\sigma G_\sigma/\sum_\sigma G_\sigma$. The figure of merit is
+as parallel conductors, $G=\sum_\sigma G_\sigma$, $S=\sum_\sigma S_\sigma G_\sigma/\sum_\sigma G_\sigma$,
+and $\kappa_e=\sum_\sigma\kappa_{e,\sigma}+T[\sum_\sigma G_\sigma S_\sigma^2-(\sum_\sigma G_\sigma S_\sigma)^2/\sum_\sigma G_\sigma]$,
+the last (bipolar) term vanishing where one spin channel is gapped, as it is at our operating point.
+The figure of merit is
 \begin{equation}
 ZT=\frac{S^2 G\,T}{\kappa_e+\kappa_{\rm ph}} .
 \end{equation}

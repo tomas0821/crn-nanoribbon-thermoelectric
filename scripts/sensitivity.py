@@ -47,7 +47,7 @@ def peak_zt(p):
         np.savez(key, Tu=Tu, Td=Td)
     up = th.sweep_mu(E_GRID, Tu, MU, T0)
     dn = th.sweep_mu(E_GRID, Td, MU, T0)
-    zt = th.ZT(th.combine_spins(up, dn), T0, th.kappa_ph_ballistic(T0))
+    zt = th.ZT(th.combine_spins(up, dn, T0), T0, th.kappa_ph_ballistic(T0))
     i = int(np.argmax(zt))
     return zt[i], MU[i]
 

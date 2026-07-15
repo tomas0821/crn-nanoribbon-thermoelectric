@@ -32,7 +32,7 @@ MU = np.linspace(-0.1, 0.5, 121)
 def peak_zt(E, Tu, Td, T_K):
     up = th.sweep_mu(E, Tu, MU, T_K)
     dn = th.sweep_mu(E, Td, MU, T_K)
-    zt = th.ZT(th.combine_spins(up, dn), T_K, th.kappa_ph_ballistic(T_K))
+    zt = th.ZT(th.combine_spins(up, dn, T_K), T_K, th.kappa_ph_ballistic(T_K))
     return float(zt.max())
 
 

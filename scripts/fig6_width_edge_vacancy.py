@@ -51,7 +51,7 @@ def get_TE(p, edge, width, vac=0.0, seed=0):
 def zt_of_mu(T_up, T_dn, T_K=T0, kfac=1.0):
     up = th.sweep_mu(E_GRID, T_up, MU, T_K)
     dn = th.sweep_mu(E_GRID, T_dn, MU, T_K)
-    tot = th.combine_spins(up, dn)
+    tot = th.combine_spins(up, dn, T_K)
     return th.ZT(tot, T_K, kfac * th.kappa_ph_ballistic(T_K))
 
 
@@ -113,7 +113,7 @@ def main():
         for T2 in temps:
             u = th.sweep_mu(E_GRID, Tu, np.array([mu_opt]), T2)
             dd = th.sweep_mu(E_GRID, Td, np.array([mu_opt]), T2)
-            zt_t.append(float(th.ZT(th.combine_spins(u, dd), T2,
+            zt_t.append(float(th.ZT(th.combine_spins(u, dd, T2), T2,
                                     th.kappa_ph_ballistic(T2))[0]))
         axs[1, 1].plot(temps, zt_t, color=col, lw=1.8, label=f"N = {N}")
     axs[1, 1].set_title("(d) ZT(T) at optimal doping (zigzag)")

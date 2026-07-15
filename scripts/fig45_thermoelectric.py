@@ -59,7 +59,7 @@ def main():
     for T_K, c in ((100, "C0"), (300, "C2"), (500, "C3")):
         up = th.sweep_mu(E, T_up, mu, T_K)
         dn = th.sweep_mu(E, T_dn, mu, T_K)
-        tot = th.combine_spins(up, dn)
+        tot = th.combine_spins(up, dn, T_K)
         ax.plot(mu, tot["S"] * 1e6, color=c, lw=1.8, label=f"{T_K} K")
     ax.axhline(0, color="k", lw=0.6, ls=":")
     ax.axvline(0, color="0.7", lw=0.6, ls=":")
@@ -74,7 +74,7 @@ def main():
     T_K = 300.0
     up = th.sweep_mu(E, T_up, mu, T_K)
     dn = th.sweep_mu(E, T_dn, mu, T_K)
-    tot = th.combine_spins(up, dn)
+    tot = th.combine_spins(up, dn, T_K)
     kph = th.kappa_ph_ballistic(T_K)     # ballistic estimate at 300 K
 
     fig, axs = plt.subplots(1, 3, figsize=(11, 3.6))
@@ -109,7 +109,7 @@ def main():
         for T2 in temps:
             u = th.sweep_mu(E, T_up, np.array([mu_opt]), T2)
             dd = th.sweep_mu(E, T_dn, np.array([mu_opt]), T2)
-            zt_T.append(float(th.ZT(th.combine_spins(u, dd), T2,
+            zt_T.append(float(th.ZT(th.combine_spins(u, dd, T2), T2,
                                     factor * th.kappa_ph_ballistic(T2))[0]))
         axs[2].plot(temps, zt_T, color=col, lw=1.7, label=lab)
     axs[2].set_xlabel("temperature (K)")
