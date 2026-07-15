@@ -49,3 +49,25 @@ supplement with the Wannier/TB Hamiltonian) before fixing ribbon widths and the 
 Re-run: `python3 /home/tomas/mnt/gdrive/Research/Current/lit-gap-toolkit/check_novelty.py \
   --query "CrN nanoribbon thermoelectric" --query "CrN nanoribbon Landauer"`
 and re-check Semantic Scholar once it is not rate-limited.
+
+---
+
+## Deeper re-verification — 2026-07-15 · VERDICT: STILL CLEAN
+Re-ran the toolkit (Crossref + OpenAlex + arXiv; Semantic Scholar again HTTP-429) with 5 expanded
+queries, plus three targeted web searches. All sources agree: **no CrN nanoribbon thermoelectric
+or transport paper exists.**
+- **CrN thermoelectric prior art remains thin-film / bulk / alloy only** — e.g. epitaxial CrN
+  (Quintela), a new **2026 RSC** p-type-via-oxygen CrN *film* study, CrN/Cr₂N films, Fe-nanoparticle
+  CrN films, bulk CrN (ZT≈0.1), CrN alloy-film Linköping thesis. None low-dimensional/ribbon.
+- **2D CrN hits** are nanosheets (Cr₂O₃/CrN FETs), nanoparticles, the Modarresi spin valve, or a
+  *different* compound (CrSi₂N₄ monolayer). Not CrN nanoribbon thermoelectrics.
+- The **spin-thermoelectric nanoribbon format is well populated for OTHER materials** (graphene,
+  graphitic carbon nitride g-C₃N₄/g-C₄N₃, BN, Heusler) — confirms the format is welcome, not a
+  collision.
+- Incidental useful ref (not a collision): *"Tight-binding parametrization for the chromium
+  nitride: A NMTO study"* (arXiv 2012) — TB parametrization of **bulk rocksalt** CrN; could be
+  cited in Methods.
+
+Bottom line: the "first thermoelectric / phase-coherent Landauer study of CrN nanoribbons" claim
+holds. Still advisable to (a) do one final re-check immediately before submission and (b) confirm
+Semantic Scholar once it is not rate-limited.
