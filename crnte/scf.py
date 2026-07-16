@@ -180,3 +180,54 @@ def bulk_scf(p, U_eff=U_EFF, N_e=N_E_PER_CELL, m_init=2.0, nk=40, mix=0.3, tol=1
             return dict(m_Cr=m_new, Delta_ex=U_eff * m_new, E_F=EF, iters=it)
         m = mix * m_new + (1 - mix) * m
     return dict(m_Cr=m, Delta_ex=U_eff * m, E_F=EF, iters=maxit)
+
+
+# --- Stage 3: self-consistent per-site Cr moments in a ribbon (edge magnetism) ----------------
+def ribbon_scf(edge: str, N: int, p: SKParams, U_eff=U_EFF, N_e=N_E_PER_CELL, nk=60,
+               mix=0.3, tol=1e-4, maxit=400, m_init=2.674):
+    """Converge the per-Cr-site moments m_i of a ferromagnetic width-N ribbon (unrestricted MF).
+
+    Convention (as calibrated in bulk_scf): majority Cr d unshifted, minority Cr d shifted by the
+    site-dependent U_eff*m_i. Returns dict(rows, m, m_interior, m_edge, E_band, E_F, iters).
+    """
+    cr, nn, T, tc = ribbon_cell(edge, N, p.a)
+    nC = len(cr)
+    Tlen = np.linalg.norm(T)
+    rows = cr[:, tc]
+    N_tot = int(round(N_e * nC))
+    _, _, cri, _ = build_bloch(edge, N, p, +1, exchange=np.zeros(nC))     # orbital<->site map
+    idx_by_site = [list(cri[i]) for i in range(nC)]
+    ks = np.linspace(-np.pi, np.pi, nk, endpoint=False) / Tlen
+
+    m = np.full(nC, float(m_init))
+    E_band = EF = 0.0
+    for it in range(maxit):
+        H0u, Vu, _, _ = build_bloch(edge, N, p, +1, exchange=np.zeros(nC))
+        H0d, Vd, _, _ = build_bloch(edge, N, p, -1, exchange=U_eff * m)
+        allE, allw, alls = [], [], []          # energies, Cr-site weights, spin per state
+        for k in ks:
+            for H0, V, spin in ((H0u, Vu, +1), (H0d, Vd, -1)):
+                Hk = H0 + V * np.exp(1j * k * Tlen) + V.conj().T * np.exp(-1j * k * Tlen)
+                w, v = np.linalg.eigh(Hk)
+                allE.append(w)
+                allw.append(np.array([(np.abs(v[ix, :]) ** 2).sum(0) for ix in idx_by_site]).T)
+                alls.append(np.full(len(w), spin))
+        allE = np.concatenate(allE)
+        allw = np.concatenate(allw, axis=0)     # (Nstates, nC)
+        alls = np.concatenate(alls)
+        order = np.argsort(allE)
+        nocc = N_tot * nk
+        occ = order[:nocc]
+        EF = 0.5 * (allE[order[nocc - 1]] + allE[order[nocc]])
+        E_band = allE[occ].sum() / nk
+        up = allw[occ][alls[occ] == +1].sum(0) / nk
+        dn = allw[occ][alls[occ] == -1].sum(0) / nk
+        m_new = up - dn
+        if np.max(np.abs(m_new - m)) < tol:
+            m = m_new
+            break
+        m = mix * m_new + (1 - mix) * m
+
+    interior = np.abs(rows - np.median(rows)) < 0.4 * (rows.max() - rows.min())
+    return dict(rows=rows, m=m, m_interior=float(np.mean(m[interior])),
+                m_edge=float(np.max(np.abs(m))), E_band=E_band, E_F=EF, iters=it)
