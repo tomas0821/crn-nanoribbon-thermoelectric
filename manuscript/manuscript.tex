@@ -250,6 +250,19 @@ by heavy electron doping to the minority band edge near $+1.0$~eV. The spin pola
 thermally driven current thus switches from $+100\%$ to $-100\%$ with chemical potential, a
 signature spin-caloritronic function.
 
+\subsection{Edge magnetism}
+Although the transport above uses the uniform bulk exchange, the same model reproduces the
+\emph{magnetic edges} that motivate this system. Solving the mean-field Hubbard problem
+self-consistently for the ribbon---with the effective on-site interaction calibrated so that the
+uniform (bulk) solution recovers the fitted exchange---yields the per-site Cr moment profile of
+Fig.~\ref{fig:edgemag}. The interior recovers the bulk moment ($2.64\,\mu_B$ in the reduced
+manifold, cf.\ $2.67\,\mu_B$ for the monolayer), while the reduced-coordination edge Cr atoms carry
+\emph{enhanced} moments---by $\sim\!6\%$ (zigzag) to $\sim\!8\%$ (armchair). The enhancement is
+width-independent (identical for $N=14$ and $N=20$), confirming it as a genuine edge effect. This
+is the microscopic counterpart, from a lightweight model, of the magnetic CrN nanoribbon edges
+analysed by DMRG~\cite{CrNdmrg2023}: our approach and theirs agree that the edges are magnetically
+active, obtained here at negligible computational cost.
+
 \subsection{Scope and limitations}
 Three limitations are stated transparently. First, the tight-binding parameters are fitted to a
 published band structure rather than to a fresh ab-initio calculation; the conclusions are
@@ -260,11 +273,12 @@ by the single, physically transparent hopping $V_{pd\pi}$ that sets the transpor
 the exchange splitting, the $d_{z^2}$ energy and the second-neighbour hopping are essentially
 irrelevant near $E_F$ (Fig.~\ref{fig:sensitivity}). Second,
 $\kappa_{\rm ph}$ is estimated ballistically, not computed; absolute $ZT$ values carry the
-corresponding uncertainty, which we bracket explicitly. Third, the edge Cr atoms are treated with
-the bulk exchange splitting; a site-resolved self-consistent mean-field treatment of the magnetic
-edges---and, relatedly, the phonon-scattering (edge-disorder) route to $ZT$
-enhancement~\cite{Sevincli2010}, which requires an explicit phonon-transport calculation---are the
-natural next steps.
+corresponding uncertainty, which we bracket explicitly. Third, the transport is computed with the
+uniform bulk exchange; the self-consistent calculation of Fig.~\ref{fig:edgemag} shows the edge
+moments are enhanced by only $\sim\!6$--$8\%$, so feeding the site-dependent exchange back into the
+transmission is a small refinement we omit here. Finally, the phonon-scattering (edge-disorder)
+route to $ZT$ enhancement~\cite{Sevincli2010} requires an explicit phonon-transport calculation and
+is left for future work.
 
 %% ------------------------------------------------------------------
 \section{Conclusions}
@@ -399,6 +413,17 @@ power factors: the majority PF peaks at the band edge ($+0.2$~eV) and the minori
 minority band edge ($+1.0$~eV); the spin polarization of the thermoelectric current (green,
 right axis) switches from $+100\%$ to $-100\%$ between the two.}
 \label{fig:spin}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.82\columnwidth]{fig_edgemag.png}
+\caption{Self-consistent mean-field Cr magnetic moment across the ribbon width. The interior
+recovers the bulk monolayer moment (dotted line) while the reduced-coordination edge Cr atoms carry
+enhanced moments ($\sim\!6\%$ zigzag, $\sim\!8\%$ armchair); the enhancement is width-independent
+($N=14$ vs $20$). This reproduces, from a lightweight model, the magnetic edges of hexagonal CrN
+nanoribbons.}
+\label{fig:edgemag}
 \end{figure}
 
 \begin{figure}[t]
