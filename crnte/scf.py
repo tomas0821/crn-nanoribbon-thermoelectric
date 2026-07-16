@@ -116,3 +116,67 @@ def bands(H0, V, Tlen, nk=200):
         Hk = H0 + V * np.exp(1j * k * Tlen) + V.conj().T * np.exp(-1j * k * Tlen)
         out.append(np.linalg.eigvalsh(Hk))
     return ks, np.array(out)
+
+
+# --- Stage 2: bulk (uniform) mean-field calibration -------------------------------------------
+# Calibrated so the uniform SCF reproduces the fitted bulk exchange (Delta_ex = 3.6 eV). The
+# reduced 4-orbital manifold yields m_Cr = 2.67 mu_B (d_z2 fully polarised, d_xz/d_yz partially),
+# ~11% below Kuklin's 3.0 because the omitted deep sigma-d orbitals also carry moment -- the known
+# semi-quantitative limitation of the reduced model. The bulk SCF converges to this stable magnetic
+# fixed point from any starting moment (verified). Relation: Delta_ex = U_EFF * m_Cr.
+U_EFF = 1.346          # effective Stoner parameter (eV)
+N_E_PER_CELL = 4.717   # electrons per unit cell in the reduced manifold (fixed filling)
+
+
+def _bz_mesh(a, nk):
+    from .monolayer_sk import lattice_geometry
+    _, _, _, b1, b2 = lattice_geometry(a)
+    return [(i / nk) * b1 + (j / nk) * b2 for i in range(nk) for j in range(nk)]
+
+
+def monolayer_moment(p, nk=60):
+    """Cr-d occupation/moment and total filling of the fitted bulk at E_F=0 (diagnostic)."""
+    from .monolayer_sk import build_H
+    ncr = {+1: 0.0, -1: 0.0}
+    ntot = 0
+    for k in _bz_mesh(p.a, nk):
+        for spin in (+1, -1):
+            w, v = np.linalg.eigh(build_H(k, p, spin))
+            for b in range(4):
+                if w[b] < 0.0:
+                    ncr[spin] += (np.abs(v[:3, b]) ** 2).sum()
+                    ntot += 1
+    ncr = {s: ncr[s] / nk ** 2 for s in ncr}
+    return dict(m_Cr=ncr[+1] - ncr[-1], n_Cr_up=ncr[+1], n_Cr_dn=ncr[-1], N_e=ntot / nk ** 2)
+
+
+def bulk_scf(p, U_eff=U_EFF, N_e=N_E_PER_CELL, m_init=2.0, nk=40, mix=0.3, tol=1e-4, maxit=100):
+    """Self-consistent uniform mean-field. Returns dict(m_Cr, Delta_ex, E_F, iters).
+
+    At fixed filling N_e, iterates Delta_ex = U_eff * m_Cr until the Cr-d moment converges.
+    """
+    import dataclasses
+    from .monolayer_sk import build_H
+    kpts = _bz_mesh(p.a, nk)
+    m = m_init
+    EF = 0.0
+    for it in range(maxit):
+        pp = dataclasses.replace(p, delta_ex=U_eff * m)
+        allE, proj = [], []
+        for k in kpts:
+            for spin in (+1, -1):
+                w, v = np.linalg.eigh(build_H(k, pp, spin))
+                cw = (np.abs(v[:3, :]) ** 2).sum(0)
+                allE.extend(w)
+                proj.extend(zip(cw, [spin] * 4))
+        allE = np.array(allE)
+        nocc = int(round(N_e * nk * nk))
+        order = np.argsort(allE)
+        EF = 0.5 * (allE[order[nocc - 1]] + allE[order[nocc]])
+        up = sum(proj[i][0] for i in order[:nocc] if proj[i][1] == +1) / nk ** 2
+        dn = sum(proj[i][0] for i in order[:nocc] if proj[i][1] == -1) / nk ** 2
+        m_new = up - dn
+        if abs(m_new - m) < tol:
+            return dict(m_Cr=m_new, Delta_ex=U_eff * m_new, E_F=EF, iters=it)
+        m = mix * m_new + (1 - mix) * m
+    return dict(m_Cr=m, Delta_ex=U_eff * m, E_F=EF, iters=maxit)
