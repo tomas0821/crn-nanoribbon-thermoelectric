@@ -21,28 +21,31 @@ from .ribbon_sk import _transverse_bound
 _S3 = np.sqrt(3.0)
 
 
-def ribbon_cell(edge: str, N: int, a: float):
-    """Sites of one ribbon unit cell (kwant-honeycomb convention). Returns (cr, nn, T, tc)."""
+def ribbon_cell(edge: str, N: int, a: float, ncell: int = 1):
+    """Sites of a ribbon supercell of `ncell` periods along transport (kwant-honeycomb convention).
+
+    Returns (cr, nn, Tsuper, tc) where Tsuper = ncell * (one-period translation).
+    """
     d = a / _S3
     pv0 = np.array([a, 0.0])
     pv1 = np.array([a / 2.0, a * _S3 / 2.0])
     lo, hi = _transverse_bound(edge, N, a)
     if edge == "zigzag":
-        T = np.array([a, 0.0]); tc, lc = 1, 0        # transverse=y, transport=x
+        Tp = np.array([a, 0.0]); tc, lc = 1, 0        # transverse=y, transport=x
     elif edge == "armchair":
-        T = np.array([0.0, a * _S3]); tc, lc = 0, 1    # transverse=x, transport=y
+        Tp = np.array([0.0, a * _S3]); tc, lc = 0, 1    # transverse=x, transport=y
     else:
         raise ValueError(edge)
-    Tlen = np.linalg.norm(T)
+    Lp = np.linalg.norm(Tp)                            # one-period length along transport
     cr, nn = [], []
     R = 3 * N + 8
     for n in range(-R, R + 1):
         for m in range(-R, R + 1):
             base = n * pv0 + m * pv1
             for pos, lst in ((base, cr), (base + np.array([0.0, d]), nn)):
-                if lo - 1e-6 <= pos[tc] <= hi + 1e-6 and -1e-6 <= pos[lc] < Tlen - 1e-6:
+                if lo - 1e-6 <= pos[tc] <= hi + 1e-6 and -1e-6 <= pos[lc] < ncell * Lp - 1e-6:
                     lst.append(pos)
-    return np.array(cr), np.array(nn), T, tc
+    return np.array(cr), np.array(nn), ncell * Tp, tc
 
 
 def _hop_block(A_is_cr, B_is_cr, bond, p, d):
@@ -65,15 +68,15 @@ def _hop_block(A_is_cr, B_is_cr, bond, p, d):
     return None                                    # N-N: no hopping
 
 
-def build_bloch(edge: str, N: int, p: SKParams, spin: int, exchange=None):
-    """Return (H0, V, cr_index, rows). H(k)=H0+V e^{ikT}+V^dag e^{-ikT}.
+def build_bloch(edge: str, N: int, p: SKParams, spin: int, exchange=None, ncell: int = 1):
+    """Return (H0, V, cr_index, rows). H(k)=H0+V e^{ikT}+V^dag e^{-ikT} for an `ncell`-period cell.
 
     exchange: optional array of per-Cr-site exchange shifts added to that Cr's d orbitals (eV). If
     None, the uniform fitted shift ``p.cr_shift(spin)`` is used on every Cr (reproduces ribbon_sk).
     cr_index[i] = (i0,i1,i2) orbital indices of Cr site i; rows[i] = its transverse coordinate.
     """
     a, d = p.a, p.a / _S3
-    cr, nn, T, tc = ribbon_cell(edge, N, a)
+    cr, nn, T, tc = ribbon_cell(edge, N, a, ncell)
     nC, nN = len(cr), len(nn)
     dim = 3 * nC + nN
     cr_index = [(3 * i, 3 * i + 1, 3 * i + 2) for i in range(nC)]
@@ -231,3 +234,53 @@ def ribbon_scf(edge: str, N: int, p: SKParams, U_eff=U_EFF, N_e=N_E_PER_CELL, nk
     interior = np.abs(rows - np.median(rows)) < 0.4 * (rows.max() - rows.min())
     return dict(rows=rows, m=m, m_interior=float(np.mean(m[interior])),
                 m_edge=float(np.max(np.abs(m))), E_band=E_band, E_F=EF, iters=it)
+
+
+# --- Stage 4: intra-edge exchange J1, J2 via the Lichtenstein (LKAG) magnetic-force theorem ----
+def edge_exchange(edge: str, N: int, p: SKParams, U_eff=U_EFF, nk=120, nE=400, eta=0.02,
+                  neighbors=(1, 2), E_min=-8.0):
+    """Intra-edge exchange constants J_n along the edge Cr chain (meV), averaged over both edges.
+
+    Uses the LKAG formula J_n = (1/2pi) Im \\int^{E_F} dE  delta^2 Tr_d[G^up_{n}(E) G^dn_{-n}(E)],
+    with G^sigma_n the intersite Green's function between an edge Cr and its n-th neighbour along
+    the edge (obtained by k-integration at the FM self-consistent solution). This isolates the
+    inter-site exchange (naive total-energy flips are swamped by on-site kinetic terms). Returns
+    dict with J_lkag[n] (unit-vector convention) and J_heis[n]=J_lkag/S^2 (Heisenberg, S=m_edge/2).
+    """
+    r = ribbon_scf(edge, N, p, nk=60)
+    rows, m, EF = r["rows"], r["m"], r["E_F"]
+    _, _, cri, _ = build_bloch(edge, N, p, +1, exchange=np.zeros(len(m)))
+    H0u, Vu, _, _ = build_bloch(edge, N, p, +1, exchange=np.zeros(len(m)))
+    H0d, Vd, _, _ = build_bloch(edge, N, p, -1, exchange=U_eff * m)
+    Tlen = p.a if edge == "zigzag" else p.a * _S3
+    dim = H0u.shape[0]
+    edge_sites = [int(np.argmax(rows)), int(np.argmin(rows))]     # top & bottom edge Cr
+    ks = np.linspace(-np.pi, np.pi, nk, endpoint=False) / Tlen
+    Es = np.linspace(E_min, EF, nE)
+    ii = np.eye(dim)
+
+    J = {n: 0.0 for n in neighbors}
+    for isite in edge_sites:
+        bl = list(cri[isite])
+        delta = U_eff * abs(m[isite])
+        integ = {n: np.empty(nE, complex) for n in neighbors}
+        for e, E in enumerate(Es):
+            Gu = {n: np.zeros((3, 3), complex) for n in neighbors}
+            Gd = {n: np.zeros((3, 3), complex) for n in neighbors}
+            for k in ks:
+                phase = np.exp(1j * k * Tlen)
+                Hu = H0u + Vu * phase + Vu.conj().T / phase
+                Hd = H0d + Vd * phase + Vd.conj().T / phase
+                gu = np.linalg.inv((E + 1j * eta) * ii - Hu)[np.ix_(bl, bl)]
+                gd = np.linalg.inv((E + 1j * eta) * ii - Hd)[np.ix_(bl, bl)]
+                for n in neighbors:
+                    Gu[n] += gu * phase ** n
+                    Gd[n] += gd / phase ** n
+            for n in neighbors:
+                integ[n][e] = np.trace((Gu[n] / nk) @ (Gd[n] / nk))
+        for n in neighbors:
+            J[n] += (delta ** 2 / (2 * np.pi)) * np.imag(np.trapz(integ[n], Es)) * 1000.0  # meV
+    J = {n: J[n] / len(edge_sites) for n in neighbors}                 # average over the two edges
+    S = float(np.max(np.abs(m))) / 2.0
+    return dict(J_lkag=J, J_heis={n: J[n] / S ** 2 for n in neighbors}, S=S,
+                m_edge=float(np.max(np.abs(m))))
