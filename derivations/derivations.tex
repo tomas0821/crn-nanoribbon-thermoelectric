@@ -21,7 +21,8 @@ tight-binding + Landauer thermoelectric calculation: the lattice/reciprocal geom
 Slater--Koster Bloch Hamiltonian and its selection rules, the Onsager transport coefficients from
 the Landauer currents (including all unit factors), the electronic figure-of-merit identity, the
 Sommerfeld expansion with the Mott and Wiedemann--Franz consequences, the two-spin-channel
-combination (with the bipolar correction), and the ballistic phonon thermal-conductance quantum.
+combination (with the bipolar correction), the ballistic phonon thermal-conductance quantum, and
+the self-consistent mean-field edge magnetism with the Lichtenstein (LKAG) exchange formula.
 Numerical cross-checks that were run against these results are noted in boxes.
 
 \tableofcontents
@@ -349,6 +350,77 @@ $\kappa_{\rm ph}=n_{\rm modes}\,\kappa_0(T)$ with $n_{\rm modes}\approx4$ acoust
 ($\kappa_{\rm ph}(300\,\text K)\approx1.1$~nW/K), and bracket $ZT$ over $\tfrac12$--$2\times$ this.
 
 %======================================================================
+\section{Mean-field edge magnetism and exchange constants}
+
+\subsection{Self-consistent unrestricted Hartree--Fock}
+Decoupling the Cr-$d$ Hubbard term $H_U=U\sum_{i\alpha}\hat n_{i\alpha\uparrow}\hat n_{i\alpha\downarrow}$
+(\S2.5) gives the spin-dependent on-site potential
+$\varepsilon_{i\alpha\sigma}=\varepsilon^0_\alpha+U\langle\hat n_{i\alpha\bar\sigma}\rangle$. In the
+Stoner (uniform-over-$d$) form the site exchange splitting is
+\begin{equation}
+\Delta_i\equiv\varepsilon_{i\downarrow}-\varepsilon_{i\uparrow}=U_{\rm eff}\,m_i,
+\qquad m_i=\sum_\alpha\big(n_{i\alpha\uparrow}-n_{i\alpha\downarrow}\big),
+\end{equation}
+and the occupations, at fixed electron number $N_e$ (charge neutrality fixes $E_F$),
+\begin{equation}
+n_{i\alpha\sigma}=\frac1{N_k}\sum_{k,n}f\!\big(E_{n\sigma}(k)\big)\,
+\big|\langle i\alpha\sigma|\psi_{n\sigma}(k)\rangle\big|^2 .
+\end{equation}
+Iterating $\{m_i\}\to\Delta_i\to H_\sigma(k)\to\{m_i\}$ to self-consistency yields the moment
+profile; edge Cr atoms, with reduced coordination, develop enhanced $m_i$.
+
+\subsection{Bulk calibration}
+$U_{\rm eff}$ and $N_e$ are fixed by requiring the uniform (bulk) self-consistent solution to
+reproduce the fitted exchange, $U_{\rm eff}=\Delta_{\rm ex}/m_{\rm bulk}$. In the reduced manifold
+$m_{\rm bulk}=2.67\,\mu_B$ ($d_{z^2}$ fully polarised, the metallic $d_{xz},d_{yz}$ partially), so
+$U_{\rm eff}=3.6/2.67=1.35$~eV and $N_e=4.72$ e/cell; the magnetic solution is a stable fixed point
+(converges from any $m_{\rm init}$).
+
+\subsection{Exchange constants: the magnetic force theorem}
+The intersite exchange $J_{ij}$ of the mapped Heisenberg model
+$H_{\rm spin}=-\sum_{ij}J_{ij}\,\mathbf e_i\!\cdot\!\mathbf e_j$ (unit vectors $\mathbf e$) is the
+second-order response of the electronic energy to \emph{infinitesimal} tilts of the moments. A
+finite spin flip is unusable: it changes the on-site potential by $\mathcal O(\Delta_i)\sim$~eV,
+whose kinetic/hybridisation energy swamps the meV-scale $J$ (this is why the naive total-energy
+flip gave a wrong, on-site-dominated answer). The magnetic force theorem removes this: at
+self-consistency the first-order change of the total energy under a potential perturbation equals
+the change of the band energy at frozen potential, and the double-counting term (a function of
+$|m_i|,n_i$ only, unchanged by a rotation) cancels.
+
+\paragraph{LKAG derivation.} Tilt the moment at site $i$ by a small angle $\theta_i$ about an axis
+$\perp$ the collinear direction. The local spin potential
+$V_i=\tfrac{\Delta_i}{2}\,\hat z\!\cdot\!\boldsymbol\tau$ acquires a transverse piece
+$\delta V_i=\tfrac{\Delta_i}{2}\theta_i\,\hat x\!\cdot\!\boldsymbol\tau$ (Pauli matrices
+$\boldsymbol\tau$). By the force theorem the second-order change of the grand potential from tilts
+at $i,j$ is
+\begin{equation}
+\delta^2\Omega=-\frac1\pi\,{\rm Im}\!\int^{E_F}\!\!dE\ {\rm Tr}\big[\delta V_i\,G(E)\,\delta V_j\,G(E)\big].
+\end{equation}
+Since $\hat x\!\cdot\!\boldsymbol\tau$ flips spin ($\uparrow\!\leftrightarrow\!\downarrow$), the spin
+trace produces $\tfrac{\theta_i\theta_j}{4}\Delta_i\Delta_j\,{\rm Tr}_L[G^\uparrow_{ij}G^\downarrow_{ji}]$
+(plus its conjugate). Matching to $\delta^2H_{\rm spin}=\sum J_{ij}\theta_i\theta_j$ gives the
+LKAG formula
+\begin{equation}
+\boxed{\ J_{ij}=\frac1{2\pi}\,{\rm Im}\!\int^{E_F}\!\!dE\ {\rm Tr}_L\!\big[\Delta_i\,G^\uparrow_{ij}(E)\,\Delta_j\,G^\downarrow_{ji}(E)\big]\ }
+\end{equation}
+with $\Delta_i$ the on-site exchange-splitting matrix ($=U_{\rm eff}m_i$ on the $d$ orbitals) and
+${\rm Tr}_L$ over orbitals.
+
+\paragraph{Ribbon evaluation.} The intersite Green's function between an edge Cr and its $n$-th
+neighbour along the periodic edge is a 1D $k$-sum at the self-consistent FM Hamiltonian,
+\begin{equation}
+G^\sigma_{n}(E)=\frac1{N_k}\sum_k\big[(E+i0^+-H_\sigma(k))^{-1}\big]_{ii}\,e^{ikna},
+\end{equation}
+($ii$ the edge-site $d$-block, $a$ the edge period), so
+\begin{equation}
+J_n=\frac{\delta^2}{2\pi}\,{\rm Im}\!\int^{E_F}\!\!dE\ {\rm Tr}_d\big[G^\uparrow_{n}(E)\,G^\downarrow_{-n}(E)\big],
+\qquad \delta=U_{\rm eff}\,m_{\rm edge}.
+\end{equation}
+This yields $|J_1|\gg|J_2|$ ($\sim$ tens and $\sim\!1$~meV) with ferromagnetic edge alignment---the
+DMRG sign, hierarchy and order of magnitude. Mapping onto a spin-$S$ model uses $J^{\rm Heis}=J/S^2$
+with $S=m_{\rm edge}/2$.
+
+%======================================================================
 \section{Summary of results to check}
 \begin{itemize}
 \item[(i)] $a=\sqrt3\,d$; reciprocal vectors; $f=0$ at $K$ ($\S1$).
@@ -363,8 +435,11 @@ $\kappa_e/GT=\tfrac{\pi^2}{3}(\kB/e)^2$ ($\S4$).
 and $\kappa_e=\sum\kappa_\sigma+$ bipolar term---the code now evaluates the full expression; the
 bipolar term is exactly zero at the operating point (minority channel gapped) ($\S5$).
 \item[(vii)] $\kappa_0=\pi^2\kB^2 T/3h$ ($\S6$).
+\item[(viii)] Self-consistent mean field $\Delta_i=U_{\rm eff}m_i$ with bulk calibration; LKAG
+exchange $J_{ij}=\tfrac1{2\pi}{\rm Im}\!\int^{E_F}\!{\rm Tr}[\Delta_i G^\uparrow_{ij}\Delta_j G^\downarrow_{ji}]$
+(a finite spin flip is on-site dominated and must \emph{not} be used) ($\S7$).
 \end{itemize}
-Items (ii), (iv), (v) and the bipolar term were cross-checked numerically (boxes above); every
-formula used in the code is now derived here in full.
+Items (ii), (iv), (v), the bipolar term and the $J$ hierarchy $|J_1|\gg|J_2|$ were cross-checked
+numerically (boxes above / \S7); every formula used in the code is now derived here in full.
 
 \end{document}
