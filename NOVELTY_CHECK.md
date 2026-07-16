@@ -89,3 +89,24 @@ databases (Crossref, OpenAlex, arXiv, Semantic Scholar).
 - DMRG paper is published in **Physical Review B** (per OpenAlex), not only arXiv — but the DB
   year records conflict (PRB 2023 vs arXiv 2408.06754 = Aug 2024); confirm the exact vol/page/year.
 - The Quintela CrN thermoelectric APL is **2009, DOI 10.1063/1.3120280** (our bib had 2014).
+
+---
+
+## Deepest re-verification — 2026-07-16 · VERDICT: CLEAN (all four DBs, S2 authenticated)
+Ran the toolkit with **8 queries** across **Crossref + OpenAlex + arXiv + Semantic Scholar**
+(S2 now uses an API key — no 429; all four returned for every query). No CrN nanoribbon
+thermoelectric/Landauer paper exists.
+- CrN thermoelectric prior art = bulk/film/ceramic only (Quintela APL 2009; oxygen-free CrN
+  ceramics 2014; secondary-phase-suppressed CrN 2021; Fe-nanoparticle CrN films 2023; CrN alloy
+  films Linköping 2025; ammonia-annealed CrN films).
+- Low-dimensional CrN = **magnetism/spintronics only**: the DMRG nanoribbon paper and a NEW find,
+  **Xiang et al., "Prediction of one-dimensional CrN nanostructure as a promising ferromagnetic
+  half-metal," Chin. Phys. B 32 (2023), DOI 10.1088/1674-1056/acb200** — DFT prediction of a 1D
+  CrN half-metal (Δs=1.58 eV, MAE, BN nanocable). NOT thermoelectric, different geometry (1D wire),
+  heavy DFT → adjacent, not colliding. Now cited (`Xiang2023`) to strengthen the low-D CrN context.
+- "CRN: Camera Radar Net" is an unrelated CS acronym.
+
+Bottom line: the thermoelectric gap is if anything MORE glaring — low-D CrN is actively studied for
+magnetism, yet no thermoelectric/Landauer study exists. The "first thermoelectric/Landauer study of
+CrN nanoribbons" claim is solid, confirmed across all four databases. Do one last re-run just
+before submission.
