@@ -5,4 +5,4 @@ Highlights
 - Minority channel gapped over 4 eV: transport is 100% spin-polarized when gated.
 - Honest ZT = 0.01-0.15 at 300 K; the optimum sits at the minority band edge.
 - A minimal orbital basis fabricates a sharp edge and overestimates ZT eightfold.
-- Phonon-Landauer kappa_ph anchored to the published DFPT phonon dispersion.
+- Antiparallel magnetizations switch the thermocurrent off: a thermal spin valve.

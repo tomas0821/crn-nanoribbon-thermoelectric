@@ -60,6 +60,20 @@ conduction pocket), phonons from Modarresi et al., *PRApplied* 11, 064015 (2019)
 
 ## Simulation Logs
 
+### Run: thermal_spin_valve — 2026-07-18 ⭐ NEW RESULT
+
+`build_spin_valve` (ribbon_sk): two-terminal ribbon with ANTIPARALLEL lead magnetizations
+(collinear abrupt wall). Exact result: each spin species is majority in one lead and inside the
+minority gap in the other → **T_AP(E) = 0 identically over the whole half-metallic window**
+(numerics: machine zero on the full 5-meV grid, `data/zigzag_N14_valve.npz`). G_P(E_F) = 7.3
+e²/h vs G_AP = 0 → thermally driven spin valve; OFF leakage set only by spin-flip + activation
+(e^{−Δ/kT} ~ 1e−14 at 300 K). Claim restricted to the OFF window (above +1.0 eV the c-orbital
+decoupling makes the AP onset unquantitative). Figure `fig_spinvalve.png` + manuscript
+§"A thermally driven spin valve". Inter-edge P/AP mean-field ΔE was computed
+(`data/spinvalve.txt`) but is NOT quoted in the paper — rigid-shift MF without charge
+self-consistency is unreliable for that ΔE; the valve premise is external control (exchange
+bias), standard for spin valves. Graphical abstract added (`graphical_abstract.png`, 1660×550).
+
 ### Run: honest_landscape_extended_model — 2026-07-17 ⭐ PRODUCTION
 
 All transport regenerated on the extended model (5-orbital: d_z², d_xz, d_yz, c | p_z), unified

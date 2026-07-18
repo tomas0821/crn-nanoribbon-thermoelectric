@@ -13,7 +13,7 @@ import numpy as np
 from .monolayer_sk import SKParams
 from .ribbon import transmission  # model-agnostic T(E) helper (energy-nudge on flat bands)
 
-__all__ = ["build_ribbon_sk", "transmission"]
+__all__ = ["build_ribbon_sk", "build_spin_valve", "transmission"]
 
 _SQRT3 = np.sqrt(3.0)
 
@@ -153,4 +153,92 @@ def build_ribbon_sk(edge: str, width: int, p: SKParams, spin: int,
 
     syst.attach_lead(lead)
     syst.attach_lead(lead.reversed())
+    return syst.finalized()
+
+
+def build_spin_valve(edge: str, width: int, p: SKParams, spin: int,
+                     length: int = 4) -> kwant.system.FiniteSystem:
+    """Two-terminal ribbon with ANTIPARALLEL lead magnetizations (collinear, abrupt wall).
+
+    The left half of the scattering region and lead 0 are magnetized +z (exchange shifts as in
+    ``build_ribbon_sk``); the right half and lead 1 are magnetized -z, i.e. the shifts of the
+    two spin species are interchanged. Spin remains a good quantum number (collinear), so each
+    ``spin`` channel is an independent scalar calculation. In the half-metallic window each
+    spin is majority in one lead and gapped in the other, so T(E) vanishes identically there --
+    the ideal thermal spin-valve OFF state; transport opens only beyond the minority band edge.
+    ``length`` counts lead periods; the wall sits at the midpoint.
+    """
+    a = p.a
+    lat, cr, nn, d = _lattice(a)
+
+    def cr_onsite(sp):
+        sh, csh = p.cr_shift(sp), p.c_shift(sp)
+        return np.diag([p.eps_dz2 + sh, p.eps_pi + sh, p.eps_pi + sh,
+                        p.eps_c + csh]).astype(complex)
+
+    n_onsite = np.array([[p.eps_pz]], dtype=complex)
+    crcr1 = np.diag([p.t_zz, 0.0, 0.0, p.t_c1]).astype(complex)
+    crcr2 = np.diag([0.0, 0.0, 0.0, p.t_c2]).astype(complex)
+    crcr3 = np.diag([0.0, 0.0, 0.0, p.t_c3]).astype(complex)
+    SHELLS = ((crcr1, ((1, 0), (0, 1), (1, -1))),
+              (crcr2, ((1, 1), (2, -1), (-1, 2))),
+              (crcr3, ((2, 0), (0, 2), (2, -2))))
+
+    def hop_crn(site1, site2):
+        if site1.family == cr:
+            bond = site2.pos - site1.pos
+            l, m = bond[0] / d, bond[1] / d
+            return p.pdpi * np.array([[0.0], [l], [m], [0.0]], dtype=complex)
+        bond = site1.pos - site2.pos
+        l, m = bond[0] / d, bond[1] / d
+        return p.pdpi * np.array([[0.0, l, m, 0.0]], dtype=complex)
+
+    lo, hi = _transverse_bound(edge, width, a)
+    if edge == "zigzag":
+        axis, lc, period = np.array([2.0 * a, 0.0]), 0, 2.0 * a
+
+        def in_width(pos):
+            return lo <= pos[1] <= hi
+    elif edge == "armchair":
+        axis, lc, period = np.array([0.0, a * _SQRT3]), 1, a * _SQRT3
+
+        def in_width(pos):
+            return lo <= pos[0] <= hi
+    else:
+        raise ValueError(edge)
+    L = length * period
+    wall = 0.5 * L
+
+    def scat_shape(pos):
+        return in_width(pos) and 0.0 <= pos[lc] < L
+
+    def onsite(site):
+        if site.family != cr:
+            return n_onsite
+        local_spin = spin if site.pos[lc] < wall else -spin   # right half magnetized -z
+        return cr_onsite(local_spin)
+
+    syst = kwant.Builder()
+    syst[lat.shape(scat_shape, (0.0, 0.0) if lc == 0 else (0.0, 0.0))] = onsite
+    syst[lat.neighbors(1)] = hop_crn
+    for mat, kinds in SHELLS:
+        for delta in kinds:
+            syst[kwant.builder.HoppingKind(delta, cr, cr)] = mat
+
+    def make_lead(sp):
+        sym = kwant.TranslationalSymmetry(axis)
+        if edge == "armchair":
+            sym.add_site_family(cr, other_vectors=[(1, 0)])
+            sym.add_site_family(nn, other_vectors=[(1, 0)])
+        lead = kwant.Builder(sym)
+        lead[lat.shape(in_width, (0.0, 0.0))] = (lambda site, s=sp:
+                                                 cr_onsite(s) if site.family == cr else n_onsite)
+        lead[lat.neighbors(1)] = hop_crn
+        for mat, kinds in SHELLS:
+            for delta in kinds:
+                lead[kwant.builder.HoppingKind(delta, cr, cr)] = mat
+        return lead
+
+    syst.attach_lead(make_lead(spin))              # lead 0: magnetized +z
+    syst.attach_lead(make_lead(-spin).reversed())  # lead 1: magnetized -z
     return syst.finalized()

@@ -1,0 +1,4 @@
+max|T_AP| = 0.00e+00
+interedge dE(AP-P) per edge Cr [meV] = -191.401 (AP stable: True, m_edge_AP 2.717)
+CAVEAT: rigid-shift MF total-energy difference without charge
+self-consistency -- not reliable; not quoted in the manuscript.
