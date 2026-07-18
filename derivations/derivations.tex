@@ -134,6 +134,26 @@ H_\sigma(\mathbf k)=
 \end{pmatrix}.
 \end{equation}
 
+\subsection{The effective conduction orbital $c$}
+The four-orbital manifold above cannot host the majority \emph{conduction} band of the DFT
+reference (electron pocket at $K$, minimum $-0.2$~eV; its projected weight lies in Cr
+$d_{xy},d_{x^2-y^2},s$). We therefore add one effective orbital $c$ on the Cr triangular
+sublattice. In a planar sheet an $s$- or in-plane-$d$-like Cr orbital has zero SK matrix element
+with N $p_z$ at $n=0$ (the same table as above with $n=0$: $E_{s,z}=nV_{sp\sigma}=0$, and the
+$E_{z,xy}, E_{z,x^2-y^2}$ rows vanish), so $c$ is symmetry-decoupled from the $\pi$ manifold and
+enters $H$ as a diagonal block
+\begin{equation}
+H_{cc}(\mathbf k)=\varepsilon_c+\Delta^c_\sigma+\sum_{n=1}^{3}t_{cn}\,S_n(\mathbf k),\qquad
+S_n(\mathbf k)=\sum_{\boldsymbol\tau\in\text{shell }n}\ee^{\,i\mathbf k\cdot\boldsymbol\tau},
+\end{equation}
+with shells at distances $a,\sqrt3 a,2a$ ($S_1(\Gamma){=}S_2(\Gamma){=}S_3(\Gamma){=}6$;
+$S_1(K){=}-3$). The four constants $(\varepsilon_c,t_{c1},t_{c2},t_{c3})$ are a weighted least
+squares fit to the digitized majority conduction band (weights favouring the transport window),
+giving $(0.915,0.285,-0.028,0.030)$~eV: pocket at $K$ at $-0.20$~eV, saddle at $M$ at
+$+0.58$~eV, $\Gamma$ at $+2.64$~eV (digitized: $-0.21$, $+0.63$, $+2.41$). In the ribbon
+builders the three shells appear as the Cr--Cr \texttt{HoppingKind}s of range up to $2a$, which
+forces a $2a$ lead period for the zigzag orientation.
+
 \subsection{Mean-field (Stoner) exchange}
 The on-site Hubbard term $U\,\hat n_{\alpha\uparrow}\hat n_{\alpha\downarrow}$ decoupled at
 mean-field level gives $U\hat n_{\alpha\uparrow}\langle\hat n_{\alpha\downarrow}\rangle
@@ -322,13 +342,13 @@ The bracket is non-negative (Cauchy--Schwarz) and represents heat carried by the
 current that flows between channels when they have different thermopowers.
 
 \paragraph{Magnitude here.} The code (\texttt{combine\_spins}) evaluates the full expression above,
-including the bracket. In a half-metal the minority channel is gapped near $E_F$, so
-$G_\downarrow=S_\downarrow=\kappa_\downarrow=0$ there and the bracket vanishes identically. Our
-$ZT$ peak sits at $\mu-E_F\simeq+0.2$~eV, \emph{inside} the minority gap $[-3.2,+1.0]$~eV, so the
-bipolar term is exactly zero at the operating point: including it leaves the reported $ZT$
-unchanged (verified numerically---the headline peak $ZT=0.233$ is identical with and without the
-term). The bracket becomes relevant only for $\mu$ pushed far enough to make both spins conduct
-($\mu-E_F\gtrsim+1$~eV), where it \emph{reduces} $ZT$.
+including the bracket. Inside the minority gap $[-3.2,+1.0]$~eV the minority channel carries
+nothing ($G_\downarrow=S_\downarrow=\kappa_\downarrow=0$), so the bracket vanishes identically
+and the in-window results are unaffected. At the global operating point of the extended model,
+$\mu-E_F\simeq+1.05$~eV, \emph{both} spins conduct with very different thermopowers
+($S_\downarrow\simeq-150$, $S_\uparrow\simeq+4~\mu$V/K at 300~K), so the bipolar term is active
+there and is fully included in every reported number; it penalises exactly the two-channel
+counterflow that the minority-edge operating point exploits.
 
 %======================================================================
 \section{Ballistic phonon thermal-conductance quantum}
@@ -345,9 +365,24 @@ With $u=\hbar\omega/\kB T$, $\displaystyle\int_0^\infty\frac{u^2\ee^u}{(\ee^u-1)
 \boxed{\,\kappa_0(T)\equiv\kappa_{\rm ph}^{(1)}=\frac{\pi^2\kB^2 T}{3h}=9.464\times10^{-13}\,T~\text{W/K}\,,}
 \end{equation}
 the universal thermal-conductance quantum (same $\pi^2/3$ as the electronic Lorenz factor, as
-required by the Wiedemann--Franz analogy). We estimate the ribbon phonon thermal conductance as
-$\kappa_{\rm ph}=n_{\rm modes}\,\kappa_0(T)$ with $n_{\rm modes}\approx4$ acoustic branches
-($\kappa_{\rm ph}(300\,\text K)\approx1.1$~nW/K), and bracket $ZT$ over $\tfrac12$--$2\times$ this.
+required by the Wiedemann--Franz analogy).
+
+\paragraph{Mode counting for a ribbon (production estimate).} $4\kappa_0(T)$ is only the
+$T\to0$ limit (four gapless ribbon modes). The production estimate (\texttt{crnte.phonon})
+counts modes from the \emph{monolayer phonon dispersion} digitized from the published DFPT
+spectrum (Modarresi et al., PRApplied 11, 064015 (2019), Fig.~4(a)): acoustic branches with
+$v_{\rm LA}\simeq8.5$, $v_{\rm TA}\simeq4.3$~km/s and zone-edge maxima $4.7$--$10.4$~THz (ZA
+quadratic near $\Gamma$), plus three optical branches ($13.7\!\to\!7.2$, $13.2\!\to\!10.8$,
+$16.85\!\to\!15.1$~THz from $\Gamma$ to zone edge), each represented by a monotone sine-form
+interpolation (whose zone-edge value and slope reproduce the digitized velocities---an internal
+consistency check). For an isotropic branch $b$, a ribbon of width $W$ has
+$M_b(\omega)=(W/\pi)\,q_b(\omega)$ propagating channels, with $q_b(\omega)$ the iso-frequency
+radius; the total $M(\omega)$ is floored at 4 in the acoustic region. Then
+$\kappa_{\rm ph}(T)=\frac1{2\pi}\int d\omega\,\hbar\omega\,(\partial n_B/\partial T)M(\omega)$.
+This recovers $4\kappa_0 T$ as $T\to0$ (verified numerically to 1\%), grows roughly linearly
+with $W$, and saturates above $\sim$500~K when all branches are populated:
+$\kappa_{\rm ph}(300~\text{K})=0.6$--$1.7$~nW/K for $W=10$--$32$~\AA. $ZT$ is reported for
+$\tfrac12$--$2\times$ this estimate.
 
 %======================================================================
 \section{Mean-field edge magnetism and exchange constants}
@@ -398,13 +433,18 @@ at $i,j$ is
 \end{equation}
 Since $\hat x\!\cdot\!\boldsymbol\tau$ flips spin ($\uparrow\!\leftrightarrow\!\downarrow$), the spin
 trace produces $\tfrac{\theta_i\theta_j}{4}\Delta_i\Delta_j\,{\rm Tr}_L[G^\uparrow_{ij}G^\downarrow_{ji}]$
-(plus its conjugate). Matching to $\delta^2H_{\rm spin}=\sum J_{ij}\theta_i\theta_j$ gives the
-LKAG formula
+(plus its conjugate). Matching requires care with the sign: expanding
+$H_{\rm spin}=-\sum_{ij}J_{ij}\,\mathbf e_i\!\cdot\!\mathbf e_j$ for tilts about a common axis,
+$\mathbf e_i\!\cdot\!\mathbf e_j=\cos(\theta_i-\theta_j)$, so the \emph{cross} term is
+$\partial^2 H_{\rm spin}/\partial\theta_i\partial\theta_j=-J_{ij}$; hence
+$J_{ij}=-\partial^2\Omega/\partial\theta_i\partial\theta_j$ and
 \begin{equation}
-\boxed{\ J_{ij}=\frac1{2\pi}\,{\rm Im}\!\int^{E_F}\!\!dE\ {\rm Tr}_L\!\big[\Delta_i\,G^\uparrow_{ij}(E)\,\Delta_j\,G^\downarrow_{ji}(E)\big]\ }
+\boxed{\ J_{ij}=-\frac1{2\pi}\,{\rm Im}\!\int^{E_F}\!\!dE\ {\rm Tr}_L\!\big[\Delta_i\,G^\uparrow_{ij}(E)\,\Delta_j\,G^\downarrow_{ji}(E)\big]\ }
 \end{equation}
 with $\Delta_i$ the on-site exchange-splitting matrix ($=U_{\rm eff}m_i$ on the $d$ orbitals) and
-${\rm Tr}_L$ over orbitals.
+${\rm Tr}_L$ over orbitals ($J>0$ ferromagnetic in this convention). An early version of the
+code omitted the minus sign; the corrected sign gives $J_1>0$, consistent with the fact that
+the ferromagnetic edge is the stable self-consistent solution.
 
 \paragraph{Ribbon evaluation.} The intersite Green's function between an edge Cr and its $n$-th
 neighbour along the periodic edge is a 1D $k$-sum at the self-consistent FM Hamiltonian,
@@ -413,10 +453,11 @@ G^\sigma_{n}(E)=\frac1{N_k}\sum_k\big[(E+i0^+-H_\sigma(k))^{-1}\big]_{ii}\,e^{ik
 \end{equation}
 ($ii$ the edge-site $d$-block, $a$ the edge period), so
 \begin{equation}
-J_n=\frac{\delta^2}{2\pi}\,{\rm Im}\!\int^{E_F}\!\!dE\ {\rm Tr}_d\big[G^\uparrow_{n}(E)\,G^\downarrow_{-n}(E)\big],
+J_n=-\frac{\delta^2}{2\pi}\,{\rm Im}\!\int^{E_F}\!\!dE\ {\rm Tr}_d\big[G^\uparrow_{n}(E)\,G^\downarrow_{-n}(E)\big],
 \qquad \delta=U_{\rm eff}\,m_{\rm edge}.
 \end{equation}
-This yields $|J_1|\gg|J_2|$ ($\sim$ tens and $\sim\!1$~meV) with ferromagnetic edge alignment---the
+This yields $|J_1|\gg|J_2|$ ($\sim$ tens and $\sim\!1$~meV for the zigzag edge) with
+ferromagnetic $J_1>0$---the
 DMRG sign, hierarchy and order of magnitude. Mapping onto a spin-$S$ model uses $J^{\rm Heis}=J/S^2$
 with $S=m_{\rm edge}/2$.
 
@@ -432,8 +473,9 @@ $\kappa_e=\tfrac1{hT}(\Lloc_2-\tfrac{\Lloc_1^2}{\Lloc_0})$, with units ($\S3$).
 \item[(v)] Mott $S=-\tfrac{\pi^2}{3}\tfrac{\kB^2 T}{e}\,\dd\ln T/\dd E$; Wiedemann--Franz
 $\kappa_e/GT=\tfrac{\pi^2}{3}(\kB/e)^2$ ($\S4$).
 \item[(vi)] Parallel spins: $G=\sum G_\sigma$, $S=\tfrac{\sum G_\sigma S_\sigma}{\sum G_\sigma}$,
-and $\kappa_e=\sum\kappa_\sigma+$ bipolar term---the code now evaluates the full expression; the
-bipolar term is exactly zero at the operating point (minority channel gapped) ($\S5$).
+and $\kappa_e=\sum\kappa_\sigma+$ bipolar term---the code evaluates the full expression; the
+bracket vanishes inside the minority gap and is active (and included) at the minority-edge
+operating point ($\S5$).
 \item[(vii)] $\kappa_0=\pi^2\kB^2 T/3h$ ($\S6$).
 \item[(viii)] Self-consistent mean field $\Delta_i=U_{\rm eff}m_i$ with bulk calibration; LKAG
 exchange $J_{ij}=\tfrac1{2\pi}{\rm Im}\!\int^{E_F}\!{\rm Tr}[\Delta_i G^\uparrow_{ij}\Delta_j G^\downarrow_{ji}]$

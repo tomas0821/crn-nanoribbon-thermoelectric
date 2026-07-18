@@ -110,3 +110,15 @@ Bottom line: the thermoelectric gap is if anything MORE glaring — low-D CrN is
 magnetism, yet no thermoelectric/Landauer study exists. The "first thermoelectric/Landauer study of
 CrN nanoribbons" claim is solid, confirmed across all four databases. Do one last re-run just
 before submission.
+
+---
+
+## Final pre-submission re-check — 2026-07-18 · VERDICT: CLEAN
+Re-ran the toolkit ("CrN nanoribbon thermoelectric", "CrN nanoribbon Landauer"): Crossref,
+OpenAlex and Semantic Scholar all clean (arXiv timed out on the broad query; the three
+responding databases agree and all previous four-database checks were clean). The only CrN
+nanoribbon paper remains the DMRG magnetism/Boltzmann one (PRB 107, 205418 (2023)), which we
+cite and differentiate. The "first thermoelectric / phase-coherent Landauer study of CrN
+nanoribbons" claim stands. NOTE (post-audit): the manuscript's headline is now the HONEST
+result (extended model, ZT 0.04–0.15, spin-filter emphasis + manifold caution) — novelty claim
+unchanged by the correction.

@@ -1,8 +1,8 @@
 Highlights
 (Elsevier: 3-5 bullet points, each <= 85 characters including spaces)
 
-- First thermoelectric transport study of hexagonal CrN nanoribbons (no DFT).
-- Half-metallic edges yield a 100% spin-polarized thermoelectric current.
-- ZT peaks at a sharp band edge: ZT ~ 0.2-0.3 at 300 K, rising with temperature.
-- Design rules from edge type, ribbon width, doping window and temperature.
-- Self-consistent edge magnetism reproduces the DMRG magnetic CrN edges.
+- First thermoelectric (Landauer) study of CrN nanoribbons, no ab-initio input.
+- Minority channel gapped over 4 eV: transport is 100% spin-polarized when gated.
+- Honest ZT = 0.01-0.15 at 300 K; the optimum sits at the minority band edge.
+- A minimal orbital basis fabricates a sharp edge and overestimates ZT eightfold.
+- Phonon-Landauer kappa_ph anchored to the published DFPT phonon dispersion.

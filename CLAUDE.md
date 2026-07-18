@@ -29,10 +29,16 @@ analysis run on 2026-07-14.
 - **Re-verify novelty right before writing** — the nitride-nanoribbon field moves fast.
 
 ## Environment & commands
-- **No code exists yet** — this repo is currently plan + novelty-check notes only. When you
-  start coding, create a `requirements.txt` (`kwant`, `numpy`, `scipy`, `matplotlib`; PythTB
-  optional) and a virtual env; Kwant installs cleanly via conda/pip. Everything runs on a
-  laptop — no HPC, no VASP/QE.
+- **Code is complete** (`crnte/` package + `scripts/`), manuscript drafted
+  (`manuscript/manuscript.tex`). Run everything with `~/venvs/crn-te/bin/python` (isolated
+  Kwant venv, Python 3.12, numpy<2 — system Python 3.14 cannot build Kwant). Everything runs
+  on a laptop — no HPC, no VASP/QE. All production data quoted in the paper is cached in
+  `data/` (git-ignored; regenerate via `scripts/run_all_transmissions.py` + the fig scripts).
+- **Model note (2026-07-17):** the TB model is the EXTENDED 5-orbital one (d+p_z manifold + an
+  effective conduction orbital `c` fitted to Kuklin's digitized majority conduction pocket).
+  The reduced d+p_z manifold alone overestimates ZT ~8x (see `fig_manifold.png`) — do not
+  revert to it. κ_ph comes from `crnte/phonon.py` (phonon Landauer anchored to Modarresi's
+  DFPT dispersion), not from the old 4κ₀T estimate.
 - **Novelty re-check** (run before drafting *and* before submission):
   ```
   python3 /home/tomas/mnt/gdrive/Research/Current/lit-gap-toolkit/check_novelty.py \
@@ -45,6 +51,6 @@ analysis run on 2026-07-14.
   numbering (Fig 1–6, Tables 1–2) for output filenames so scripts trace to manuscript figures.
 
 ## First thing to do in a fresh session
-Read `paper_plan_...md`, then re-run the novelty check. The lowest-risk starting deliverable
-is Fig. 2 + Fig. 3 (TB band structures + transmission) for hexagonal CrN armchair/zigzag
-ribbons in Kwant.
+Read `00_Master_Notebook.md` (current state + honest headline results), then check the
+AI-handoff list there. Remaining pre-submission items: make the GitHub repo public (data
+statement promises it), run the final novelty re-check, submit.
