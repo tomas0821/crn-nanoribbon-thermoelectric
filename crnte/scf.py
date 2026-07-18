@@ -1,5 +1,9 @@
 """Self-consistent mean-field (unrestricted Hartree-Fock) machinery for CrN ribbon EDGES.
 
+NOTE: this module works in the reduced d+p_z manifold (build_H_dp) WITHOUT the effective
+conduction orbital c: the c pocket holds only ~0.07 e/Cr and contributes negligibly to the
+Cr moment, so the edge-magnetism analysis is unchanged by the transport-model extension.
+
 Stage 1 (this file, verified below): a hand-built 1D Bloch Hamiltonian H_sigma(k) for a ribbon of
 width N, with a SITE-DEPENDENT exchange shift on the Cr d orbitals -- the quantity the SCF loop
 will iterate. Constructing it by hand (rather than via Kwant) gives a clean orbital<->site index
@@ -139,7 +143,7 @@ def _bz_mesh(a, nk):
 
 def monolayer_moment(p, nk=60):
     """Cr-d occupation/moment and total filling of the fitted bulk at E_F=0 (diagnostic)."""
-    from .monolayer_sk import build_H
+    from .monolayer_sk import build_H_dp as build_H
     ncr = {+1: 0.0, -1: 0.0}
     ntot = 0
     for k in _bz_mesh(p.a, nk):
@@ -159,7 +163,7 @@ def bulk_scf(p, U_eff=U_EFF, N_e=N_E_PER_CELL, m_init=2.0, nk=40, mix=0.3, tol=1
     At fixed filling N_e, iterates Delta_ex = U_eff * m_Cr until the Cr-d moment converges.
     """
     import dataclasses
-    from .monolayer_sk import build_H
+    from .monolayer_sk import build_H_dp as build_H
     kpts = _bz_mesh(p.a, nk)
     m = m_init
     EF = 0.0
@@ -279,7 +283,9 @@ def edge_exchange(edge: str, N: int, p: SKParams, U_eff=U_EFF, nk=120, nE=400, e
             for n in neighbors:
                 integ[n][e] = np.trace((Gu[n] / nk) @ (Gd[n] / nk))
         for n in neighbors:
-            J[n] += (delta ** 2 / (2 * np.pi)) * np.imag(np.trapz(integ[n], Es)) * 1000.0  # meV
+            # J_ij = -d^2(Omega)/d(theta_i)d(theta_j): the cross-term of the Heisenberg form
+            # H = -sum J e_i.e_j is -J theta_i theta_j, hence the overall minus sign here.
+            J[n] += -(delta ** 2 / (2 * np.pi)) * np.imag(np.trapz(integ[n], Es)) * 1000.0  # meV
     J = {n: J[n] / len(edge_sites) for n in neighbors}                 # average over the two edges
     S = float(np.max(np.abs(m))) / 2.0
     return dict(J_lkag=J, J_heis={n: J[n] / S ** 2 for n in neighbors}, S=S,

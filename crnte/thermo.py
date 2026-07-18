@@ -51,7 +51,8 @@ def coefficients(E_eV, TE, mu_eV, T_K):
     Returns dict: G [S], S [V/K], kappa_e [W/K], PF [W/K^2], ZT_e [-], and raw L0,L1,L2.
     """
     L0, L1, L2 = onsager(E_eV, TE, mu_eV, T_K)
-    if L0 <= 0:   # no states in the window -> insulating, coefficients ill-defined
+    if L0 <= 1e-9:   # no states in the Fermi window (physical L0 >~ 1e-3): insulating.
+        # Guards against exponentially small L0 producing spurious huge S = L1/L0.
         return dict(G=0.0, S=0.0, kappa_e=0.0, PF=0.0, ZT_e=0.0, L0=L0, L1=L1, L2=L2)
     G = G0 * L0                                    # S
     S = -(1.0 / T_K) * (L1 / L0)                   # V/K   (L1/L0 in eV -> eV/e/K = V/K)

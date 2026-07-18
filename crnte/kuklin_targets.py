@@ -27,6 +27,34 @@ MAJORITY = {
     "deep_pi_bands": (-4.5, -3.5),  # figure+text: (d_xz,d_yz)+N p_z pi-dative bands
 }
 
+# --- digitized LOWEST majority (spin-up) conduction band CB1 (Kuklin Fig. 2d) ------------------
+# Digitized 2026-07-17 from the 300-dpi render of c6nr07790k.pdf p. 4. Calibration: E_F dashed
+# line at page-y 1091, 66.2 px/eV from the axis digit labels; k-columns Gamma=646, M=750, K=853,
+# Gamma'=957 (equal per-segment spacing). s is the path coordinate (Gamma=0, M=1, K=2, Gamma=3).
+# Estimated accuracy +/-0.1 eV in the transport window, +/-0.3 eV near Gamma (band crowding).
+# CB1 has the electron pocket at K (Kuklin text: CBM at K = -0.2 eV). The dip to +0.37 at
+# s=0.75 is the CB1/CB2 anticrossing; a single effective band smooths through it. A second
+# conduction band (CB2, min ~+0.6 near M) is NOT included in the model: it adds majority modes
+# only above ~+0.5 eV.
+CB1_DIGITIZED = [  # (s, E-E_F [eV])
+    (0.00, 2.41), (0.10, 2.42), (0.25, 2.56), (0.50, 1.64), (0.75, 0.37),
+    (0.90, 0.69), (1.00, 0.63), (1.10, 0.59), (1.25, 0.48), (1.50, 0.18),
+    (1.75, -0.07), (1.90, -0.20), (2.00, -0.21), (2.10, -0.14), (2.25, 0.34),
+    (2.50, 1.12), (2.75, 2.57), (2.90, 2.44),
+]
+# Weighted least-squares fit (weights favouring the transport window E < 1 eV) of a
+# Cr-triangular-sublattice band eps_c + t_c1*S1 + t_c2*S2 + t_c3*S3:
+CB1_FIT = {"eps_c": 0.9147, "t_c1": 0.2852, "t_c2": -0.0278, "t_c3": 0.0297}
+
+# --- digitized top majority valence band VB1 (same calibration; for reference/plotting) --------
+# Peaks at ~0 inside the Gamma-M and K-Gamma intervals (Kuklin text: VB touches E_F there),
+# dips to -0.8 at M and -1.6 at K. NOTE: the reduced 4-orbital pi* band reproduces the ~0 top
+# but places it near K rather than inside the intervals -- a stated limitation of the manifold.
+VB1_DIGITIZED = [
+    (0.75, -0.08), (1.00, -0.79), (1.25, -0.93), (1.50, -1.20), (1.75, -1.48),
+    (2.00, -1.60), (2.10, -1.53), (2.25, -0.89), (2.50, -0.21),
+]
+
 # --- minority (spin-down) band features (figure, ~+/-0.2 eV) ---
 MINORITY = {
     "vbm": -3.0,   # valence-band maximum (near M)

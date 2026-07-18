@@ -91,10 +91,14 @@ def transmission(syst, energies) -> np.ndarray:
     """
     out = np.empty(len(energies))
     for i, e in enumerate(energies):
-        for nudge in (0.0, 1e-6, -1e-6, 1e-5, -1e-5, 1e-4):
+        for nudge in (0.0, 1e-6, -1e-6, 1e-5, -1e-5, 1e-4, -1e-4):
             try:
                 s = kwant.smatrix(syst, energy=float(e) + nudge)
-                out[i] = s.transmission(1, 0)
+                t = s.transmission(1, 0)
+                n_open = len(s.lead_info[0].momenta) / 2   # propagating modes in lead 0
+                if not np.isfinite(t) or t < -1e-6 or t > n_open + 1e-6:
+                    continue          # ill-conditioned solve (can happen at band edges): nudge
+                out[i] = t
                 break
             except RuntimeError:
                 continue
