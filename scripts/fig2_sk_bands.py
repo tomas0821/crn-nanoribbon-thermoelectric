@@ -24,10 +24,11 @@ def sanity_checks(p):
     for _ in range(20):
         k = rng.normal(size=2)
         for spin in (+1, -1):
-            H = build_H(k, p, spin)
+            H = build_H(k, p, spin)   # orbital order: d_z2, d_xz, d_yz, c | p_z
             assert np.allclose(H, H.conj().T), "H not Hermitian"
-            assert abs(H[0, 3]) < 1e-12, "d_z2 should be non-bonding w.r.t. p_z"
-    print("sanity: Hermitian OK, d_z2-p_z decoupling OK")
+            assert abs(H[0, 4]) < 1e-12, "d_z2 should be non-bonding w.r.t. p_z"
+            assert abs(H[3, 4]) < 1e-12, "c should be decoupled from p_z"
+    print("sanity: Hermitian OK, d_z2/c - p_z decoupling OK")
 
 
 def main():
@@ -43,9 +44,18 @@ def main():
             ax.plot(x, e[:, b], **(style if b == 0 else {kk: v for kk, v in style.items()
                                                          if kk != "label"}))
 
-    # digitized target markers
+    # digitized Kuklin Fig. 2d points (spin-up): conduction band CB1 and valence band VB1.
+    # s in [0,3] is the equal-segment path coordinate Gamma-M-K-Gamma -> map to plot x.
+    def s_to_x(s):
+        seg = min(int(s), 2)
+        return ticks[seg] + (s - seg) * (ticks[seg + 1] - ticks[seg])
+    for pts, lab in ((kt.CB1_DIGITIZED, "digitized Kuklin CB1/VB1"),
+                     (kt.VB1_DIGITIZED, None)):
+        xs = [s_to_x(s) for s, _ in pts]
+        es = [E for _, E in pts]
+        ax.plot(xs, es, "o", ms=4, mfc="none", mec="C0", mew=1.2,
+                label=lab if pts is kt.CB1_DIGITIZED else None)
     ax.axhline(0.0, color="0.5", lw=0.7, ls=":")
-    ax.axhline(kt.MAJORITY["cbm_at_K"], color="C0", lw=0.6, ls=":")
     ax.axhline(kt.MINORITY["vbm"], color="C3", lw=0.6, ls=":")
     ax.axhline(kt.MINORITY["cbm"], color="C3", lw=0.6, ls=":")
     ax.text(ticks[-1], 0.05, " $E_F$", fontsize=8, color="0.4", va="bottom")
@@ -59,7 +69,7 @@ def main():
     ax.set_xlim(ticks[0], ticks[-1])
     ax.set_ylim(-5.5, 3.0)
     ax.set_ylabel(r"$E - E_F$ (eV)")
-    ax.set_title("h-CrN reduced SK model vs Kuklin targets")
+    ax.set_title("h-CrN extended SK model vs digitized Kuklin bands")
     ax.legend(frameon=False, fontsize=9, loc="upper right")
 
     out = os.path.join(FIGDIR, "fig2_sk_bands.png")

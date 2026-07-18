@@ -52,14 +52,18 @@ def main():
 
     fig, axs = plt.subplots(1, 2, figsize=(9.4, 3.8))
 
-    # (a) per-spin and charge Seebeck
-    axs[0].plot(MU, up["S"] * 1e6, color="C3", lw=1.8, label=r"$S_\uparrow$ (majority)")
-    axs[0].plot(MU, dn["S"] * 1e6, color="C0", lw=1.8, ls="--", label=r"$S_\downarrow$ (minority)")
+    # (a) per-spin and charge Seebeck. Mask each spin channel where its own conductance is
+    # negligible (deep in the gap S_sigma is exponentially activated and not meaningful).
+    G0 = 3.874e-5      # e^2/h in S
+    Sup = np.where(up["G"] > 1e-3 * G0, up["S"], np.nan)
+    Sdn = np.where(dn["G"] > 1e-3 * G0, dn["S"], np.nan)
+    axs[0].plot(MU, Sup * 1e6, color="C3", lw=1.8, label=r"$S_\uparrow$ (majority)")
+    axs[0].plot(MU, Sdn * 1e6, color="C0", lw=1.8, ls="--", label=r"$S_\downarrow$ (minority)")
     axs[0].plot(MU, tot["S"] * 1e6, color="k", lw=1.3, ls=":", label=r"$S_c$ (charge)")
     axs[0].set_xlabel(r"$\mu - E_F$ (eV)"); axs[0].set_ylabel(r"Seebeck ($\mu$V/K)")
     axs[0].set_title("(a) spin-resolved Seebeck (300 K)")
     axs[0].axvline(0, color="0.8", lw=0.6, ls=":"); axs[0].legend(frameon=False, fontsize=9)
-    axs[0].set_ylim(-1500, 1500)
+    axs[0].set_ylim(-450, 250)
 
     # (b) per-spin power factor + thermoelectric-current spin polarization
     ax = axs[1]
@@ -87,7 +91,10 @@ def main():
     # report the spin-polarized window
     near = np.abs(MU) < 0.5
     print(f"thermocurrent spin polarization at E_F: {100*P[np.argmin(np.abs(MU))]:.1f}%")
-    print(f"minority PF negligible for mu-E_F < ~1 eV; activates near the minority CBM (+1.0 eV)")
+    imx = int(np.argmax(dn["PF"]))
+    print(f"minority PF activates near the minority CBM: peak {dn['PF'][imx]*1e12:.3f} pW/K^2 "
+          f"at mu-E_F={MU[imx]:+.2f} eV")
+    print(f"min polarization over window: {100*np.nanmin(P):.1f}%  (majority background persists)")
     print(f"wrote {out}")
 
 

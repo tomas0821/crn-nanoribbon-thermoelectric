@@ -1,0 +1,2 @@
+zigzag N=14: J1=+59.23 meV, J2=+0.79 meV (Heisenberg J1/S^2=+30.33, J2/S^2=+0.40; S=1.397, m_edge=2.795)
+armchair N=14: J1=+0.36 meV, J2=+0.03 meV (Heisenberg J1/S^2=+0.18, J2/S^2=+0.01; S=1.422, m_edge=2.844)

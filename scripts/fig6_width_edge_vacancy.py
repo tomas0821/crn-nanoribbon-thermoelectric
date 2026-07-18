@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-"""Fig 6: design rules -- width dependence, edge type, and edge-vacancy enhancement of ZT.
+"""Fig 6: width, edge and temperature dependence of the thermoelectric response.
 
-(a) ZT(mu) at 300 K for zigzag widths N = 8, 14, 20.
-(b) peak ZT vs width N (zigzag).
+(a) ZT(mu) at 300 K for zigzag widths N = 8, 14, 20 (each with ITS OWN phonon-Landauer
+    kappa_ph(W), so the width trend includes the growth of the phonon background).
+(b) peak ZT vs width N for both edges at matched N.
 (c) zigzag vs armchair ZT(mu), N = 14.
-(d) edge-vacancy enhancement: pristine vs vacancy-disordered edges, zigzag N = 14.
+(d) ZT(T) at the 300-K optimal doping for the three zigzag widths.
 
-Uses the fitted SK ribbons + thermo module. ZT with the ballistic kappa_ph estimate at 300 K.
-Transmissions are cached under data/. Also prints Table 2 (peak ZT, optimal mu per config).
+Uses the unified fine T(E) caches (scripts/run_all_transmissions.py). Prints/writes Table 2.
 
 Run:  ~/venvs/crn-te/bin/python scripts/fig6_width_edge_vacancy.py
 """
@@ -23,36 +23,23 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from crnte import thermo as th  # noqa: E402
 from crnte.monolayer_sk import SKParams  # noqa: E402
-from crnte.ribbon_sk import build_ribbon_sk, transmission  # noqa: E402
+from crnte.phonon import kappa_ph, ribbon_width  # noqa: E402
 
 FIGDIR, DATADIR = os.path.join(ROOT, "figures"), os.path.join(ROOT, "data")
-os.makedirs(FIGDIR, exist_ok=True)
-os.makedirs(DATADIR, exist_ok=True)
-
-E_GRID = np.linspace(-0.8, 1.0, 301)
-MU = np.linspace(-0.5, 0.6, 221)
+MU = np.linspace(-0.6, 1.2, 361)
 T0 = 300.0
 
 
-def get_TE(p, edge, width, vac=0.0, seed=0):
-    tag = f"{edge}_N{width}" + (f"_vac{int(vac*100)}s{seed}" if vac > 0 else "") + "_cmp"
-    cache = os.path.join(DATADIR, tag + ".npz")
-    if os.path.exists(cache):
-        d = np.load(cache)
-        if d["E"].shape == E_GRID.shape and np.allclose(d["E"], E_GRID):
-            return d["T_up"], d["T_dn"]
-    print(f"  computing {tag} ...")
-    T_up = transmission(build_ribbon_sk(edge, width, p, +1, vacancy=vac, seed=seed), E_GRID)
-    T_dn = transmission(build_ribbon_sk(edge, width, p, -1, vacancy=vac, seed=seed), E_GRID)
-    np.savez(cache, E=E_GRID, T_up=T_up, T_dn=T_dn)
-    return T_up, T_dn
+def get_TE(edge, width):
+    d = np.load(os.path.join(DATADIR, f"{edge}_N{width}_TE.npz"))
+    return d["E"], d["T_up"], d["T_dn"]
 
 
-def zt_of_mu(T_up, T_dn, T_K=T0, kfac=1.0):
-    up = th.sweep_mu(E_GRID, T_up, MU, T_K)
-    dn = th.sweep_mu(E_GRID, T_dn, MU, T_K)
+def zt_of_mu(E, T_up, T_dn, W, T_K=T0, kfac=1.0):
+    up = th.sweep_mu(E, T_up, MU, T_K)
+    dn = th.sweep_mu(E, T_dn, MU, T_K)
     tot = th.combine_spins(up, dn, T_K)
-    return th.ZT(tot, T_K, kfac * th.kappa_ph_ballistic(T_K))
+    return th.ZT(tot, T_K, kfac * kappa_ph(T_K, W))
 
 
 def main():
@@ -61,60 +48,48 @@ def main():
 
     fig, axs = plt.subplots(2, 2, figsize=(10, 7.6))
 
-    # (a) width dependence + (b) peak ZT vs N
     widths = [8, 14, 20]
-    peak_zt, peak_mu = [], []
-    for N, col in zip(widths, ("C0", "C2", "C3")):
-        Tu, Td = get_TE(p, "zigzag", N)
-        zt = zt_of_mu(Tu, Td)
-        axs[0, 0].plot(MU, zt, color=col, lw=1.8, label=f"N = {N}")
-        i = int(np.argmax(zt))
-        peak_zt.append(zt[i]); peak_mu.append(MU[i])
-        rows.append(("zigzag", N, "pristine", zt[i], MU[i]))
+    peak_zt = {"zigzag": [], "armchair": []}
+    for edge in ("zigzag", "armchair"):
+        for N in widths:
+            E, Tu, Td = get_TE(edge, N)
+            W = ribbon_width(edge, N, p.a)
+            zt = zt_of_mu(E, Tu, Td, W)
+            i = int(np.argmax(zt))
+            peak_zt[edge].append(zt[i])
+            rows.append((edge, N, W, zt[i], MU[i]))
+            if edge == "zigzag":
+                col = {8: "C0", 14: "C2", 20: "C3"}[N]
+                axs[0, 0].plot(MU, zt, color=col, lw=1.8, label=f"N = {N}")
     axs[0, 0].set_title("(a) ZT vs doping — zigzag widths (300 K)")
     axs[0, 0].set_xlabel(r"$\mu - E_F$ (eV)"); axs[0, 0].set_ylabel("ZT")
     axs[0, 0].legend(frameon=False); axs[0, 0].axvline(0, color="0.8", lw=0.6, ls=":")
 
-    # (b) peak ZT vs width -- BOTH edges at matched N (fair edge comparison)
-    arm_peak = []
-    for N in widths:
-        Tu, Td = get_TE(p, "armchair", N)
-        zt = zt_of_mu(Tu, Td)
-        i = int(np.argmax(zt))
-        arm_peak.append(zt[i])
-        if N != 14:
-            rows.append(("armchair", N, "pristine", zt[i], MU[i]))
-    axs[0, 1].plot(widths, peak_zt, "o-", color="C2", lw=1.8, ms=8, label="zigzag")
-    axs[0, 1].plot(widths, arm_peak, "s--", color="C1", lw=1.8, ms=8, label="armchair")
+    axs[0, 1].plot(widths, peak_zt["zigzag"], "o-", color="C2", lw=1.8, ms=8, label="zigzag")
+    axs[0, 1].plot(widths, peak_zt["armchair"], "s--", color="C1", lw=1.8, ms=8, label="armchair")
     axs[0, 1].set_title("(b) peak ZT vs width, both edges")
     axs[0, 1].set_xlabel("ribbon width N"); axs[0, 1].set_ylabel("peak ZT (300 K)")
     axs[0, 1].set_xticks(widths); axs[0, 1].legend(frameon=False)
 
-    # (c) zigzag vs armchair at matched N=14
     for edge, col in (("zigzag", "C2"), ("armchair", "C1")):
-        Tu, Td = get_TE(p, edge, 14)
-        zt = zt_of_mu(Tu, Td)
-        axs[1, 0].plot(MU, zt, color=col, lw=1.8, label=edge)
-        i = int(np.argmax(zt))
-        if edge == "armchair":
-            rows.append(("armchair", 14, "pristine", zt[i], MU[i]))
+        E, Tu, Td = get_TE(edge, 14)
+        W = ribbon_width(edge, 14, p.a)
+        axs[1, 0].plot(MU, zt_of_mu(E, Tu, Td, W), color=col, lw=1.8, label=edge)
     axs[1, 0].set_title("(c) edge type — ZT vs doping (N=14, 300 K)")
     axs[1, 0].set_xlabel(r"$\mu - E_F$ (eV)"); axs[1, 0].set_ylabel("ZT")
     axs[1, 0].legend(frameon=False); axs[1, 0].axvline(0, color="0.8", lw=0.6, ls=":")
 
-    # (d) ZT(T) at optimal doping for the three zigzag widths
     temps = np.linspace(50, 700, 60)
     for N, col in zip(widths, ("C0", "C2", "C3")):
-        Tu, Td = get_TE(p, "zigzag", N)
-        # optimal mu at 300 K
-        zt300 = zt_of_mu(Tu, Td, 300.0)
+        E, Tu, Td = get_TE("zigzag", N)
+        W = ribbon_width("zigzag", N, p.a)
+        zt300 = zt_of_mu(E, Tu, Td, W, 300.0)
         mu_opt = MU[int(np.argmax(zt300))]
         zt_t = []
         for T2 in temps:
-            u = th.sweep_mu(E_GRID, Tu, np.array([mu_opt]), T2)
-            dd = th.sweep_mu(E_GRID, Td, np.array([mu_opt]), T2)
-            zt_t.append(float(th.ZT(th.combine_spins(u, dd, T2), T2,
-                                    th.kappa_ph_ballistic(T2))[0]))
+            u = th.sweep_mu(E, Tu, np.array([mu_opt]), T2)
+            dd = th.sweep_mu(E, Td, np.array([mu_opt]), T2)
+            zt_t.append(float(th.ZT(th.combine_spins(u, dd, T2), T2, kappa_ph(T2, W))[0]))
         axs[1, 1].plot(temps, zt_t, color=col, lw=1.8, label=f"N = {N}")
     axs[1, 1].set_title("(d) ZT(T) at optimal doping (zigzag)")
     axs[1, 1].set_xlabel("temperature (K)"); axs[1, 1].set_ylabel("ZT")
@@ -123,15 +98,14 @@ def main():
     fig.tight_layout()
     fig.savefig(os.path.join(FIGDIR, "fig6_width_edge_vacancy.png"), dpi=200)
 
-    # Table 2
-    print("\nTable 2 (peak ZT @300K, ballistic kappa_ph):")
-    print(f"{'edge':10s} {'N':>3s} {'config':18s} {'peakZT':>7s} {'mu-E_F':>7s}")
+    print("\nTable 2 (peak ZT @300K, phonon-Landauer kappa_ph(W)):")
+    print(f"{'edge':10s} {'N':>3s} {'W(A)':>6s} {'peakZT':>8s} {'mu-E_F':>7s}")
     for r in rows:
-        print(f"{r[0]:10s} {r[1]:3d} {r[2]:18s} {r[3]:7.3f} {r[4]:+7.2f}")
+        print(f"{r[0]:10s} {r[1]:3d} {r[2]:6.1f} {r[3]:8.4f} {r[4]:+7.2f}")
     with open(os.path.join(DATADIR, "table2.txt"), "w") as fh:
-        fh.write("edge  N  config  peakZT  mu-E_F(eV)\n")
+        fh.write("edge  N  W(A)  peakZT  mu-E_F(eV)\n")
         for r in rows:
-            fh.write(f"{r[0]}  {r[1]}  {r[2]}  {r[3]:.3f}  {r[4]:+.2f}\n")
+            fh.write(f"{r[0]}  {r[1]}  {r[2]:.1f}  {r[3]:.4f}  {r[4]:+.2f}\n")
     print("wrote figures/fig6_width_edge_vacancy.png, data/table2.txt")
 
 

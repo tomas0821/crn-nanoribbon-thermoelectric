@@ -115,19 +115,20 @@ def panel_zigzag(ax):
 
 
 def panel_armchair(ax):
-    # theta=90 deg: horizontal cuts are armchair edges. Wide (periodic x), a few rows tall.
-    xl, yl = (0.4, 11.5), (0.2, 6.4)
-    crin, _ = draw(ax, xl, yl, theta=np.pi / 2)
+    # theta=90 deg: horizontal cuts are armchair edges. Wide (periodic x), several rows tall.
+    xl, yl = (0.4, 12.4), (1.0, 9.4)
+    crin, nnin = draw(ax, xl, yl, theta=np.pi / 2, s=110)
     ytop, ybot = crin[:, 1].max(), crin[:, 1].min()
-    ax.annotate("", xy=(11.7, ybot), xytext=(11.7, ytop),
+    ylow = min(ybot, nnin[:, 1].min())          # N atoms can stick out below the lowest Cr
+    ax.annotate("", xy=(12.7, ybot), xytext=(12.7, ytop),
                 arrowprops=dict(arrowstyle="<->", color="k"))
-    ax.text(12.0, (ytop + ybot) / 2, r"width $N$", rotation=90, va="center", fontsize=11)
-    ax.annotate("", xy=(1.0, ybot - 0.75), xytext=(9.5, ybot - 0.75),
+    ax.text(13.0, (ytop + ybot) / 2, r"width $N$", rotation=90, va="center", fontsize=11)
+    ax.annotate("", xy=(1.0, ylow - 0.85), xytext=(9.5, ylow - 0.85),
                 arrowprops=dict(arrowstyle="<->", color="0.4"))
-    ax.text(5.2, ybot - 1.15, "periodic (transport)", color="0.4", fontsize=9, ha="center")
+    ax.text(5.2, ylow - 1.3, "periodic (transport)", color="0.4", fontsize=9, ha="center")
     ax.set_title("(c) Armchair ribbon (ACNR)", fontsize=13)
-    ax.set_xlim(xl[0] - 0.3, xl[1] + 1.3)
-    ax.set_ylim(ybot - 1.6, ytop + 0.8)
+    ax.set_xlim(xl[0] - 0.3, xl[1] + 1.8)
+    ax.set_ylim(ylow - 1.7, ytop + 0.8)
 
 
 def main():

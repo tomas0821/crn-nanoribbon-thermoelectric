@@ -29,9 +29,13 @@ def main():
     configs = [("zigzag", 14, "C2", "o"), ("zigzag", 20, "C0", "s"), ("armchair", 14, "C1", "^")]
 
     fig, ax = plt.subplots(figsize=(6.4, 4.4))
+    cache = {}
     for edge, N, col, mk in configs:
         r = scf.ribbon_scf(edge, N, p, nk=60)
         rows, m = r["rows"], r["m"]
+        cache[f"{edge}_N{N}_rows"] = rows
+        cache[f"{edge}_N{N}_m"] = m
+        cache[f"{edge}_N{N}_summary"] = np.array([r["m_interior"], r["m_edge"], r["iters"]])
         o = np.argsort(rows)
         # centre and normalise transverse coordinate to [0, N-1] site index
         x = np.arange(len(rows))
@@ -47,6 +51,7 @@ def main():
     ax.legend(frameon=False, fontsize=8.5)
     ax.grid(alpha=0.25)
     fig.tight_layout()
+    np.savez(os.path.join(ROOT, "data", "edgemag.npz"), **cache)
     out = os.path.join(FIGDIR, "fig_edgemag.png")
     fig.savefig(out, dpi=200)
     print(f"wrote {out}")

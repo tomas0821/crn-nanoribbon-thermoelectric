@@ -22,17 +22,21 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 from crnte import thermo as th  # noqa: E402
 from crnte.monolayer_sk import SKParams  # noqa: E402
+from crnte.phonon import kappa_ph, ribbon_width  # noqa: E402
 from crnte.ribbon_sk import build_ribbon_sk, transmission  # noqa: E402
 
 FIGDIR = os.path.join(ROOT, "figures")
-EMIN, EMAX = -0.6, 0.9
-MU = np.linspace(-0.1, 0.5, 121)
+EMIN, EMAX = -0.6, 1.5
+MU = np.linspace(-0.4, 1.2, 321)
+
+
+W14 = ribbon_width("zigzag", 14, SKParams().a)
 
 
 def peak_zt(E, Tu, Td, T_K):
     up = th.sweep_mu(E, Tu, MU, T_K)
     dn = th.sweep_mu(E, Td, MU, T_K)
-    zt = th.ZT(th.combine_spins(up, dn, T_K), T_K, th.kappa_ph_ballistic(T_K))
+    zt = th.ZT(th.combine_spins(up, dn, T_K), T_K, kappa_ph(T_K, W14))
     return float(zt.max())
 
 
@@ -83,6 +87,9 @@ def main():
     out = os.path.join(FIGDIR, "fig8_convergence.png")
     fig.savefig(out, dpi=200)
 
+    np.savez(os.path.join(ROOT, "data", "convergence.npz"),
+             dEs=np.array(dEs), zt300=np.array(zt300), zt100=np.array(zt100),
+             lengths=np.array(lengths), ztL=np.array(ztL))
     rel300 = abs(zt300[-1] - zt300[-2]) / zt300[-1] * 100
     print(f"\nRelative change of peak ZT(300K) from dE=0.005 -> 0.0025: {rel300:.2f}%")
     print(f"Length spread of peak ZT: {max(ztL)-min(ztL):.4f} (should be ~0 for pristine)")
