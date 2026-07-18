@@ -1,0 +1,8 @@
+Substrate OFF-window backing (literature, Kuklin et al. Nanoscale 9, 621 (2017), main text p. 627 + Fig. 5):
+- h-CrN/MoSe2 (all three stackings): "100% spin polarized with a 1.43 eV spin-down band gap"
+- h-CrN/MoS2: "100% spin-polarized half-metallic nature ... with 1.71 eV spin-down band gaps"
+- Cr moments preserved (2.74-2.86 mu_B).
+=> valve OFF window on substrates = minority gap = 1.43-1.71 eV (~55-66 k_B T at 300 K).
+NOTE: our rigid-shift model CANNOT reproduce this narrowing (reducing Delta_ex collapses the
+minority CBM onto E_F at Delta ~ 2.6 eV); the composite narrowing involves band realignment,
+so the manuscript quotes the composite DFT values directly instead of a model rerun.

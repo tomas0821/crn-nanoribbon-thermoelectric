@@ -239,6 +239,10 @@ def build_spin_valve(edge: str, width: int, p: SKParams, spin: int,
                 lead[kwant.builder.HoppingKind(delta, cr, cr)] = mat
         return lead
 
-    syst.attach_lead(make_lead(spin))              # lead 0: magnetized +z
-    syst.attach_lead(make_lead(-spin).reversed())  # lead 1: magnetized -z
+    # Kwant attaches a lead on the side its symmetry vector points toward: reverse the
+    # +z lead so it sits on the LEFT (matching the +z-magnetized left half of the region).
+    # For the collinear valve this placement does not affect T (spin channels never mix),
+    # but it keeps the geometry consistent with crnte.valve.build_wall_valve.
+    syst.attach_lead(make_lead(spin).reversed())   # lead 0: magnetized +z, left
+    syst.attach_lead(make_lead(-spin))             # lead 1: magnetized -z, right
     return syst.finalized()

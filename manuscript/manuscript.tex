@@ -29,25 +29,24 @@ Universidad de Costa Rica, San Jos\'e, Costa Rica}
 
 \begin{abstract}
 We present the first thermoelectric-transport characterization of hexagonal (honeycomb) CrN
-nanoribbons, using a Slater--Koster tight-binding model fitted to the published first-principles
-bands of the half-metallic $h$-CrN monolayer and phase-coherent Landauer transport (Kwant), with
-no fresh ab-initio computation. The model retains the out-of-plane Cr
-$d_{z^2},d_{xz},d_{yz}$/N~$p_z$ manifold and, crucially, an effective conduction orbital fitted
-to the digitized majority conduction band, whose electron pocket at $K$ the reduced manifold
-misses. Restoring this pocket removes an artificially sharp transmission edge above $E_F$ and
+nanoribbons, using a Slater--Koster tight-binding model fitted to the published bands of the
+half-metallic $h$-CrN monolayer and phase-coherent Landauer transport, with no fresh ab-initio
+computation. The model adds to the out-of-plane Cr~$d$/N~$p_z$ manifold an effective conduction
+orbital fitted to the digitized majority conduction band that the reduced manifold misses. Restoring this pocket removes an artificially sharp transmission edge above $E_F$ and
 collapses the apparent figure of merit from $ZT\simeq0.3$ to an honest $ZT\simeq0.01$--$0.15$ at
 $300$~K---a caution for minimal-basis nanoribbon thermoelectric studies
-that parameter-sensitivity checks cannot detect. The phonon thermal conductance is a ballistic
+that parameter sensitivity cannot detect. The phonon thermal conductance is a ballistic
 phonon-Landauer estimate anchored to the published phonon dispersion. The ribbons are outstanding spin filters: the minority channel is gapped over
 more than $4$~eV, so charge and thermoelectric currents are $100\%$ spin-polarized throughout
-the accessible doping window. The largest thermoelectric response
+the accessible window. The largest thermoelectric response
 arises at the minority conduction-band edge ($\mu-E_F\simeq+1.0$~eV), where the opening minority
-channel supplies a large partial Seebeck coefficient at the cost of spin polarization; within
+channel supplies a large partial Seebeck coefficient at the cost of polarization; within
 the fully polarized window the narrow armchair $N{=}8$ ribbon performs best
-($ZT\simeq0.15$ at $300$~K). The same gap makes the ribbon a thermally driven spin valve:
-with antiparallel lead magnetizations the coherent transmission---and hence the
-thermocurrent---vanishes identically across the window. A self-consistent mean-field treatment
-reproduces the magnetic edges and the sign and hierarchy of their exchange couplings.
+($ZT\simeq0.15$ at $300$~K). The same gap makes the ribbon a thermally driven spin valve: for
+collinear antiparallel junctions the coherent transmission vanishes identically across the
+window, and a noncollinear calculation shows this OFF state requires a magnetization reversal
+sharper than $\sim$$1$~nm (a constrained wall or spacer). A self-consistent mean-field
+treatment reproduces the magnetic edges and their exchange-coupling hierarchy.
 \end{abstract}
 
 \begin{keyword}
@@ -437,35 +436,80 @@ axis).}
 \label{sec:valve}
 The half-metallic window enables a two-terminal function that is stronger than spin filtering.
 Consider the same ribbon with the magnetizations of its two halves (and leads) aligned
-antiparallel---a collinear, abrupt domain wall, realizable by exchange bias or a local
-field on one segment. Spin remains a good quantum number, and each spin species is then
+antiparallel, realizable by exchange bias or a local field on one segment. For a
+\emph{collinear} junction spin remains a good quantum number, and each spin species is then
 majority on one side but sits \emph{inside the minority gap} on the other: there are no
-propagating states for it to transmit into. Consequently the coherent transmission vanishes
-identically over the entire half-metallic window,
-$T_{\rm AP}(E)=0$ for $E-E_F\in[-3.2,+1.0]$~eV [Fig.~\ref{fig:valve}(a)]---an exact
-\emph{lead-spectrum} effect, independent of the domain-wall shape or length (our numerics
-return $T_{\rm AP}$ at machine zero). Both the electrical conductance and the thermally driven
-current therefore switch off [Fig.~\ref{fig:valve}(b)]: the ribbon is a thermal spin valve
-whose OFF-state leakage is set only by spin-flip scattering and by thermal activation across
-the remaining gap ($\gtrsim0.8$~eV at the operating points considered here, i.e.\ an
-activation factor $e^{-\Delta/k_BT}\sim10^{-14}$ at room temperature). This is the
+propagating states for it to transmit into. The coherent transmission then vanishes
+identically over the entire half-metallic window, $T_{\rm AP}(E)=0$ for
+$E-E_F\in[-3.2,+1.0]$~eV [Fig.~\ref{fig:valve}(a)]---an exact lead-spectrum effect (our
+numerics return $T_{\rm AP}$ at machine zero). Both the electrical conductance and the
+thermally driven current switch off [Fig.~\ref{fig:valve}(b)]: a thermal spin valve, the
 thermally driven, single-material counterpart of the CrN/P/CrN lateral spin
-valve~\cite{Modarresi2019}. We restrict the quantitative claim to the OFF window: above the
+valve~\cite{Modarresi2019}. The magnetization-dependent thermopower readout that such a device
+requires is experimentally established in magnetic tunnel
+junctions~\cite{Walter2011,Liebing2011}.
+
+How sharp must the magnetization reversal be? A real junction hosts a domain wall of finite
+width $\lambda$, and a noncollinear texture mixes the spin channels: carriers can rotate their
+spin adiabatically with the local exchange field and leak through---the classic
+spin-mistracking physics of domain-wall resistance~\cite{Cabrera1974,Tatara1997,vanHoof1999}.
+We quantify this with a fully spinful calculation: a Walker profile
+$\theta(x)=2\arctan e^{(x-x_0)/\delta}$ (width $\lambda=\pi\delta$) interpolating between the
+antiparallel leads, with the exchange field $\tfrac{\Delta}{2}\,\hat n(x)\cdot\boldsymbol\sigma$
+on the Cr orbitals. Figure~\ref{fig:wall} shows the result: the OFF state survives only for
+walls sharper than $\lambda_{1/2}\simeq9$~\AA\ (half-transparency at $E_F$), and walls wider
+than $\sim$$3$~nm are fully transparent ($T_{\rm AP}\to T_{\rm P}$, the adiabatic limit,
+reached exactly in our numerics). The crossover scale is consistent with the mistracking
+length $\hbar v_F/\Delta_{\rm ex}\simeq0.4$~\AA\ times the number of exchange precessions
+accumulated across the wall, and with the first-principles finding that wide walls in
+ballistic ferromagnets are nearly transparent~\cite{vanHoof1999}. The OFF state therefore
+requires an \emph{atomically sharp} reversal. Two established routes provide it: a
+geometrically constrained wall, whose width is set by a nanoconstriction rather than by the
+bulk exchange--anisotropy balance~\cite{Bruno1999}, and a nonmagnetic spacer separating the two
+segments---precisely the CrN/P/CrN geometry~\cite{Modarresi2019}, in which no magnetic texture
+connects the halves. Experimentally, magnetically misaligned interfaces between half-metallic
+grains are indeed strongly resistive~\cite{Coey1998}, and the measured resistance of a single
+domain wall in a nearly half-metallic manganite exceeds mistracking estimates by orders of
+magnitude~\cite{Mathur1999}, suggesting that our coherent adiabatic limit is, if anything, an
+upper bound on the leakage. Two further practical remarks, both anchored to published
+first-principles results: on the proposed stabilizing substrates the OFF window equals the
+composite minority gap, $1.43$~eV ($h$-CrN/MoSe$_2$) to $1.71$~eV
+($h$-CrN/MoS$_2$)~\cite{Kuklin2017}---still $\sim$$55\,k_BT$ at room temperature; and above the
 minority band edge the AP transmission computed in our model is suppressed by the symmetry
-decoupling of the effective conduction orbital and is not reliable there. The device premise
-is the standard one for spin valves: the magnetization of one segment is set externally
-(exchange bias or a local field), which is compatible with the robust ferromagnetic order
-along each edge (Sec.~\ref{sec:edgemag}).
+decoupling of the effective conduction orbital, so we restrict the quantitative claim to the
+OFF window. The one ingredient no published calculation supplies is the \emph{intrinsic}
+(unconstrained) wall width of $h$-CrN, $\lambda_{\rm int}=\pi\sqrt{A/K}$: it requires the
+magnetocrystalline anisotropy $K$, which demands spin--orbit coupling absent from our model
+and, to our knowledge, unreported for $h$-CrN. A single-unit-cell noncollinear DFT+$U$+SOC
+calculation of $K$---a small, standard computation---combined with the exchange stiffness $A$
+from the DMRG couplings~\cite{CrNdmrg2023} would fix $\lambda_{\rm int}$ and thereby decide
+whether an unconstrained wall (almost certainly wider than $1$~nm, as in all soft $3d$
+magnets) must be excluded by design, as the constriction and spacer routes above already
+ensure.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig_spinvalve.png}
 \caption{Thermal spin valve (zigzag $N=14$). (a) Total transmission for parallel (P) and
-antiparallel (AP) magnetizations of the two leads: in the AP configuration each spin species
-has no propagating states in one of the leads, so $T_{\rm AP}(E)=0$ identically across the
-half-metallic window. (b) The resulting conductance switch at $300$~K; the thermocurrent
+collinear antiparallel (AP) magnetizations of the two leads: in the AP configuration each spin
+species has no propagating states in one of the leads, so $T_{\rm AP}(E)=0$ identically across
+the half-metallic window. (b) The resulting conductance switch at $300$~K; the thermocurrent
 switches off identically.}
 \label{fig:valve}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\columnwidth]{fig_wall.png}
+\caption{Domain-wall leakage of the OFF state (spinful noncollinear calculation, zigzag
+$N=14$). (a) Antiparallel transmission versus wall width $\lambda$ at $E_F$ and at
+$+0.5$~eV; dotted lines mark the parallel-configuration values reached in the adiabatic
+(wide-wall) limit. (b) Same at $E_F$ on a log scale: the exactly collinear junction
+($\lambda=0$, $T=0$) is a singular point; half transparency is reached already at
+$\lambda_{1/2}\simeq9$~\AA. The OFF state requires an atomically sharp reversal---a
+geometrically constrained wall~\cite{Bruno1999} or a nonmagnetic
+spacer~\cite{Modarresi2019}.}
+\label{fig:wall}
 \end{figure}
 
 \subsection{Edge magnetism}
@@ -549,9 +593,11 @@ spin filters, they are outstanding: the minority channel is gapped over more tha
 charge and heat currents are $100\%$ spin polarized across the entire realistic doping window,
 and the magnetic edges that enable this are reproduced self-consistently, including the sign and
 hierarchy of their exchange couplings. The same gap powers a two-terminal function: with
-antiparallel lead magnetizations the coherent transmission vanishes identically over the whole
-window, making the ribbon a thermally driven spin valve whose OFF state is enforced by the lead
-spectra rather than by interface details. Methodologically, we showed that the minimal orbital
+collinear antiparallel lead magnetizations the coherent transmission vanishes identically over
+the whole window---a thermally driven spin valve; our noncollinear domain-wall calculation
+shows the OFF state survives only for magnetization reversals sharper than about a nanometre,
+singling out geometrically constrained or spacer-separated junctions as the working
+geometries. Methodologically, we showed that the minimal orbital
 manifold suggested by the states at $E_F$ fabricates a sharp band edge and an almost
 order-of-magnitude overestimate of $ZT$---an artifact invisible to parameter-sensitivity
 analysis---which is a concrete caution for minimal-basis nanoribbon thermoelectric studies in

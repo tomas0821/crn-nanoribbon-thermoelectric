@@ -60,16 +60,40 @@ conduction pocket), phonons from Modarresi et al., *PRApplied* 11, 064015 (2019)
 
 ## Simulation Logs
 
+### Run: wall_leakage_spinful — 2026-07-18 ⭐ KEY QUANTIFICATION (supersedes the "robust to
+wall details" wording of the first valve entry)
+
+`crnte/valve.py`: FULL SPINFUL noncollinear calculation (Cr 4 orb × 2 spins, N p_z × 2; Walker
+wall θ(x)=2 arctan e^{(x−x0)/δ}, width λ=πδ; exchange (Δ/2)(1−n̂·σ) on Cr orbitals).
+**Corrected a lead-placement bug** (Kwant attaches a lead on the side its symmetry vector
+points toward — the θ=0 lead sat on the wrong side, faking an OFF state at ALL wall widths;
+caught by the 1D-chain textbook test + uniform-rotation invariance check T=8.000000).
+Honest result (`data/wall_sweep.npz/.txt`, `fig_wall.png`): OFF state survives only for
+atomically sharp reversals — **λ_1/2 ≈ 9 Å at E_F; λ ≳ 3 nm walls are fully transparent**
+(T→T_P exactly, adiabatic limit; both limits validated). Mistracking scale ħv_F/Δ_ex ≈ 0.4 Å
+(ħv_F = 1.35 eV·Å from the lead bands). Literature anchors (all Crossref-verified, added to
+refs.bib): Cabrera–Falicov 1974, Tatara–Fukuyama PRL 1997, van Hoof et al. PRB 1999 (wide
+walls transparent), Bruno PRL 1999 (constrained walls atomically sharp), Coey PRL 1998 (CrO₂
+grain-boundary MR), Mathur JAP 1999 (manganite DW resistance ≫ mistracking), Walter Nat.
+Mater. 2011 + Liebing PRL 2011 (magneto-Seebeck readout exists). Substrate OFF window:
+literature-direct from Kuklin composites (1.43/1.71 eV, 100% spin-polarized;
+`data/substrate_window.txt`; our rigid-shift model CANNOT reproduce the narrowing — band
+realignment — so the composite values are quoted, not modeled). **Planned (not run) DFT to fix
+the one unbacked number:** single-unit-cell noncollinear DFT+U+SOC magnetocrystalline
+anisotropy K of h-CrN (VASP/QE, few orientations, ~few hundred core-hours on HPC@UCR);
+with exchange stiffness A from DMRG J1 → intrinsic wall width λ_int = π√(A/K), deciding
+whether unconstrained walls exceed λ_1/2 (almost certainly yes → constriction/spacer designs
+required, as the paper already prescribes).
+
 ### Run: thermal_spin_valve — 2026-07-18 ⭐ NEW RESULT
 
 `build_spin_valve` (ribbon_sk): two-terminal ribbon with ANTIPARALLEL lead magnetizations
 (collinear abrupt wall). Exact result: each spin species is majority in one lead and inside the
 minority gap in the other → **T_AP(E) = 0 identically over the whole half-metallic window**
 (numerics: machine zero on the full 5-meV grid, `data/zigzag_N14_valve.npz`). G_P(E_F) = 7.3
-e²/h vs G_AP = 0 → thermally driven spin valve; OFF leakage set only by spin-flip + activation
-(e^{−Δ/kT} ~ 1e−14 at 300 K). Claim restricted to the OFF window (above +1.0 eV the c-orbital
-decoupling makes the AP onset unquantitative). Figure `fig_spinvalve.png` + manuscript
-§"A thermally driven spin valve". Inter-edge P/AP mean-field ΔE was computed
+e²/h vs G_AP = 0 → thermally driven spin valve. Claim restricted to the OFF window (above
++1.0 eV the c-orbital decoupling makes the AP onset unquantitative). Figure `fig_spinvalve.png`
++ manuscript §"A thermally driven spin valve". Inter-edge P/AP mean-field ΔE was computed
 (`data/spinvalve.txt`) but is NOT quoted in the paper — rigid-shift MF without charge
 self-consistency is unreliable for that ΔE; the valve premise is external control (exchange
 bias), standard for spin valves. Graphical abstract added (`graphical_abstract.png`, 1660×550).

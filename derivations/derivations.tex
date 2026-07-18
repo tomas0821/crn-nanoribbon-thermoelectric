@@ -461,6 +461,26 @@ ferromagnetic $J_1>0$---the
 DMRG sign, hierarchy and order of magnitude. Mapping onto a spin-$S$ model uses $J^{\rm Heis}=J/S^2$
 with $S=m_{\rm edge}/2$.
 
+\subsection{Spinful domain-wall junction}
+For the antiparallel valve with a noncollinear wall the two spin channels mix and the full
+spinful Hamiltonian is needed: each orbital block acquires
+\begin{equation}
+H_{\rm ex}(x)=\tfrac{\Delta}{2}\big[\mathbb 1-\hat n(x)\!\cdot\!\boldsymbol\sigma\big],
+\qquad \hat n=(\sin\theta,0,\cos\theta),\qquad
+\theta(x)=2\arctan e^{(x-x_0)/\delta},
+\end{equation}
+(Walker profile, wall width $\lambda=\pi\delta$), which for $\hat n=+\hat z$ reproduces the
+collinear convention (majority unshifted, minority $+\Delta$). Hoppings are spin diagonal.
+Checks: a uniform rotation ($\theta$ constant everywhere) leaves $T$ exactly invariant
+(verified: $T=8.000000$ at $E_F$ for several $\theta$); $\delta\to0$ reproduces the exact
+collinear OFF state ($T=0$ at machine precision); $\lambda\gtrsim3$~nm reaches the adiabatic
+limit $T\to T_{\rm P}$ exactly (spin tracks the texture). The crossover
+($\lambda_{1/2}\simeq9$~\AA\ at $E_F$) is governed by the mistracking scale
+$\hbar v_F/\Delta_{\rm ex}\simeq0.4$~\AA\ (Cabrera--Falicov). NOTE: Kwant attaches a lead on
+the side its symmetry vector points toward; an early version of the wall builder had the
+$\theta{=}0$ lead on the wrong side, creating a spurious collinear-blocked contact -- caught by
+the uniform-rotation and adiabatic-limit checks above.
+
 %======================================================================
 \section{Summary of results to check}
 \begin{itemize}
