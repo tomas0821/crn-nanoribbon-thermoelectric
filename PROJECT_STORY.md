@@ -1,9 +1,10 @@
 # PROJECT_STORY — CrN nanoribbon thermoelectric
 
-*Re-immersion narrative, written 2026-08-03 (walkthrough session). Reading this should take
-~10 minutes and restore full context. Companion files: `00_Master_Notebook.md` (the spine,
-run-by-run), `referee_report_2026-07-29.md` (round-1 panel), `NOVELTY_CHECK.md` (claim
-provenance). Figures referenced by filename live in `figures/`.*
+*Re-immersion narrative, written 2026-08-03 (walkthrough session); Phase 7 and the synthesis
+updated 2026-08-04. Reading this should take ~10 minutes and restore full context. Companion
+files: `00_Master_Notebook.md` (the spine, run-by-run), `referee_report_2026-07-29.md` and
+`referee_report_2026-08-04.md` (the two panel rounds), `NOVELTY_CHECK.md` (claim provenance).
+Figures referenced by filename live in `figures/`.*
 
 ---
 
@@ -126,6 +127,29 @@ the thermal spin valve; conclusions rewritten as four explicit claims; six refer
 2021); manuscript rebuilds clean at 26 pp. (Environment note: the WSL image had been rebuilt —
 the Kwant venv and TeX Live were gone; venv rebuilt per the memory recipe, TinyTeX installed.)
 
+## Phase 7 — Round 2 and convergence (2026-08-04) *(added 2026-08-04)*
+
+A second panel re-read the revised draft *against the round-1 report*: each referee
+adjudicated its own round-1 points (quoting the revised text as evidence) and hunted for
+problems introduced by the revision itself. Verdict: **minor revisions**, up from major — 18
+of 21 round-1 majors fully resolved, two partially (least-squares weight values still
+qualitative; figure count still 12), one unresolved being the user-side repo/tag blocker, and
+nothing refuted this round. The two new majors were both artifacts of the revision, which is
+exactly what a second round exists to catch: (1) the §3.1 claim that the π*-pinned variant
+"leaves the qualitative landscape intact" was contradicted by our own `pistar_pinned.txt` —
+in the pinned variant the *global* optimum relocates off the minority edge into the polarized
+window for four of six geometries, weakening design rule (i); and (2) the new Table 2 bracket
+columns overflowed the text block by 102 pt (verified by independent recompilation). Both
+were fixed the same day, along with 12 deduplicated minors (exact pinned factors ×2.3/+56%,
+two stale cross-references, the ZA min(quadratic, sine) rule stated explicitly, per-λ wall
+convergence numbers, Fig. 6(d) replotted from 100 K, Song 2020 characterized correctly,
+Modarresi as a first-principles *proposal*, abstract cut to 198 words, floats reordered to
+citation order). The pinned-variant results now live in §3.5 where they belong, stated
+honestly: the systematic demotes the minority-edge optima while the armchair-N=8 flagship is
+untouched. Everything from both rounds was committed as `a91952f` and pushed; `papers_md/`
+(copyrighted full texts) and the NotebookLM artifacts were deliberately kept out of the
+soon-public repository via `.gitignore`.
+
 ---
 
 ## The story in five sentences
@@ -141,10 +165,11 @@ modest thermoelectrics (ZT ≈ 0.04–0.15 at 300 K) but outstanding spin physic
 spin-polarized transport over a ~4 eV window, with the narrow armchair N=8 ribbon uniquely
 combining its best ZT with full polarization. The same gap yields a thermal spin valve with an
 exact collinear OFF state, which any continuous domain wall destroys (half transparency at
-9 Å) — so constrained-wall or spacer junctions are the working geometries. An adversarial
-referee panel then hardened the manuscript: numeric and honesty defects were fixed, methods
-made reproducible, prior art positioned, and the flagship result shown robust against the
-model's one known systematic.
+9 Å) — so constrained-wall or spacer junctions are the working geometries. Two adversarial
+referee-panel rounds then hardened the manuscript — round 1 (major revisions) fixed the
+numeric and honesty defects, made the methods reproducible and positioned the prior art;
+round 2 (minor revisions) caught the two defects the revision itself introduced — and the
+flagship result survived every stress test unchanged.
 
 ## The three load-bearing results
 
@@ -160,15 +185,16 @@ model's one known systematic.
    ±10% sensitivity unable to detect it. Caveat: demonstrated for one geometry (zigzag N=14);
    the abstract states the matched comparison only.
 
-## What is still open (from the notebook)
+## What is still open (from the notebook; updated 2026-08-04)
 
-- User-only: make the GitHub repo public + tag a release (data statement promises it); Zotero
-  citekey regeneration (17 pinned keys, Cabrera year); Editorial Manager upload.
+- User-only: make the GitHub repo public + tag a release (data statement promises it — once
+  the tag exists its name goes into the statement and the PDF is rebuilt); Zotero citekey
+  regeneration (17 pinned keys, Cabrera year); Editorial Manager upload.
 - Stated future work: second conduction band/anticrossing above +0.5 eV; site-dependent
   exchange fed back into transport; explicit phonon transport through disorder (the
   enhancement route); self-consistent screening at μ ≈ +1 eV; first-principles K of h-CrN →
   intrinsic wall width λ_int.
-- Session changes are uncommitted in git as of 2026-08-03.
+- Git: both panel rounds and all fixes committed (`a91952f`) and pushed 2026-08-04.
 
 ## Understanding risks (kind but honest)
 
