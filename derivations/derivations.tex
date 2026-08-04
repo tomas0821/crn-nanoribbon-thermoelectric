@@ -1,7 +1,9 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage{amsmath,amssymb}
+\usepackage{graphicx}
 \usepackage[hidelinks]{hyperref}
+\graphicspath{{figs/}}
 
 \newcommand{\dd}{\mathrm{d}}
 \newcommand{\ee}{\mathrm{e}}
@@ -71,6 +73,22 @@ Numerical check: evaluating $|f|$ at several high-symmetry fractional points con
 $|f(\tfrac23,\tfrac13)|=0$ while $|f(\tfrac13,\tfrac13)|=\sqrt3$; this fixed the correct $K$
 label in the band-structure script.
 \end{quote}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{figD1_geometry.png}
+\caption{The geometry behind every Bloch sum in this note. (a)~Real space: Cr (blue) and N
+(grey) sublattices, the three Cr$\to$N bond vectors $\boldsymbol\delta_i$ entering
+$f(\mathbf k)$ and $f_{xz,yz}(\mathbf k)$, and the three Cr--Cr neighbour shells at
+$|\boldsymbol\tau|=a,\ \sqrt3 a,\ 2a$ whose Bloch sums $S_1,S_2,S_3$ carry the $d_{z^2}$
+hopping $t_{zz}$ (shell~1) and the conduction-orbital hoppings $t_{c1},t_{c2},t_{c3}$
+(shells 1--3); the six shell-1 sites are ringed ($S_n(\Gamma)=6$). The $2a$ range of shell~3
+is what forces the $2a$ lead period for zigzag ribbons. (b)~Reciprocal space: $\mathbf
+b_1,\mathbf b_2$, the Brillouin zone, and the $\Gamma$--M--K--$\Gamma$ path used for all band
+plots; $f(\mathbf k)=0$ at the corners $K$, which is where the N $p_z$ level decouples and
+the minority valence-band top sits at the bare $\varepsilon_{p_z}$.}
+\label{figD:geom}
+\end{figure}
 
 %======================================================================
 \section{Tight-binding Bloch Hamiltonian}
@@ -200,6 +218,20 @@ Then the linear-response currents are
 I=\frac{e}{h}\Big[\Lloc_0\,\delta\mu+\frac{\Lloc_1}{T}\,\delta T\Big],\qquad
 I_Q=\frac{1}{h}\Big[\Lloc_1\,\delta\mu+\frac{\Lloc_2}{T}\,\delta T\Big].
 \end{equation}
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.72\textwidth]{figD2_fermiwindow.png}
+\caption{The three Onsager weights at $300$~K (each normalised to its own maximum). $\Lloc_0$
+samples $T(E)$ symmetrically over a window of a few $k_BT$; $\Lloc_1$ carries the \emph{odd}
+weight, so the Seebeck coefficient measures the electron--hole \emph{asymmetry} of $T(E)$
+around $\mu$ (a flat, symmetric transmission gives $S=0$ regardless of its size --- this is
+why sharp band edges near $\mu$ dominate the thermopower, and why the Mott formula of
+\S4.3 is a derivative); $\Lloc_2$'s even, double-lobed weight feeds $\kappa_e$. The $5$-meV
+production grid resolves these $\sim$$130$-meV windows at $300$~K but not at $100$~K, which
+is the origin of the low-temperature convergence caveat in the manuscript.}
+\label{figD:window}
+\end{figure}
 
 \subsection{Conductance, Seebeck, thermal conductance}
 \paragraph{Electrical conductance} ($\delta T=0$, $\delta\mu=-e\,\Delta V$ where
@@ -384,7 +416,25 @@ $\kappa_{\rm ph}(T)=\frac1{2\pi}\int d\omega\,\hbar\omega\,(\partial n_B/\partia
 This recovers $4\kappa_0 T$ as $T\to0$ (verified numerically to 1\%), grows roughly linearly
 with $W$, and saturates above $\sim$500~K when all branches are populated:
 $\kappa_{\rm ph}(300~\text{K})=0.6$--$1.7$~nW/K for $W=10$--$32$~\AA. $ZT$ is reported for
-$\tfrac12$--$2\times$ this estimate.
+$\tfrac12$--$2\times$ this estimate. Figure~\ref{figD:phonon} shows the constructed branches
+and the resulting mode count.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=\textwidth]{figD3_phonon.png}
+\caption{The phonon-Landauer input, exactly as implemented in \texttt{crnte.phonon}.
+(a)~The six constructed branches: LA/TA and the three optical branches are sine-form
+interpolations between their digitized anchors (dots); the sine's low-$q$ slope reproduces
+the digitized sound velocities (grey dashed) --- the internal consistency check --- and the
+flexural ZA branch follows $\alpha q^2$ (dotted) until it meets its sine curve,
+$\nu_{\rm ZA}=\min(\alpha q^2,\nu_{\rm max}\sin\pi q/2q_{\rm ZB})$. (b)~The resulting ribbon
+mode count $M(\nu)=\sum_b (W/\pi)q_b(\nu)$ for $W=18.6$~\AA, floored at the four gapless
+ribbon modes in the acoustic region; $\kappa_{\rm ph}$ is this staircase integrated against
+$\hbar\omega\,\partial n_B/\partial T$. The gaps in $M(\nu)$ between the acoustic top and the
+optical bands (and above $16.9$~THz) are what make $\kappa_{\rm ph}$ saturate above
+$\sim$$500$~K.}
+\label{figD:phonon}
+\end{figure}
 
 %======================================================================
 \section{Mean-field edge magnetism and exchange constants}
@@ -481,7 +531,22 @@ limit $T\to T_{\rm P}$ exactly (spin tracks the texture). The crossover
 $\hbar v_F/\Delta_{\rm ex}\simeq0.4$~\AA\ (Cabrera--Falicov). NOTE: Kwant attaches a lead on
 the side its symmetry vector points toward; an early version of the wall builder had the
 $\theta{=}0$ lead on the wrong side, creating a spurious collinear-blocked contact -- caught by
-the uniform-rotation and adiabatic-limit checks above.
+the uniform-rotation and adiabatic-limit checks above. Figure~\ref{figD:wall} shows the
+profile and the scattering-region construction.
+
+\begin{figure}[htb]
+\centering
+\includegraphics[width=0.8\textwidth]{figD4_wall.png}
+\caption{The Walker profile $\theta(x)=2\arctan\ee^{(x-x_0)/\delta}$ for the two wall widths
+$\lambda=\pi\delta=10$ and $30$~\AA, with the local exchange-field direction $\hat n(x)$
+sketched above. The shaded bands show the scattering-region construction for the wider wall:
+the wall core $\pm4\delta$ (where $\theta$ is within $2\ee^{-4}\simeq0.04$~rad of its lead
+value) plus two lead periods of collinear margin on each side; enlarging the region by four
+further periods changes $T_{\rm AP}(E_F)$ by $<10^{-6}$ ($\lambda=10$~\AA) and $<3\times
+10^{-4}$ ($\lambda=30$~\AA). The $\lambda\to0$ limit is the exact collinear OFF state; the
+$\lambda\to\infty$ limit is adiabatic spin tracking, $T_{\rm AP}\to T_{\rm P}$.}
+\label{figD:wall}
+\end{figure}
 
 %======================================================================
 \section{Summary of results to check}
