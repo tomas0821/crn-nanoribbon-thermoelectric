@@ -15,8 +15,8 @@
 
 \begin{frontmatter}
 
-\title{Thermoelectric transport and spin filtering in hexagonal CrN nanoribbons:\\
-a tight-binding Landauer study}
+\title{Thermoelectric transport, spin filtering and thermal spin-valve operation in
+hexagonal CrN nanoribbons: a tight-binding Landauer study}
 
 \author[aff1,aff2]{Tomas Rojas\corref{cor1}}
 \ead{tomas.rojas_s@ucr.ac.cr}
@@ -28,30 +28,28 @@ Universidad de Costa Rica, San Jos\'e, Costa Rica}
 \address[aff3]{Department of Physics and Astronomy, Ohio University, Athens, Ohio, USA}
 
 \begin{abstract}
-We present the first thermoelectric-transport characterization of hexagonal (honeycomb) CrN
-nanoribbons, using a Slater--Koster tight-binding model fitted to the published bands of the
-half-metallic $h$-CrN monolayer and phase-coherent Landauer transport, with no fresh ab-initio
-computation. The model adds to the out-of-plane Cr~$d$/N~$p_z$ manifold an effective conduction
-orbital fitted to the digitized majority conduction band that the reduced manifold misses. Restoring this pocket removes an artificially sharp transmission edge above $E_F$ and
-collapses the apparent figure of merit from $ZT\simeq0.3$ to an honest $ZT\simeq0.01$--$0.15$ at
-$300$~K---a caution for minimal-basis nanoribbon thermoelectric studies
-that parameter sensitivity cannot detect. The phonon thermal conductance is a ballistic
-phonon-Landauer estimate anchored to the published phonon dispersion. The ribbons are outstanding spin filters: the minority channel is gapped over
-more than $4$~eV, so charge and thermoelectric currents are $100\%$ spin-polarized throughout
-the accessible window. The largest thermoelectric response
-arises at the minority conduction-band edge ($\mu-E_F\simeq+1.0$~eV), where the opening minority
-channel supplies a large partial Seebeck coefficient at the cost of polarization; within
-the fully polarized window the narrow armchair $N{=}8$ ribbon performs best
-($ZT\simeq0.15$ at $300$~K). The same gap makes the ribbon a thermally driven spin valve: for
-collinear antiparallel junctions the coherent transmission vanishes identically across the
-window, and a noncollinear calculation shows this OFF state requires a magnetization reversal
-sharper than $\sim$$1$~nm (a constrained wall or spacer). A self-consistent mean-field
-treatment reproduces the magnetic edges and their exchange-coupling hierarchy.
+We present, to our knowledge, the first thermoelectric-transport study of hexagonal
+(honeycomb) CrN nanoribbons. A tight-binding model fitted to published first-principles bands
+of the half-metallic monolayer is combined with phase-coherent Landauer transport and a
+phonon-Landauer thermal conductance---no fresh ab-initio computation. Restoring the majority conduction pocket that the
+minimal out-of-plane orbital manifold misses collapses the apparent figure of merit of the
+zigzag $N{=}14$ ribbon from $ZT\simeq0.33$ to an honest $0.04$ at $300$~K---a basis-truncation
+artifact that parameter sensitivity cannot detect; across widths and edges the honest optima
+are $ZT\simeq0.04$--$0.15$. For most geometries the optimum sits at the minority
+conduction-band edge ($\mu-E_F\simeq+1$~eV), where spin polarization is lost; the narrow
+armchair $N{=}8$ ribbon is the exception, reaching its best $ZT=0.15$ ($0.08$--$0.24$ phonon
+bracket) inside the fully spin-polarized window. The ribbons quantify, in the phase-coherent
+limit, the predicted perfect spin filtering: the minority channel is gapped over nearly
+$4$~eV. A collinear antiparallel junction therefore switches charge and heat currents off
+identically---a thermal spin valve; a noncollinear calculation shows that any continuous
+domain wall leaks (half transparency at $9$~\AA), so the OFF state requires a constrained
+wall or nonmagnetic spacer. A self-consistent mean-field treatment reproduces the magnetic
+edges and their exchange-coupling hierarchy.
 \end{abstract}
 
 \begin{keyword}
 chromium nitride \sep nanoribbon \sep thermoelectric \sep half-metal \sep
-Landauer transport \sep spin filter \sep spin caloritronics
+Landauer transport \sep spin caloritronics
 \end{keyword}
 
 \end{frontmatter}
@@ -67,21 +65,25 @@ therefore become a standard testbed for tight-binding plus Landauer studies of t
 coefficient and thermoelectric figure of merit~\cite{OuyangGuo2009,Sevincli2010}. Two ingredients
 make magnetic nitride ribbons particularly interesting in this context: partially filled
 transition-metal $d$ states, which generate sharp features in the density of states, and
-intrinsically spin-polarized edges, which open the door to spin-dependent (caloritronic)
-functionality.
+intrinsically spin-polarized edges, which open the door to spin-caloritronic
+functionality~\cite{Bauer2012}---thermally driven, magnetically switchable currents of the kind
+demonstrated theoretically in ferromagnetic graphene~\cite{Zeng2011,Song2020} and
+silicene~\cite{Ghanbari2018} nanoribbon junctions.
 
 Chromium nitride is a prototypical correlated transition-metal nitride. In addition to its bulk
 antiferromagnetic rock-salt phase, a freestanding two-dimensional \emph{hexagonal} (honeycomb)
 allotrope, $h$-CrN, has been predicted from first principles to be a $100\%$ spin-polarized
 half-metallic ferromagnet with a large minority-spin gap and a magnetic moment of $3\,\mu_B$ per
-Cr~\cite{Kuklin2017}. This monolayer has since been used to construct lateral spin
-valves~\cite{Modarresi2019}, the finite-temperature magnetic order of the \emph{edges} of
+Cr~\cite{Kuklin2017}. This monolayer has since been proposed, from first principles, as the
+basis of lateral spin valves~\cite{Modarresi2019}; the finite-temperature magnetic order of the \emph{edges} of
 hexagonal CrN nanoribbons has been analysed with density-matrix renormalization group (DMRG)
-techniques~\cite{CrNdmrg2023}, and a one-dimensional CrN nanostructure has been predicted to be a
-ferromagnetic half-metal~\cite{Xiang2023}. Experimentally, CrN thin films are established
-thermoelectric materials~\cite{Quintela2009}. Yet across this activity the low-dimensional CrN
-literature is concerned with magnetism and spintronics; the thermoelectric response has not been
-addressed.
+techniques---a study that also computed spin-dependent semiclassical (Boltzmann) transport and
+found the zigzag edges to act as perfect spin filters~\cite{CrNdmrg2023}; and a one-dimensional
+CrN nanostructure has been predicted to be a ferromagnetic half-metal~\cite{Xiang2023}.
+Experimentally, CrN thin films are established thermoelectric
+materials~\cite{Quintela2009,Eklund2016,Sabeer2021}. Yet across this activity the
+low-dimensional CrN literature is concerned with magnetism and spintronics; to our knowledge
+the thermoelectric response has not been addressed.
 
 Here we close this gap, with two purposes. First, we compute the phase-coherent, spin-resolved
 Landauer transmission of hexagonal CrN armchair and zigzag nanoribbons
@@ -104,8 +106,10 @@ analysis within the reduced manifold can detect it.
 \includegraphics[width=0.9\textwidth]{fig1_geometry.png}
 \caption{Geometry. (a) $h$-CrN monolayer honeycomb with Cr (blue) and N (grey) sublattices,
 primitive vectors $\mathbf{a}_1,\mathbf{a}_2$ and unit cell. (b) Zigzag ribbon (ZCNR) with
-ferromagnetic Cr edge moments and the width convention $N$ (number of atomic rows across);
-transport is along the periodic direction. (c) Armchair ribbon (ACNR).}
+ferromagnetic Cr edge moments; transport is along the periodic direction. (c) Armchair ribbon
+(ACNR). The width index $N$, following Ref.~\cite{CrNdmrg2023}, counts the atomic rows across
+the ribbon, which alternate between Cr-only and N-only rows: $N=14$ means seven Cr and seven N
+rows between the two edges.}
 \label{fig:geometry}
 \end{figure*}
 
@@ -137,11 +141,28 @@ from orbitals outside the out-of-plane set (Cr $d_{xy},d_{x^2-y^2}$ and $s$ carr
 above-$E_F$ projected density of states~\cite{Kuklin2017}). We therefore add one effective
 conduction orbital $c$ on the Cr triangular sublattice, symmetry-decoupled from N $p_z$ in the
 planar sheet, with on-site energy $\varepsilon_c$ and first- to third-neighbour hoppings
-$t_{c1},t_{c2},t_{c3}$ fitted by weighted least squares to the digitized majority conduction
-band (fit residuals $\lesssim0.1$~eV in the transport window $|E|\lesssim1$~eV; the digitization
-itself carries $\sim$$0.1$--$0.3$~eV uncertainty). A second conduction band, which adds majority
+$t_{c1},t_{c2},t_{c3}$ fitted to the majority conduction band of Ref.~\cite{Kuklin2017},
+Fig.~2(d), which we digitized (18 points along $\Gamma$--M--K--$\Gamma$, read from a 300-dpi
+render calibrated against the energy-axis labels; estimated accuracy $\pm0.1$~eV in the
+transport window and $\pm0.3$~eV near $\Gamma$, where the bands crowd). The fit is a weighted
+least-squares fit with weights emphasizing the transport window ($E<1$~eV); the digitized
+$(k,E)$ points are plotted against the fitted band in Fig.~\ref{fig:bands} and are deposited,
+together with the fit script, in the accompanying repository. Fit residuals are
+$\lesssim0.1$~eV inside the transport window; since this is smaller than the digitization
+uncertainty itself, the honest single-number uncertainty of the conduction band in the
+transport window is $\sim$$0.2$~eV (the larger of digitization error, fit residual and the
+$\Gamma$ offset stated in Sec.~\ref{sec:results}). A second conduction band, which adds majority
 modes only above $\sim$$+0.5$~eV, and the anticrossing between the two are not resolved by the
 single effective band; this limits the model above that energy.
+
+The five $d$+$p_z$ parameters and the exchange splitting (Table~\ref{tab:params}) were adjusted
+by hand---there is no automated objective function for them---to reproduce a short list of
+explicit targets from Ref.~\cite{Kuklin2017}: the minority conduction-band edge at $+0.9$~eV
+and valence-band edge at $-3.0$~eV, the majority conduction-pocket minimum at $K$ ($-0.2$~eV),
+the majority $\pi^*$ valence band reaching $E_F$, and the non-bonding $d_{z^2}$ manifold at
+$-2.5$ to $-2.0$~eV. The residuals of this fit are stated openly in Sec.~\ref{sec:results}, and
+the sensitivity of every headline number to a $\pm10\%$ variation of each parameter is
+quantified in Fig.~\ref{fig:sensitivity}.
 
 The spin-resolved $5\times5$ Bloch Hamiltonian reads
 \begin{equation}
@@ -158,29 +179,56 @@ H_\sigma(\mathbf{k})=
 where $S_n(\mathbf{k})=\sum_{\boldsymbol\tau_n}e^{i\mathbf{k}\cdot\boldsymbol\tau_n}$ runs over
 the $n$-th shell of six Cr--Cr neighbours and
 $f_{xz,yz}(\mathbf{k})=\sum_{\boldsymbol\delta}(\hat\delta_{x,y})
-e^{i\mathbf{k}\cdot\boldsymbol\delta}$ over the three Cr--N bonds.
+e^{i\mathbf{k}\cdot\boldsymbol\delta}$ over the three Cr--N bonds. The spin-dependent shift is
+$\Delta_\uparrow=0$ and $\Delta_\downarrow=\Delta_{\rm ex}$ (and likewise
+$\Delta^c_\uparrow=0$): the majority levels sit at their bare fitted positions and the minority
+levels are rigidly raised, the convention used throughout this paper.
 
 \subsection{Magnetism}
 The monolayer is a uniform ferromagnet, so at mean-field (Stoner) level the on-site Hubbard term
 on the Cr $d$ orbitals produces a rigid exchange splitting: the majority ($\sigma=\uparrow$)
 levels are the reference and the minority ($\sigma=\downarrow$) levels are shifted up by
-$\Delta_{\rm ex}$. We fix $\Delta_{\rm ex}$ by the reported minority gap rather than solving the
-self-consistency for the uniform sheet. The effective orbital $c$ is assigned the same minority
-shift ($\Delta^c_\downarrow=\Delta_{\rm ex}$), consistent with its dominantly Cr-$d$ character;
-its minority replica then lies far above the transport window. The parameters
-(Table~\ref{tab:params}) reproduce the half-metallic character, the minority gap ($4.2$~eV in
-the model versus the reported $3.9$~eV), the non-bonding $d_{z^2}$ level below the valence-band
-top, the majority valence band that reaches $E_F$, and the majority conduction pocket at $K$
-($-0.20$~eV in the model versus $-0.2$~eV in the DFT reference). In the reduced $d$+$p_z$
-manifold the Cr moment is $2.67\,\mu_B$, about $11\%$ below the reported $3\,\mu_B$ because the
-deeper $\sigma$-bonded orbitals, which also carry moment, are not included; the conduction
-pocket adds a further $0.07$~electrons per cell to the majority channel.
+$\Delta_{\rm ex}$. We fix $\Delta_{\rm ex}$ by the reported minority band edges rather than
+solving the self-consistency for the uniform sheet, and the mapping is transparent in the
+model: the minority valence-band top is the bare N~$p_z$ level, reached at $K$ where the Cr--N
+Bloch factor vanishes ($\varepsilon_{p_z}=-3.2$~eV), and the minority conduction-band minimum
+is $\varepsilon_\pi+\Delta_{\rm ex}=+1.0$~eV. Of the two reported edges we target the
+conduction edge ($+0.9$~eV~\cite{Kuklin2017})---the edge to which the thermoelectric optimum is
+pinned---at the stated $\sim$$0.1$--$0.2$~eV digitization accuracy; the model gap then comes
+out $4.2$~eV rather than the reported $3.9$~eV because $\varepsilon_{p_z}$ lands at $-3.2$
+instead of $-3.0$~eV, a residual on the far, transport-irrelevant side of the window. Because
+the optimal doping tracks the minority conduction edge one-for-one, the quoted optimal $\mu$
+values inherit the same $\sim$$0.1$--$0.2$~eV uncertainty (Sec.~\ref{sec:scope}). The
+effective orbital $c$ is assigned the same minority shift
+($\Delta^c_\downarrow=\Delta_{\rm ex}$), consistent with its dominantly Cr-$d$ character; its
+minority replica then lies far above the transport window. The parameters
+(Table~\ref{tab:params}) reproduce the half-metallic character, the non-bonding $d_{z^2}$
+level below the valence-band top, the majority valence band that reaches $E_F$, and the
+majority conduction pocket at $K$ ($-0.20$~eV in the model versus $-0.2$~eV in the DFT
+reference). In the reduced $d$+$p_z$ manifold the Cr moment is $2.67\,\mu_B$, about $11\%$
+below the reported $3\,\mu_B$ because the deeper $\sigma$-bonded orbitals, which also carry
+moment, are not included; the conduction pocket adds a further $0.07$~electrons per cell to
+the majority channel.
+
+For the edge-magnetism analysis of Sec.~\ref{sec:edgemag} the rigid splitting is promoted to a
+self-consistent one: an unrestricted mean-field interaction on the Cr $d$ orbitals in which the
+minority levels on Cr site $i$ are shifted by $U_{\rm eff}\,m_i$, with $m_i$ the
+self-consistent moment of that site (majority levels unshifted, as above). The Stoner parameter
+$U_{\rm eff}=\Delta_{\rm ex}/m_{\rm Cr}=1.346$~eV is calibrated so that the uniform solution
+reproduces the fitted bulk exchange ($m_{\rm Cr}=2.674\,\mu_B$ in the reduced manifold); the
+filling is fixed at $N_e=4.717$ electrons per CrN cell, the filling of the fitted bulk bands at
+$E_F=0$; and the loop iterates with linear mixing ($0.3$) to a tolerance of $10^{-4}\,\mu_B$ on
+every site moment, using $60$ $k$ points in the one-dimensional ribbon Brillouin zone. The
+nearly empty conduction orbital is omitted from the self-consistency (it holds
+$\sim$$0.07$~e/Cr and contributes negligibly to the moments).
 
 \begin{table}[t]
 \centering
 \caption{Model parameters (energies in eV, referenced to $E_F$). The $d$+$p_z$ parameters are
-fitted to the band-structure targets of Ref.~\cite{Kuklin2017}; $\varepsilon_c,t_{c1..3}$ are a
-weighted least-squares fit to the digitized majority conduction band of the same reference.}
+fitted by hand to the explicit band-structure targets of Ref.~\cite{Kuklin2017} listed in
+Sec.~2.1; $\varepsilon_c,t_{c1..3}$ are a weighted least-squares fit to the digitized majority
+conduction band of the same reference (digitized points in Fig.~\ref{fig:bands} and in the
+repository).}
 \label{tab:params}
 \begin{tabular}{lcl}
 \toprule
@@ -208,11 +256,17 @@ $T_\sigma(E)$ is obtained from the scattering matrix computed by the wavefunctio
 algorithm implemented in Kwant~\cite{Groth2014kwant}. In the pristine limit $T_\sigma(E)$ counts
 the propagating modes, so the transmission is quantised in integer steps
 [Fig.~\ref{fig:transmission}]. All production transmissions are evaluated on a single energy
-grid of spacing $5$~meV. We verified numerical convergence explicitly: the pristine
-transmission, and hence all coefficients, is independent of the scattering-region length, and
-the peak $ZT$ at $300$~K is converged at the few-percent level for grid spacings
-$\le10$~meV. Low-temperature ($\lesssim100$~K) absolute values require finer grids owing to the
-narrow Fermi window and are not the focus here.
+grid of spacing $5$~meV. Two checks control the numerics. First, the energy grid: the peak
+$ZT$ of the zigzag $N{=}14$ ribbon at $300$~K is $0.0364$, $0.0408$, $0.0399$ and $0.0396$ for
+grid spacings of $20$, $10$, $5$ and $2.5$~meV, so the production grid is converged to better
+than $1\%$; at $100$~K the same quantity still drifts by $\sim$$6\%$ between the two finest
+grids, which is why low-temperature ($\lesssim100$~K) absolute values are not quoted in this
+work. Second, for a \emph{pristine} ribbon the transmission is independent of the
+scattering-region length by construction (leads and region are identical); we use this as a
+numerical self-consistency check---$T_\sigma(E)$ computed for one to four unit cells agrees to
+machine precision---not as a physical convergence statement. The length does matter for the
+noncollinear domain-wall junctions of Sec.~\ref{sec:valve}, where the region is sized to
+contain the wall (see there). The convergence data are included in the repository.
 
 \subsection{Thermoelectric coefficients}
 The linear-response coefficients follow from the moments of the transmission weighted by the
@@ -235,11 +289,23 @@ ZT=\frac{S^2 G\,T}{\kappa_e+\kappa_{\rm ph}} .
 \subsection{Phonon thermal conductance}
 \label{sec:phonons}
 The phonon contribution is estimated by a ballistic phonon-Landauer mode count anchored to the
-published DFPT phonon dispersion of the freestanding $h$-CrN monolayer [Ref.~\cite{Modarresi2019},
-Fig.~4(a)], which we digitized along $\Gamma$--M and $\Gamma$--K (acoustic velocities
-$v_{\rm LA}\simeq8.5$, $v_{\rm TA}\simeq4.3$~km/s; acoustic zone-boundary frequencies
-$\simeq4.7$--$10.4$~THz; three optical branches up to $16.9$~THz). Each branch is represented by
-a monotone interpolation between its digitized $\Gamma$ and zone-boundary anchors; for a ribbon
+published density-functional perturbation theory (DFPT) phonon dispersion of the freestanding
+$h$-CrN monolayer [Ref.~\cite{Modarresi2019}, Fig.~4(a)], which we digitized along $\Gamma$--M
+and $\Gamma$--K (estimated accuracy $\sim$$0.3$~THz). All six branches of the two-atom cell are
+included. The in-plane acoustic branches are linear near $\Gamma$, with
+$v_{\rm LA}\simeq8.5$ and $v_{\rm TA}\simeq4.3$~km/s, and reach zone-boundary frequencies of
+$10.4$ and $5.4$~THz; the flexural ZA branch---quadratic near $\Gamma$, as in every 2D
+crystal---is represented as $\nu=\alpha q^2$ with $\alpha\simeq44$~THz\,\AA$^2$ read from the
+same dispersion, crossing over to its zone-boundary maximum of $4.7$~THz. The three optical
+branches run from $(13.7,\,13.2,\,16.85)$~THz at $\Gamma$ to $(7.2,\,10.8,\,15.1)$~THz at the
+zone boundary. Each in-plane acoustic and optical branch is a monotone sine-form
+interpolation between its anchors [$\nu(q)=\nu_{\rm max}\sin(\pi q/2q_{\rm ZB})$ for LA and
+TA, whose low-$q$ slopes then reproduce the digitized velocities---a consistency check],
+while ZA follows its quadratic form until it meets the corresponding sine curve
+[$\nu_{\rm ZA}(q)=\min(\alpha q^2,\,\nu_{\rm max}\sin(\pi q/2q_{\rm ZB}))$]; all branches are
+treated as isotropic
+with the zone-boundary radius $q_{\rm ZB}=1.20$~\AA$^{-1}$ averaged over the digitized
+$\Gamma$--M ($1.11$~\AA$^{-1}$) and $\Gamma$--K ($1.29$~\AA$^{-1}$) directions. For a ribbon
 of transverse width $W$ the number of propagating channels of branch $b$ at frequency $\omega$
 is $M_b=(W/\pi)q_b(\omega)$, with $q_b(\omega)$ the iso-frequency radius, bounded below by the
 four gapless ribbon modes~\cite{Rego1998}. Then
@@ -269,8 +335,18 @@ $3.9$~eV, $[-3.0,+0.9]$~\cite{Kuklin2017}). The flat non-bonding $d_{z^2}$ band 
 $\sim\!2.5$~eV below $E_F$. Two known residuals of the fit are stated openly: the $\pi^*$
 valence-band top sits at $+0.19$~eV at $K$, whereas the DFT band peaks at $\simeq0$ \emph{inside}
 the $\Gamma$--M and K--$\Gamma$ intervals and dips to $-1.6$~eV at $K$; and the conduction band
-is $\sim$$0.2$~eV too high at $\Gamma$. Both lie outside the few-$k_BT$ window that controls the
-transport integrals at the operating points discussed below.
+is $\sim$$0.2$~eV too high at $\Gamma$. The conduction-band offset at $\Gamma$ lies far outside
+the transport window. The $\pi^*$ misfit does not: its spurious spectral weight in
+$[0,+0.19]$~eV sits within a few $k_BT$ of several polarized-window optima of
+Table~\ref{tab:results}, and the ribbon mode counts inside the half-metallic window inherit
+the full dispersion of this band, not only its edge energies. We therefore probe the
+consequence directly with a dedicated \emph{$\pi^*$-pinned} variant of the model:
+$\varepsilon_\pi\to\varepsilon_\pi-0.19$~eV together with
+$\Delta_{\rm ex}\to\Delta_{\rm ex}+0.19$~eV, which lowers the majority $\pi^*$ manifold so
+that its top sits at the DFT value $\simeq0$ while leaving the minority conduction edge---and
+hence the half-metallic window---unchanged (the minority $d_{z^2}$ level rises by the same
+$0.19$~eV as a side effect). The consequences of this variant for every ribbon of
+Table~\ref{tab:results} are quantified in Sec.~\ref{sec:widths}.
 
 \begin{figure}[t]
 \centering
@@ -316,10 +392,13 @@ exist throughout the window, the transmission edge disappears, and the peak $ZT$
 almost an order of magnitude, to $0.040$, on the same phonon background. We emphasise that a
 parameter-sensitivity analysis \emph{within} the reduced manifold---varying every retained
 parameter by $\pm10\%$---leaves the spurious result essentially unchanged, because no variation
-of retained parameters can create a missing band. Minimal-basis nanoribbon thermoelectric
-studies that fit only the states at $E_F$ inherit this risk whenever the reference material has
-conduction (or valence) bands of different orbital character within a few $k_BT$ of the
-operating window.
+of retained parameters can create a missing band. The caution is generic rather than aimed at
+any published result: the single-$\pi$-orbital workflow that is standard for graphene-family
+ribbons~\cite{OuyangGuo2009,Sevincli2010} is safe there precisely because no bands of other
+orbital character approach the operating window, but a minimal basis fitted only to the states
+at $E_F$ inherits this risk whenever the reference material---as is typical for
+transition-metal compounds---has conduction (or valence) bands of different orbital character
+within a few $k_BT$ of the operating window.
 
 \begin{figure}[t]
 \centering
@@ -332,7 +411,8 @@ same phonon background: the apparent peak $ZT\simeq0.33$ collapses to $0.040$.}
 \end{figure}
 
 \subsection{Seebeck coefficient, power factor and figure of merit}
-Figure~\ref{fig:seebeck} shows the Seebeck coefficient of the zigzag $N=14$ ribbon. Within the
+\label{sec:te}
+Figure~\ref{fig:spin}(a) shows the Seebeck coefficient of the zigzag $N=14$ ribbon. Within the
 half-metallic window the majority background is metallic and multichannel, so $S$ is small and
 oscillatory ($|S|\lesssim40$~$\mu$V/K at $300$~K), changing sign as subband edges cross the
 Fermi window. The largest response appears at $\mu-E_F\simeq+1.05$~eV, where the minority
@@ -340,64 +420,114 @@ channel opens: the sharp minority edge supplies a large partial thermopower
 ($S_\downarrow\simeq-150~\mu$V/K at $300$~K) against the smooth majority background
 ($S_\uparrow\simeq+4~\mu$V/K), giving a charge thermopower of a few tens of $\mu$V/K and the
 global maximum of the power factor and $ZT$ [Fig.~\ref{fig:zt}]. For zigzag $N=14$ we obtain
-peak $ZT=0.040$ at $300$~K at $\mu-E_F=+1.08$~eV (bracket $0.02$--$0.08$ for $2\times$ and
-$\tfrac12\times\kappa_{\rm ph}$), rising to $0.065$ at $700$~K. These are honest but modest
-values: pristine CrN nanoribbons are not competitive thermoelectrics in the coherent ballistic
-picture. For context, they sit at the level of \emph{pristine} graphene nanoribbons in the
-same ballistic framework~\cite{OuyangGuo2009}; there, an order-of-magnitude enhancement was
-achieved by edge disorder that suppresses phonons more strongly than
-electrons~\cite{Sevincli2010}, and the same phonon-engineering route is open here (it requires
-an explicit phonon-transport calculation, Sec.~\ref{sec:scope}).
+peak $ZT=0.040$ at $300$~K at $\mu-E_F=+1.08$~eV, with the $\tfrac12\times$/$2\times
+\kappa_{\rm ph}$ bracket spanning $0.047$--$0.030$ [Fig.~\ref{fig:zt}(b)]; the
+parameter-sensitivity spread is wider, $[0.014,0.079]$ (Sec.~\ref{sec:scope}), and the two
+brackets measure different things---phonon-model versus electronic-parameter uncertainty. At
+the same doping $ZT$ rises to $0.065$ at $700$~K, subject to the magnetic-order caveat of
+Sec.~\ref{sec:scope}. These are honest but modest values: pristine CrN nanoribbons are not
+competitive thermoelectrics in the coherent ballistic picture. For context, they sit at the
+level of \emph{pristine} graphene nanoribbons in the same ballistic
+framework~\cite{OuyangGuo2009}; there, an order-of-magnitude enhancement was achieved by edge
+disorder that suppresses phonons more strongly than electrons~\cite{Sevincli2010}. We
+deliberately do not compute the electronic side of that physics here: with the ballistic
+phonon background of Sec.~\ref{sec:phonons} held fixed, adding disorder to the electronic
+channel alone can only degrade $ZT$---the enhancement lives entirely in the \emph{ratio} of
+phonon to electron suppression---so a meaningful disorder study requires phonon transport
+through the same disordered geometry, which is outside the scope of this model
+(Sec.~\ref{sec:scope}).
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.85\columnwidth]{fig4_seebeck.png}
-\caption{Seebeck coefficient $S(\mu)$ of the zigzag $N=14$ ribbon at $100$, $300$ and $500$~K.
-$S$ is small in the multichannel half-metallic window and peaks near the minority band edge
-($+1.05$~eV), where the minority channel opens.}
-\label{fig:seebeck}
+\includegraphics[width=\columnwidth]{fig_spinseebeck.png}
+\caption{Spin-resolved thermoelectrics (zigzag $N=14$, $300$~K). (a) Spin-resolved Seebeck
+coefficients $S_\uparrow$, $S_\downarrow$ and the charge thermopower $S_c$; each spin channel
+is drawn only where its own conductance is non-negligible (deep in the minority gap
+$S_\downarrow$ is exponentially activated and not meaningful). (b) Spin-resolved power
+factors; right axis: conductance polarization $P_G$ (dash-dotted), which is $100\%$ across the
+entire half-metallic window, and power-factor polarization
+$P_{PF}=({\rm PF}_\uparrow-{\rm PF}_\downarrow)/({\rm PF}_\uparrow+{\rm PF}_\downarrow)$
+(solid), which is undefined ($0/0$) and therefore masked wherever both power factors vanish
+simultaneously---at sign changes of $S$; these are the gaps in the curve, not a loss of
+polarization.}
+\label{fig:spin}
 \end{figure}
 
-\begin{figure*}[t]
+\begin{figure}[t]
 \centering
-\includegraphics[width=\textwidth]{fig5_zt.png}
+\includegraphics[width=\columnwidth]{fig5_zt.png}
 \caption{(a) Power factor $S^2G$ versus doping at $300$~K (zigzag $N=14$): the maximum sits at
 the minority band edge near $+1.1$~eV. (b) $ZT$ versus doping for the
-$\kappa_{\rm ph}$ bracket. (c) $ZT(T)$ at the optimal doping.}
+$\tfrac12\times$/$1\times$/$2\times$ $\kappa_{\rm ph}$ bracket.}
 \label{fig:zt}
-\end{figure*}
+\end{figure}
 
 \subsection{Width and edge dependence}
+\label{sec:widths}
 Table~\ref{tab:results} and Fig.~\ref{fig:designrules} collect the peak values for
-$N=8,14,20$ and both edges, each ribbon with its own $\kappa_{\rm ph}(W)$. Three observations
-replace the naive design rules that the reduced manifold would have suggested. (i)~For most
-geometries the global optimum sits at the minority band edge ($+1.05$ to $+1.09$~eV), i.e.\ at
-heavy electron doping, and reaches $ZT=0.04$--$0.15$ at $300$~K. (ii)~Armchair ribbons
-consistently outperform zigzag ribbons at matched width (e.g.\ $0.14$ versus $0.04$ at $N=14$),
-and $ZT$ does not grow with width---it decreases (armchair) or is non-monotonic (zigzag),
-because narrow ribbons benefit from subband gaps that sharpen the transmission while
-$\kappa_{\rm ph}$ grows with $W$. (iii)~The narrow armchair $N=8$ ribbon is the exception and the most
-interesting geometry: its optimum, $ZT=0.15$ at $300$~K, lies \emph{inside} the half-metallic
-window ($\mu-E_F=-0.34$~eV, $S=-114$~$\mu$V/K), where the current is still $100\%$
-spin polarized---the best figure of merit and full polarization coincide.
+$N=8,14,20$ and both edges, each ribbon with its own $\kappa_{\rm ph}(W)$ and its own
+$\tfrac12\times$/$2\times$ bracket. Three observations replace the naive design rules that the
+reduced manifold would have suggested. (i)~In the baseline model the global optimum sits, for
+most geometries, at the minority band edge ($+1.05$ to $+1.09$~eV), i.e.\ at heavy electron
+doping, reaching $ZT=0.04$--$0.14$ there (this is the rule the $\pi^*$-pinned systematic
+weakens; see below). (ii)~Armchair ribbons consistently outperform zigzag ribbons at
+matched width (e.g.\ $0.14$ versus $0.04$ at $N=14$), and $ZT$ does not grow with width---it
+decreases (armchair) or is non-monotonic (zigzag), because narrow ribbons benefit from subband
+gaps that sharpen the transmission while $\kappa_{\rm ph}$ grows with $W$. (iii)~The narrow
+armchair $N=8$ ribbon is the exception and the most interesting geometry, shown in full in
+Fig.~\ref{fig:armchair8}: its optimum, $ZT=0.145$ $[0.082$--$0.235]$ at $300$~K, lies
+\emph{inside} the half-metallic window ($\mu-E_F=-0.34$~eV, $S=-114$~$\mu$V/K), where the
+current is still $100\%$ spin polarized---the best figure of merit and full polarization
+coincide. Because this optimum sits on a majority subband feature rather than on the minority
+edge, it is insensitive to $\Delta_{\rm ex}$ and to the conduction-orbital hoppings, and the
+same $\pm10\%$ parameter sweep run for the zigzag benchmark gives a strongly asymmetric
+spread: the polarized-window optimum falls at most $7\%$ below the baseline ($0.135$) and
+rises to at most $0.28$ (largest excursion $V_{pd\pi}$), staying inside the polarized window
+for every variation but one ($\varepsilon_c{+}10\%$, where the minority-edge peak overtakes
+it). Its $ZT$ also \emph{decreases} with temperature ($0.098$ at $500$~K, $0.088$ at
+$700$~K), opposite to the minority-edge optima.
+
+How much of this landscape survives the model's known $\pi^*$ systematic? Recomputing every
+entry of Table~\ref{tab:results} in the $\pi^*$-pinned variant defined in
+Sec.~\ref{sec:results} preserves the order of magnitude and the armchair-$N{=}8$ exception,
+but demotes the minority-edge optima both quantitatively and qualitatively: they drop by
+factors of $1.2$--$4$ (zigzag $N{=}8$: $0.062\to0.028$; armchair $N{=}20$: $0.104\to0.027$),
+and the \emph{global} optimum relocates off the minority edge into the polarized window for
+four of the six geometries---only armchair $N{=}14$ keeps an edge optimum ($0.138\to0.049$
+at $+1.04$~eV)---so rule~(i) holds in the baseline model but is weakened within the
+systematic's error bar. The polarized-window optima rearrange rather than survive in place:
+the zigzag $N{=}8$/$N{=}20$ values at $+0.12$/$+0.08$~eV, which sit directly on the spurious
+$\pi^*$ states, disappear, and the in-window peaks relocate and grow---by a factor $2.3$ for
+zigzag $N{=}14$ ($0.014\to0.033$, now at $0.00$~eV) and by $56\%$ for zigzag $N{=}20$
+($0.017\to0.027$ at $+0.05$~eV). The one number that is essentially untouched is the armchair
+$N{=}8$ optimum, $0.145\to0.145$ (shifting from $-0.34$ to $-0.45$~eV): the paper's most
+interesting result is robust against the model's known systematic, while the in-window and
+minority-edge values of the other geometries should be read as order-of-magnitude estimates
+(see also Sec.~\ref{sec:scope}).
 
 \begin{table}[t]
 \centering
-\caption{Peak figure of merit at $300$~K (phonon-Landauer $\kappa_{\rm ph}(W)$): global optimum
-and best value inside the fully spin-polarized window ($\mu-E_F<+1.0$~eV, where
-$T_\downarrow=0$).}
+\caption{Peak figure of merit at $300$~K: global optimum and best value inside the fully
+spin-polarized window ($\mu-E_F<+1.0$~eV, where $T_\downarrow=0$), each with its
+phonon-Landauer $\kappa_{\rm ph}(W)$; the ranges in brackets are the
+$\tfrac12\times$/$2\times\,\kappa_{\rm ph}$ bracket. The parameter-sensitivity spread
+(Sec.~\ref{sec:scope}) comes on top of these ranges. For context, pristine graphene
+nanoribbons of comparable width reach similar values in the same ballistic
+framework~\cite{OuyangGuo2009}.}
 \label{tab:results}
-\small
+\footnotesize
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{llccc}
 \toprule
-Edge & $N$ & $W$ (\AA) & peak $ZT$ (at $\mu{-}E_F$ [eV]) & polarized $ZT$ (at $\mu{-}E_F$) \\
+Edge & $N$ & $W$ (\AA) & peak $ZT$ [$\tfrac12$--$2\times\kappa_{\rm ph}$] ($\mu{-}E_F$ [eV]) &
+polarized $ZT$ [bracket] ($\mu{-}E_F$) \\
 \midrule
-zigzag   & 8  & 10.2 & 0.062 ($+1.08$) & 0.040 ($+0.12$) \\
-zigzag   & 14 & 18.6 & 0.040 ($+1.08$) & 0.014 ($-0.12$) \\
-zigzag   & 20 & 27.1 & 0.048 ($+1.09$) & 0.017 ($+0.08$) \\
-armchair & 8  & 12.2 & 0.145 ($-0.34$) & 0.145 ($-0.34$) \\
-armchair & 14 & 21.9 & 0.138 ($+1.05$) & 0.047 ($-0.13$) \\
-armchair & 20 & 31.7 & 0.104 ($+1.07$) & 0.029 ($-0.14$) \\
+zigzag   & 8  & 10.2 & 0.062 [0.047--0.074] ($+1.08$) & 0.040 [0.028--0.051] ($+0.12$) \\
+zigzag   & 14 & 18.6 & 0.040 [0.030--0.047] ($+1.08$) & 0.014 [0.010--0.017] ($-0.12$) \\
+zigzag   & 20 & 27.1 & 0.048 [0.036--0.056] ($+1.09$) & 0.017 [0.013--0.021] ($+0.08$) \\
+armchair & 8  & 12.2 & 0.145 [0.082--0.235] ($-0.34$) & 0.145 [0.082--0.235] ($-0.34$) \\
+armchair & 14 & 21.9 & 0.138 [0.094--0.179] ($+1.05$) & 0.047 [0.032--0.062] ($-0.13$) \\
+armchair & 20 & 31.7 & 0.104 [0.074--0.132] ($+1.07$) & 0.029 [0.020--0.038] ($-0.14$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -408,8 +538,19 @@ armchair & 20 & 31.7 & 0.104 ($+1.07$) & 0.029 ($-0.14$) \\
 \caption{Width, edge and temperature dependence. (a) $ZT$ versus doping for zigzag widths
 $N=8,14,20$ at $300$~K, each with its own $\kappa_{\rm ph}(W)$. (b) Peak $ZT$ versus width for
 both edge types. (c) Zigzag versus armchair at matched width $N=14$. (d) $ZT(T)$ at the $300$-K
-optimal doping for the three zigzag widths.}
+optimal doping for the three zigzag widths (plotted from $100$~K, below which the production
+energy grid is not converged, Sec.~2.3).}
 \label{fig:designrules}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{fig_armchair8.png}
+\caption{The armchair $N=8$ ribbon---the only geometry whose optimum lies inside the fully
+spin-polarized window (shaded; minority edge dashed). (a) Spin-resolved transmission. (b)
+Charge Seebeck coefficient at $300$~K. (c) $ZT$ at $300$~K with the $\kappa_{\rm ph}$ bracket;
+the star marks the optimum at $\mu-E_F=-0.34$~eV quoted in Table~\ref{tab:results}.}
+\label{fig:armchair8}
 \end{figure*}
 
 \subsection{Spin caloritronics}
@@ -418,36 +559,31 @@ current below $+1.0$~eV is carried entirely by majority carriers: the ribbons ar
 spin-Seebeck elements, with the caveat that the total thermopower there is modest.
 Figure~\ref{fig:spin} makes the trade-off explicit: moving the chemical potential to the
 minority band edge maximises $|S|$ and $ZT$ but activates the minority channel, degrading the
-conductance polarization from $100\%$ to $\simeq50\%$ (at $+1.05$~eV) and below. The armchair
-$N=8$ geometry evades the trade-off, as noted above.
-
-\begin{figure}[t]
-\centering
-\includegraphics[width=\columnwidth]{fig_spinseebeck.png}
-\caption{Spin-resolved thermoelectrics (zigzag $N=14$, $300$~K). (a) Spin-resolved Seebeck
-coefficients $S_\uparrow$, $S_\downarrow$ and the charge thermopower $S_c$; the minority channel
-contributes only above its band edge near $+1.0$~eV, where $S_\downarrow$ is large. (b)
-Spin-resolved power factors and the spin polarization of the thermoelectric response (right
-axis).}
-\label{fig:spin}
-\end{figure}
+conductance polarization $P_G=(G_\uparrow-G_\downarrow)/(G_\uparrow+G_\downarrow)$ [now plotted
+in Fig.~\ref{fig:spin}(b)] from $100\%$ ($T_\downarrow=0$) to $49\%$ at $+1.05$~eV and through
+zero near $+1.1$~eV. The armchair $N=8$ geometry evades the trade-off, as noted above.
 
 \subsection{A thermally driven spin valve}
 \label{sec:valve}
 The half-metallic window enables a two-terminal function that is stronger than spin filtering.
-Consider the same ribbon with the magnetizations of its two halves (and leads) aligned
-antiparallel, realizable by exchange bias or a local field on one segment. For a
+Thermally driven currents switched by the relative magnetization of two leads are a staple of
+nanoribbon spin caloritronics~\cite{Bauer2012}: magnetically switchable thermal
+magnetoresistance has been predicted for ferromagnetic graphene nanoribbon
+junctions~\cite{Zeng2011}, thermally driven spin currents for doped zigzag graphene and
+silicene ribbons~\cite{Song2020,Ghanbari2018}, and the magnetization-dependent thermopower
+readout such devices require is experimentally established in magnetic tunnel
+junctions~\cite{Walter2011,Liebing2011}. What the half-metallic gap adds is an \emph{exact}
+OFF state. Consider the same ribbon with the magnetizations of its two halves (and leads)
+aligned antiparallel, realizable by exchange bias or a local field on one segment. For a
 \emph{collinear} junction spin remains a good quantum number, and each spin species is then
 majority on one side but sits \emph{inside the minority gap} on the other: there are no
 propagating states for it to transmit into. The coherent transmission then vanishes
 identically over the entire half-metallic window, $T_{\rm AP}(E)=0$ for
-$E-E_F\in[-3.2,+1.0]$~eV [Fig.~\ref{fig:valve}(a)]---an exact lead-spectrum effect (our
-numerics return $T_{\rm AP}$ at machine zero). Both the electrical conductance and the
-thermally driven current switch off [Fig.~\ref{fig:valve}(b)]: a thermal spin valve, the
-thermally driven, single-material counterpart of the CrN/P/CrN lateral spin
-valve~\cite{Modarresi2019}. The magnetization-dependent thermopower readout that such a device
-requires is experimentally established in magnetic tunnel
-junctions~\cite{Walter2011,Liebing2011}.
+$E-E_F\in[-3.2,+1.0]$~eV [Fig.~\ref{fig:valve}(a)]---a lead-spectrum zero (our numerics return
+machine zero), not the large-but-finite suppression of the heterostructure and
+non-half-metallic devices above---and both the electrical conductance and the thermally driven
+current switch off [Fig.~\ref{fig:valve}(b)]: the single-material, thermally driven
+counterpart of the CrN/P/CrN lateral spin valve~\cite{Modarresi2019}.
 
 How sharp must the magnetization reversal be? A real junction hosts a domain wall of finite
 width $\lambda$, and a noncollinear texture mixes the spin channels: carriers can rotate their
@@ -455,37 +591,47 @@ spin adiabatically with the local exchange field and leak through---the classic
 spin-mistracking physics of domain-wall resistance~\cite{Cabrera1974,Tatara1997,vanHoof1999}.
 We quantify this with a fully spinful calculation: a Walker profile
 $\theta(x)=2\arctan e^{(x-x_0)/\delta}$ (width $\lambda=\pi\delta$) interpolating between the
-antiparallel leads, with the exchange field $\tfrac{\Delta}{2}\,\hat n(x)\cdot\boldsymbol\sigma$
-on the Cr orbitals. Figure~\ref{fig:wall} shows the result: the OFF state survives only for
-walls sharper than $\lambda_{1/2}\simeq9$~\AA\ (half-transparency at $E_F$), and walls wider
-than $\sim$$3$~nm are fully transparent ($T_{\rm AP}\to T_{\rm P}$, the adiabatic limit,
-reached exactly in our numerics). The crossover scale is consistent with the mistracking
-length $\hbar v_F/\Delta_{\rm ex}\simeq0.4$~\AA\ times the number of exchange precessions
-accumulated across the wall, and with the first-principles finding that wide walls in
-ballistic ferromagnets are nearly transparent~\cite{vanHoof1999}. The OFF state therefore
-requires an \emph{atomically sharp} reversal. Two established routes provide it: a
-geometrically constrained wall, whose width is set by a nanoconstriction rather than by the
-bulk exchange--anisotropy balance~\cite{Bruno1999}, and a nonmagnetic spacer separating the two
-segments---precisely the CrN/P/CrN geometry~\cite{Modarresi2019}, in which no magnetic texture
-connects the halves. Experimentally, magnetically misaligned interfaces between half-metallic
-grains are indeed strongly resistive~\cite{Coey1998}, and the measured resistance of a single
-domain wall in a nearly half-metallic manganite exceeds mistracking estimates by orders of
-magnitude~\cite{Mathur1999}, suggesting that our coherent adiabatic limit is, if anything, an
-upper bound on the leakage. Two further practical remarks, both anchored to published
-first-principles results: on the proposed stabilizing substrates the OFF window equals the
-composite minority gap, $1.43$~eV ($h$-CrN/MoSe$_2$) to $1.71$~eV
-($h$-CrN/MoS$_2$)~\cite{Kuklin2017}---still $\sim$$55\,k_BT$ at room temperature; and above the
-minority band edge the AP transmission computed in our model is suppressed by the symmetry
-decoupling of the effective conduction orbital, so we restrict the quantitative claim to the
-OFF window. The one ingredient no published calculation supplies is the \emph{intrinsic}
-(unconstrained) wall width of $h$-CrN, $\lambda_{\rm int}=\pi\sqrt{A/K}$: it requires the
-magnetocrystalline anisotropy $K$, which demands spin--orbit coupling absent from our model
-and, to our knowledge, unreported for $h$-CrN. A single-unit-cell noncollinear DFT+$U$+SOC
-calculation of $K$---a small, standard computation---combined with the exchange stiffness $A$
-from the DMRG couplings~\cite{CrNdmrg2023} would fix $\lambda_{\rm int}$ and thereby decide
-whether an unconstrained wall (almost certainly wider than $1$~nm, as in all soft $3d$
-magnets) must be excluded by design, as the constriction and spacer routes above already
-ensure.
+antiparallel leads, with the local exchange field
+$\tfrac{1}{2}\,\Delta_{\rm orb}\,\hat n(x)\cdot\boldsymbol\sigma$ acting with magnitude
+$\Delta_{\rm ex}$ on the Cr $d$ orbitals and $\Delta^c_\downarrow=\Delta_{\rm ex}$ on the
+effective conduction orbital (N $p_z$ carries no exchange field). The scattering region
+contains the wall core $\pm4\delta$ plus two lead periods of margin on each side; enlarging
+it by four further periods changes $T_{\rm AP}(E_F)$ by less than $10^{-6}$ at
+$\lambda=10$~\AA\ and by less than $3\times10^{-4}$ (fractionally $3\times10^{-5}$) at
+$\lambda=30$~\AA, the widest-wall (longest-tail) case. Figure~\ref{fig:wall} shows the result, and it is a collapse rather than a threshold: the exact
+zero exists only at the collinear point $\lambda=0$. Already the sharpest possible texture
+($\lambda\simeq1$~\AA) leaks $T_{\rm AP}\simeq0.7$---an ON/OFF ratio of order ten---half
+transparency is reached at $\lambda_{1/2}\simeq9$~\AA, and walls wider than $\sim$$3$~nm are
+fully transparent ($T_{\rm AP}\to T_{\rm P}$, the adiabatic limit, reached exactly in our
+numerics). The crossover scale is consistent with the mistracking length
+$\hbar v_F/\Delta_{\rm ex}\simeq0.4$~\AA\ (majority Fermi velocity $v_F\approx2\times10^5$~m/s
+of the fitted $\pi^*$ band) times the number of exchange precessions accumulated across the
+wall, and with the first-principles finding that wide walls in ballistic ferromagnets are
+nearly transparent~\cite{vanHoof1999}. Any \emph{continuous} magnetization texture therefore
+destroys the exact OFF state; what the device needs is a junction across which no texture
+connects the two halves. Two established routes provide exactly that: a geometrically
+constrained wall, whose width is set by a nanoconstriction rather than by the bulk
+exchange--anisotropy balance~\cite{Bruno1999}, and a nonmagnetic spacer separating the two
+segments---precisely the CrN/P/CrN geometry~\cite{Modarresi2019}.
+
+Experiment supports the picture, and, if anything, our coherent adiabatic limit overestimates
+the leakage: magnetically misaligned interfaces between half-metallic grains are strongly
+resistive~\cite{Coey1998}, and the measured resistance of a single domain wall in a nearly
+half-metallic manganite exceeds mistracking estimates by orders of
+magnitude~\cite{Mathur1999}. Two practical remarks, both anchored to published
+first-principles results. First, on the proposed stabilizing substrates the OFF window equals
+the composite minority gap, $1.43$~eV ($h$-CrN/MoSe$_2$) to $1.71$~eV
+($h$-CrN/MoS$_2$)~\cite{Kuklin2017}---still $\sim$$55\,k_BT$ at room temperature. Second,
+above the minority band edge the AP transmission computed in our model is suppressed by the
+symmetry decoupling of the effective conduction orbital, so we restrict the quantitative claim
+to the OFF window. The one ingredient no published calculation supplies is the
+\emph{intrinsic} (unconstrained) wall width of $h$-CrN, $\lambda_{\rm int}=\pi\sqrt{A/K}$: the
+magnetocrystalline anisotropy $K$ requires spin--orbit coupling, which is absent from our
+model and, to our knowledge, unreported for $h$-CrN. A first-principles determination of $K$,
+combined with the exchange stiffness $A$ from the DMRG couplings~\cite{CrNdmrg2023}, would fix
+$\lambda_{\rm int}$; we leave it to future work, noting that in soft $3d$ magnets
+$\lambda_{\rm int}$ far exceeds $1$~nm---which is precisely why the constriction and spacer
+geometries are the working designs rather than one option among several.
 
 \begin{figure}[t]
 \centering
@@ -493,8 +639,9 @@ ensure.
 \caption{Thermal spin valve (zigzag $N=14$). (a) Total transmission for parallel (P) and
 collinear antiparallel (AP) magnetizations of the two leads: in the AP configuration each spin
 species has no propagating states in one of the leads, so $T_{\rm AP}(E)=0$ identically across
-the half-metallic window. (b) The resulting conductance switch at $300$~K; the thermocurrent
-switches off identically.}
+the half-metallic window (displayed range $[-1.2,+1.0]$~eV; the zero was verified numerically
+over the full window $[-3.2,+1.0]$~eV). (b) The resulting conductance switch at $300$~K; the
+thermocurrent switches off identically.}
 \label{fig:valve}
 \end{figure}
 
@@ -504,10 +651,11 @@ switches off identically.}
 \caption{Domain-wall leakage of the OFF state (spinful noncollinear calculation, zigzag
 $N=14$). (a) Antiparallel transmission versus wall width $\lambda$ at $E_F$ and at
 $+0.5$~eV; dotted lines mark the parallel-configuration values reached in the adiabatic
-(wide-wall) limit. (b) Same at $E_F$ on a log scale: the exactly collinear junction
-($\lambda=0$, $T=0$) is a singular point; half transparency is reached already at
-$\lambda_{1/2}\simeq9$~\AA. The OFF state requires an atomically sharp reversal---a
-geometrically constrained wall~\cite{Bruno1999} or a nonmagnetic
+(wide-wall) limit. (b) Same at $E_F$ on a log scale: the exact zero exists only at the
+collinear point $\lambda=0$; the sharpest finite texture ($\lambda\simeq1$~\AA) already
+transmits $T_{\rm AP}\simeq0.7$ (ON/OFF $\sim$$10$), and $\lambda_{1/2}\simeq9$~\AA\ marks
+half transparency. The exact OFF state therefore requires a junction with no continuous
+texture---a geometrically constrained wall~\cite{Bruno1999} or a nonmagnetic
 spacer~\cite{Modarresi2019}.}
 \label{fig:wall}
 \end{figure}
@@ -515,17 +663,20 @@ spacer~\cite{Modarresi2019}.}
 \subsection{Edge magnetism}
 \label{sec:edgemag}
 Although the transport above uses the uniform bulk exchange, the same model reproduces the
-\emph{magnetic edges} that motivate this system. Solving the mean-field Hubbard problem
-self-consistently for the ribbon (in the $d$+$p_z$ manifold; the nearly empty conduction pocket
-contributes negligibly to the moments)---with the effective on-site interaction calibrated so
-that the uniform solution recovers the fitted exchange---yields the per-site Cr moment profile
-of Fig.~\ref{fig:edgemag}. The interior recovers the bulk moment ($2.64\,\mu_B$ in the reduced
+\emph{magnetic edges} that motivate this system. Solving the self-consistent mean-field
+problem specified in Sec.~2.2 for the ribbon yields the per-site Cr moment profile of
+Fig.~\ref{fig:edgemag}. The interior recovers the bulk moment ($2.63\,\mu_B$ in the reduced
 manifold, cf.\ $2.67\,\mu_B$ for the monolayer), while the reduced-coordination edge Cr atoms
-carry \emph{enhanced} moments---by $\sim\!6\%$ (zigzag) to $\sim\!8\%$ (armchair). The
-enhancement is width-independent (identical for $N=14$ and $N=20$), confirming it as a genuine
-edge effect. This is the microscopic counterpart, from a lightweight model, of the magnetic CrN
-nanoribbon edges analysed by DMRG~\cite{CrNdmrg2023}. Going further, the intra-edge exchange
-constants extracted via the magnetic-force theorem~\cite{Liechtenstein1987} for the zigzag edge
+carry \emph{enhanced} moments: by $+4.8\%$ and $+6.1\%$ on the two inequivalent zigzag edges
+(the ribbon terminates on an N row on one side and a Cr row on the other) and by $+8.3\%$ on
+the two equivalent armchair edges. The enhancement is width-independent (identical for $N=14$
+and $N=20$), confirming it as a genuine edge effect. This is the microscopic counterpart, from
+a lightweight model, of the magnetic CrN nanoribbon edges analysed by
+DMRG~\cite{CrNdmrg2023}. Going further, the intra-edge exchange constants extracted via the
+magnetic-force theorem~\cite{Liechtenstein1987}---implemented with the ribbon Green's function
+on the real-axis contour $E\in[-8~\mathrm{eV},E_F]$ ($400$ energies, broadening
+$\eta=20$~meV, $120$ $k$ points, the perturbation acting on the three retained Cr $d$
+orbitals; the script is part of the repository)---for the zigzag edge
 are $J_1=+59$~meV and $J_2=+0.8$~meV (unit-vector convention, $J>0$ ferromagnetic):
 ferromagnetic $J_1$---consistent with the ferromagnetic edge being the stable self-consistent
 solution---and the strong hierarchy $|J_1|\gg|J_2|$ reproduce the sign and hierarchy of the
@@ -540,8 +691,9 @@ coupling ($|J_1|<1$~meV), reflecting the larger Cr--Cr spacing ($\sqrt3\,a$) alo
 \includegraphics[width=0.82\columnwidth]{fig_edgemag.png}
 \caption{Self-consistent mean-field Cr magnetic moment across the ribbon width. The interior
 recovers the bulk monolayer moment (dotted line) while the reduced-coordination edge Cr atoms
-carry enhanced moments ($\sim\!6\%$ zigzag, $\sim\!8\%$ armchair); the enhancement is
-width-independent ($N=14$ vs $20$).}
+carry enhanced moments: $+4.8\%$/$+6.1\%$ on the two inequivalent (N- and Cr-terminated)
+zigzag edges, $+8.3\%$ on the armchair edges; the enhancement is width-independent ($N=14$ vs
+$20$).}
 \label{fig:edgemag}
 \end{figure}
 
@@ -551,21 +703,38 @@ The limitations are stated transparently. First, the tight-binding parameters ar
 published band structure (digitization uncertainty $0.1$--$0.3$~eV), so the results are
 semi-quantitative. Varying every model parameter by $\pm10\%$
 (Fig.~\ref{fig:sensitivity}) changes the peak $ZT$ of the zigzag $N=14$ ribbon between $0.014$
-and $0.079$ about the baseline $0.040$: the \emph{order of magnitude} ($ZT\sim10^{-2}$--$10^{-1}$)
-and the qualitative landscape---a modest multichannel background inside the fully polarized
-window and a dominant peak that tracks the minority band edge---are robust, while individual
-peak heights are not converged beyond a factor of $\sim$2 (the largest excursions come from
-$V_{pd\pi}$ and from parameters that shift the minority edge, $\Delta_{\rm ex}$ and the
-on-site energies). We emphasise again---Sec.~\ref{sec:caution}---that such checks cannot detect
-a missing band. Second, the single effective conduction orbital does
-not resolve the second conduction band or its anticrossing above $\sim$$+0.5$~eV, and the
-$\pi^*$ valence-band top is misplaced in $k$-space (though not in energy). Third,
-$\kappa_{\rm ph}$ is a coherent ballistic estimate anchored to the published phonon dispersion;
-anharmonicity and edge roughness would reduce it (raising $ZT$), which is why we bracket it, and
-the phonon-engineering route to $ZT$ enhancement~\cite{Sevincli2010} remains open and requires
-an explicit phonon-transport calculation. Fourth, the transport uses the uniform bulk exchange;
-the self-consistent edge moments differ by only $6$--$8\%$, so feeding the site-dependent
-exchange back into the transmission is a small refinement we omit. Finally, transport at
+and $0.079$ about the baseline $0.040$ (for the armchair $N=8$ optimum the same protocol gives
+the spread quoted in Sec.~\ref{sec:widths}): the \emph{order of magnitude}
+($ZT\sim10^{-2}$--$10^{-1}$) and the qualitative landscape---a modest multichannel background
+inside the fully polarized window and a dominant peak that tracks the minority band edge---are
+robust, while individual peak heights are not converged beyond a factor of $\sim$2 (the
+largest excursions come from $V_{pd\pi}$ and from parameters that shift the minority edge,
+$\Delta_{\rm ex}$ and the on-site energies). The $\pm10\%$ variation is a uniform
+\emph{convention}, not a propagated error bar: for the on-site energies it corresponds to
+$0.2$--$0.35$~eV, comparable to the digitization uncertainty, but for $\varepsilon_c$ it is
+only $\pm0.09$~eV and for the weakest hoppings a few meV---smaller than their real
+uncertainties---and correlated variations along the least-squares covariance are not explored.
+The $\pi^*$-pinned variant of Sec.~\ref{sec:results} is our targeted probe of the one known
+\emph{systematic} misfit, and---as emphasised in Sec.~\ref{sec:caution}---no such check can
+detect a missing band. Second, the single effective conduction orbital does not resolve the
+second conduction band or its anticrossing above $\sim$$+0.5$~eV, and the $\pi^*$ valence
+band disperses incorrectly: its top sits at $+0.19$~eV at $K$ instead of $\simeq0$ inside the
+$\Gamma$--M and K--$\Gamma$ intervals---a $0.19$~eV error in energy as well as a misplacement
+in $k$, and precisely the systematic explored by the pinned variant. Third, $\kappa_{\rm ph}$ is a coherent ballistic
+estimate anchored to the published phonon dispersion; anharmonicity and edge roughness would
+reduce it (raising $ZT$), which is why we bracket it, and the phonon-engineering route to $ZT$
+enhancement~\cite{Sevincli2010} requires phonon transport through a disordered geometry, for
+the reason given in Sec.~\ref{sec:te}. Fourth, the transport uses the uniform bulk exchange; the
+self-consistent edge moments differ by only $5$--$8\%$, so feeding the site-dependent exchange
+back into the transmission is a small refinement we omit. Fifth, all transport assumes
+saturated ferromagnetic order with a temperature-independent exchange splitting. The
+random-phase-approximation estimate of the ordering temperature of the freestanding monolayer
+is $T_C\simeq209$~K (Hubbard $U=3$~eV; $124$~K at $U=0$)~\cite{Modarresi2019}, and the
+finite-temperature order of the ribbon \emph{edges} has been analysed by
+DMRG~\cite{CrNdmrg2023}; results at and above room temperature therefore presuppose that
+magnetic order survives (stabilized, e.g., by a substrate or anisotropy), and the $ZT(T)$
+curves up to $700$~K in Figs.~\ref{fig:designrules} should be read as ordered-phase transport
+with $\Delta_{\rm ex}(T)$ softening neglected. Finally, transport at
 $\mu-E_F\simeq+1$~eV assumes a rigid band structure under heavy electron doping or gating, an
 approximation that a self-consistent treatment of screening would refine.
 
@@ -575,7 +744,8 @@ approximation that a self-consistent treatment of screening would refine.
 \caption{Sensitivity of the peak figure of merit (zigzag $N=14$, $300$~K, global optimum) to a
 $\pm10\%$ variation of each model parameter, including those of the effective conduction
 orbital. The spread is $[0.014,0.079]$ about the baseline $0.040$: the order of magnitude is
-robust, individual peak heights are semi-quantitative.}
+robust, individual peak heights are semi-quantitative. The $\pm10\%$ variation is a uniform
+convention, not a propagated error bar (see text).}
 \label{fig:sensitivity}
 \end{figure}
 
@@ -583,25 +753,29 @@ robust, individual peak heights are semi-quantitative.}
 \section{Conclusions}
 \label{sec:conclusions}
 
-We have presented the first thermoelectric-transport study of hexagonal CrN nanoribbons, using a
-tight-binding plus Landauer approach parametrized entirely from published first-principles data.
-The honest headline is twofold. As thermoelectrics, pristine CrN nanoribbons are modest:
-$ZT\simeq0.01$--$0.15$ at $300$~K (rising moderately with temperature), with the global optimum
-pinned to the minority conduction-band edge at heavy electron doping, and with the narrow
-armchair $N=8$ ribbon uniquely combining its best $ZT$ ($0.15$) with full spin polarization. As
-spin filters, they are outstanding: the minority channel is gapped over more than $4$~eV, so
-charge and heat currents are $100\%$ spin polarized across the entire realistic doping window,
-and the magnetic edges that enable this are reproduced self-consistently, including the sign and
-hierarchy of their exchange couplings. The same gap powers a two-terminal function: with
-collinear antiparallel lead magnetizations the coherent transmission vanishes identically over
-the whole window---a thermally driven spin valve; our noncollinear domain-wall calculation
-shows the OFF state survives only for magnetization reversals sharper than about a nanometre,
-singling out geometrically constrained or spacer-separated junctions as the working
-geometries. Methodologically, we showed that the minimal orbital
-manifold suggested by the states at $E_F$ fabricates a sharp band edge and an almost
-order-of-magnitude overestimate of $ZT$---an artifact invisible to parameter-sensitivity
-analysis---which is a concrete caution for minimal-basis nanoribbon thermoelectric studies in
-general.
+We have presented, to our knowledge, the first thermoelectric-transport study of hexagonal CrN
+nanoribbons, using a tight-binding plus Landauer approach parametrized entirely from published
+first-principles data. The paper makes four claims. (i)~As thermoelectrics, pristine CrN
+nanoribbons are modest: $ZT\simeq0.04$--$0.15$ at $300$~K across widths and edges
+($\kappa_{\rm ph}$ brackets in Table~\ref{tab:results}), with the global optimum pinned to the
+minority conduction-band edge at heavy electron doping for most geometries; the narrow
+armchair $N=8$ ribbon is the exception, uniquely combining the best figure of merit,
+$ZT=0.15$ $[0.08$--$0.24]$, with full spin polarization (Fig.~\ref{fig:armchair8}).
+(ii)~As spin filters they are outstanding---the minority channel is gapped over nearly
+$4$~eV---though the half-metallicity itself confirms the first-principles and semiclassical
+predictions~\cite{Kuklin2017,CrNdmrg2023}; what this work adds is its phase-coherent
+quantification (quantized, $100\%$-polarized transmission across the accessible window, robust
+in width and edge type) and the spin-resolved thermoelectric trade-off at the minority edge.
+(iii)~The same gap powers a thermally driven spin valve with an \emph{exact} collinear OFF
+state; the noncollinear domain-wall calculation shows that any continuous magnetization
+texture leaks (half transparency already at $9$~\AA), singling out geometrically constrained
+or spacer-separated junctions as the working geometries. (iv)~Methodologically, the minimal
+orbital manifold suggested by the states at $E_F$ fabricates a sharp band edge and an almost
+order-of-magnitude overestimate of $ZT$ ($0.33\to0.040$ for the zigzag $N=14$ ribbon)---an
+artifact invisible to parameter-sensitivity analysis---a concrete caution for minimal-basis
+nanoribbon thermoelectric studies in general. Supporting these claims, the self-consistent
+mean-field treatment reproduces the magnetic edges and the sign and hierarchy of their
+exchange couplings found by DMRG.
 
 %% ------------------------------------------------------------------
 \section*{CRediT authorship contribution statement}
@@ -618,9 +792,12 @@ This research did not receive any specific grant from funding agencies in the pu
 commercial, or not-for-profit sectors.
 
 \section*{Data and code availability}
-The tight-binding/transport code (Python, Kwant), the digitized reference data and the scripts
-that generate all figures and tables are openly available in the accompanying repository:\\
-\url{https://github.com/tomas0821/crn-nanoribbon-thermoelectric}.
+The tight-binding/transport code (Python, Kwant), the digitized reference data (band-structure
+and phonon anchors) and the scripts that generate all figures and tables are openly available
+in the accompanying repository,\\
+\url{https://github.com/tomas0821/crn-nanoribbon-thermoelectric},\\
+where a tagged release records the exact version used to produce the numbers in this
+manuscript.
 
 %% ------------------------------------------------------------------
 \bibliographystyle{elsarticle-num}

@@ -23,5 +23,13 @@ manuscript/final.log
 # Regenerable transmission caches (rebuild via the scripts)
 data/*.npz
 
+# Full-text markdown conversions of copyrighted reference papers — must not be
+# redistributed (same rule as the reference PDFs above).
+papers_md/
+
+# NotebookLM video overviews (large, regenerable) and personal notebook pointer
+overviews/
+.notebooklm
+
 # elsarticle byproduct
 *.spl

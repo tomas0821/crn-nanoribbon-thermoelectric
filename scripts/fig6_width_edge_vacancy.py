@@ -79,7 +79,8 @@ def main():
     axs[1, 0].set_xlabel(r"$\mu - E_F$ (eV)"); axs[1, 0].set_ylabel("ZT")
     axs[1, 0].legend(frameon=False); axs[1, 0].axvline(0, color="0.8", lw=0.6, ls=":")
 
-    temps = np.linspace(50, 700, 60)
+    # start at 100 K: the production 5 meV grid is unconverged below ~100 K (see methods)
+    temps = np.linspace(100, 700, 61)
     for N, col in zip(widths, ("C0", "C2", "C3")):
         E, Tu, Td = get_TE("zigzag", N)
         W = ribbon_width("zigzag", N, p.a)

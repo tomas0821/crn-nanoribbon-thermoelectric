@@ -1,8 +1,10 @@
 #!/usr/bin/env python
-"""Figs 4-5: thermoelectric response of a zigzag CrN nanoribbon (extended SK model).
+"""Fig 5: thermoelectric response of a zigzag CrN nanoribbon (extended SK model).
 
-Fig 4 - Seebeck S(mu) at several temperatures (spin channels combined).
-Fig 5 - power factor and ZT vs mu at 300 K (kappa_ph bracket), and ZT(T) at the optimal mu.
+Fig 5 - power factor and ZT vs mu at 300 K (kappa_ph bracket).
+Referee round 1 tightening: the old Fig 4 (S(mu) at 100/300/500 K) and the old Fig 5(c)
+(ZT(T) at the optimum) were dropped -- S(mu) lives in fig_spinseebeck(a) and ZT(T) in
+fig6(d); the 100 K curve also used the production 5 meV grid, unconverged at that T.
 
 Uses the unified fine T_sigma(E) cache (scripts/run_all_transmissions.py, dE = 0.005 eV) and
 the phonon-Landauer kappa_ph anchored to the published h-CrN phonon dispersion (crnte.phonon).
@@ -38,30 +40,14 @@ def main():
     mu = np.linspace(-0.6, 1.2, 361)
     W = ribbon_width(EDGE, WIDTH, p.a)
 
-    # ---------- Fig 4: Seebeck S(mu) ----------
-    fig, ax = plt.subplots(figsize=(5.6, 4.2))
-    for T_K, c in ((100, "C0"), (300, "C2"), (500, "C3")):
-        up = th.sweep_mu(E, T_up, mu, T_K)
-        dn = th.sweep_mu(E, T_dn, mu, T_K)
-        tot = th.combine_spins(up, dn, T_K)
-        ax.plot(mu, tot["S"] * 1e6, color=c, lw=1.8, label=f"{T_K} K")
-    ax.axhline(0, color="k", lw=0.6, ls=":")
-    ax.axvline(0, color="0.7", lw=0.6, ls=":")
-    ax.set_xlabel(r"$\mu - E_F$ (eV)")
-    ax.set_ylabel(r"Seebeck $S$ ($\mu$V/K)")
-    ax.set_title(f"{EDGE} CrN ribbon (N={WIDTH}) — Seebeck")
-    ax.legend(frameon=False, title="temperature")
-    fig.tight_layout()
-    fig.savefig(os.path.join(FIGDIR, "fig4_seebeck.png"), dpi=200)
-
-    # ---------- Fig 5: PF and ZT (with kappa_ph bracket) vs mu, and ZT(T) ----------
+    # ---------- Fig 5: PF and ZT (with kappa_ph bracket) vs mu ----------
     T_K = 300.0
     up = th.sweep_mu(E, T_up, mu, T_K)
     dn = th.sweep_mu(E, T_dn, mu, T_K)
     tot = th.combine_spins(up, dn, T_K)
     kph = kappa_ph(T_K, W)
 
-    fig, axs = plt.subplots(1, 3, figsize=(11, 3.6))
+    fig, axs = plt.subplots(1, 2, figsize=(8.2, 3.6))
     axs[0].plot(mu, tot["PF"] * 1e12, color="C4", lw=1.8)   # pW/K^2
     axs[0].set_ylabel(r"power factor $S^2G$ (pW/K$^2$)")
     axs[0].set_title("Power factor (300 K)")
@@ -79,24 +65,8 @@ def main():
         a.set_xlabel(r"$\mu - E_F$ (eV)")
         a.axvline(0, color="0.7", lw=0.6, ls=":")
 
-    # ZT(T) at the mu that maximizes the phonon-Landauer ZT at 300 K
     ZT_300 = th.ZT(tot, T_K, kappa_ph=kph)
     mu_opt = mu[int(np.argmax(ZT_300))]
-    temps = np.linspace(50, 700, 66)
-    for factor, col, lab in ((0.5, "C2", r"$0.5\,\kappa_{ph}$"),
-                             (1.0, "C0", r"$\kappa_{ph}$"),
-                             (2.0, "C3", r"$2\,\kappa_{ph}$")):
-        zt_T = []
-        for T2 in temps:
-            u = th.sweep_mu(E, T_up, np.array([mu_opt]), T2)
-            dd = th.sweep_mu(E, T_dn, np.array([mu_opt]), T2)
-            zt_T.append(float(th.ZT(th.combine_spins(u, dd, T2), T2,
-                                    factor * kappa_ph(T2, W))[0]))
-        axs[2].plot(temps, zt_T, color=col, lw=1.7, label=lab)
-    axs[2].set_xlabel("temperature (K)")
-    axs[2].set_ylabel(r"$ZT$")
-    axs[2].set_title(f"ZT(T) at $\\mu-E_F$={mu_opt:+.2f} eV")
-    axs[2].legend(frameon=False, fontsize=7.5)
 
     fig.tight_layout()
     fig.savefig(os.path.join(FIGDIR, "fig5_zt.png"), dpi=200)

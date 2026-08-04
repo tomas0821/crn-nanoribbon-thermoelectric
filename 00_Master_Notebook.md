@@ -17,9 +17,70 @@
 - [x] **Manuscript rewritten** around the honest results + methodological caution; CRediT,
       funding, data statements added; HPC acknowledgement removed (nothing ran on HPC);
       highlights + cover letter updated. *(2026-07-17)*
+- [x] **Pipeline adoption (2026-07-27):** both source papers converted to
+      `papers_md/` — [[kuklinTwodimensionalHexagonalCrN2017]] and
+      [[modarresiLateralSpinValve2019]] (Modarresi Table I hand-restored; see
+      `papers_md/CONVERSION_NOTES.md`). Final novelty re-check re-run: **CLEAN**
+      (Crossref + OpenAlex + Semantic Scholar; arXiv checked separately after rate-limit).
+- [x] **Full bibliography → Zotero (2026-07-27):** all 27 manuscript references imported into
+      the CrN-nanoribbon-TE collection (doi.org BibTeX → connector; Datta book from refs.bib).
+      Collection now mirrors `manuscript/refs.bib` 1:1 — see `papers_md/INDEX.md`.
+- [x] **papers_md batch 2 (2026-07-27):** the duplicate-merges surfaced 10 PDF attachments;
+      all converted — incl. [[kupczynskiDMRGAnalysisMagnetic2023]] (J₁ = 10–12 meV,
+      J₂ = −2…0 meV, anisotropy 0.73 meV all verified verbatim — the J cross-check targets),
+      [[liebingTunnelingMagnetothermopowerMagnetic2011]] (Table I intact), and five old APS
+      OCR scans (readable prose, don't trust symbols — see `papers_md/CONVERSION_NOTES.md`).
+      12 of 26 papers now converted; the other 14 have no PDF (manual retrieval).
+- [x] **Referee panel round 1 (2026-07-29 → implemented 2026-08-01):** 4-referee adversarial
+      review + verification → `referee_report_2026-07-29.md` (verdict: major revisions; 20
+      numbered majors + 27 minors, 2 raised findings refuted). **All fixes implemented
+      2026-08-01** — manuscript.tex substantially revised (see run entry below): κ_ph-bracket
+      numeric error fixed (0.030–0.047, not "0.02–0.08"), abstract/table contradiction fixed,
+      wall OFF-state criterion restated honestly (collapse, not threshold), new
+      `fig_armchair8` figure + armchair-N8 ±10% sweep ([0.13, 0.28] one-sided,
+      `data/sensitivity_armchair8.txt`), π*-pinned systematic variant
+      (`scripts/pistar_pinned.py`, `data/pistar_pinned.txt`), full methods completeness
+      (fit targets, digitization, U_eff = 1.346 eV SCF spec, ZA branch, LKAG contour, real
+      convergence numbers, wall-region convergence ≤3×10⁻⁵), spin-caloritronics prior art
+      cited (Bauer 2012, Zeng 2011, Song 2020 *Physica E*, Ghanbari 2018 *Physica E*), T_C ≈
+      209 K caveat (Modarresi RPA), Fig 4 dropped + Fig 5 trimmed, conclusions rewritten as
+      four explicit claims, title extended, abstract ≤~200 words, 6 new refs in refs.bib.
+      NOTE: venv + TeX Live had vanished (WSL image rebuilt) — venv rebuilt per memory recipe,
+      TinyTeX installed (`~/.TinyTeX`, PATH: `$HOME/.TinyTeX/bin/x86_64-linux`).
+- [x] **Re-immersion walkthrough (2026-08-03):** full-story walkthrough delivered; narrative
+      persisted in `PROJECT_STORY.md` (phase-by-phase + synthesis — read that first when
+      returning to the project). NotebookLM notebook synced (sources: PROJECT_STORY,
+      notebook, manuscript PDF; ID in `.notebooklm`) with video overviews in `overviews/`.
+- [x] **Referee panel round 2 (2026-08-04):** re-review of the revised draft against the
+      round-1 report → `referee_report_2026-08-04.md`. **Verdict: minor revisions** (up from
+      major). Scorecard: 18/21 round-1 majors resolved, 2 partially (c-orbital weight values;
+      figure count), 1 unresolved = the user-side repo/tag blocker. 2 NEW majors, both
+      confirmed and both introduced by the revision: (a) §3.1 "qualitative landscape intact"
+      contradicts data/pistar_pinned.txt (pinned global optima relocate into the window for
+      4/6 geometries — also undermines §3.5 rule (i)); (b) Table 2 bracket columns overflow
+      the text block by 102 pt. Plus 12 deduplicated minors (wording precision vs data files,
+      2 stale cross-refs, float order, abstract still 213 words). Not yet implemented.
+- [x] **Round-2 fixes implemented — done 2026-08-04:** both majors fixed (§3.1 pinned-variant
+      results moved to §3.5 and restated honestly — "global optimum relocates into the window
+      for 4/6 geometries", rule (i) hedged; Table 2 overfull 102 pt → 0 via \footnotesize +
+      tabcolsep 2pt + shorter headers) and all 12 minors (exact factors 2.3×/56%, \ref{sec:te}
+      cross-ref, "0.19 eV error in energy as well as k", ZA min(quad,sine) stated, wall check
+      per-λ with absolute+fractional numbers, Fig 6(d) now starts at 100 K + caption note,
+      Zeng/Song/Ghanbari characterized separately, Modarresi "proposed, from first
+      principles", abstract 198 words with split opener, "strongly asymmetric" spread,
+      fig_spinseebeck float moved to §3.4 + armchair8/designrules envs swapped for citation
+      order). Rebuilt clean: 26 pp, 0 undefined refs, remaining overfulls ≤5.8 pt (cosmetic,
+      incl. the pre-existing Eq. (1) matrix). Still pending: repo public + tag (user), then
+      cite the tag name in the data statement.
+- [ ] **User GUI step (remaining):** regenerate the still-pinned `Author_Year` citekeys
+      (17 items incl. Kuklin, Modarresi, Liechtenstein — the rest got clean keys via your
+      merges), add the missing year `1974` to the Cabrera item, then verify the three
+      predicted-key folders (`kuklinTwodimensionalHexagonalCrN2017`,
+      `modarresiLateralSpinValve2019`, `liechtensteinLocalSpinDensity1987`) match and rename
+      if they differ.
 - [ ] **Before submission:** make the GitHub repo public (or archive on Zenodo) — the Data and
-      code availability statement promises it; final novelty re-check; upload to Editorial
-      Manager with highlights.txt + cover letter.
+      code availability statement promises it; upload to Editorial Manager with
+      highlights.txt + cover letter.
 
 ### Still open (future work, stated in the paper)
 - [ ] Second conduction band + CB1/CB2 anticrossing above +0.5 eV (single effective band now).
@@ -35,8 +96,10 @@
 Theory/modelling paper for **Physica E**: thermoelectric transport + spin filtering of
 **hexagonal (honeycomb) CrN nanoribbons** via **tight-binding + Landauer–Büttiker** (Kwant).
 Deliberately **no fresh DFT** — everything parametrized from published first-principles data:
-electronic bands from Kuklin et al., *Nanoscale* 9, 621 (2017) (digitized, incl. the majority
-conduction pocket), phonons from Modarresi et al., *PRApplied* 11, 064015 (2019) (digitized).
+electronic bands from Kuklin et al., *Nanoscale* 9, 621 (2017)
+([[kuklinTwodimensionalHexagonalCrN2017]]; digitized, incl. the majority conduction pocket),
+phonons from Modarresi et al., *PRApplied* 11, 064015 (2019)
+([[modarresiLateralSpinValve2019]]; digitized).
 
 **Novelty (re-verified 2026-07-16, 4 databases):** first **thermoelectric** (S, PF, ZT),
 **phase-coherent Landauer** study of CrN nanoribbons. The adjacent DMRG paper (PRB 107, 205418

@@ -74,15 +74,23 @@ def main():
     ax.axvline(0, color="0.8", lw=0.6, ls=":")
     ax.legend(frameon=False, fontsize=9, loc="upper left")
     # spin polarization on a twin axis; mask the "dead zone" where both PFs are negligible
+    # (P is a 0/0 there: both spin power factors vanish at S-sign changes, hence the gaps)
     pf_tot = up["PF"] + dn["PF"]
     thr = 0.02 * pf_tot.max()
     P = np.where(pf_tot > thr, (up["PF"] - dn["PF"]) / np.where(pf_tot > thr, pf_tot, 1.0), np.nan)
     ax2 = ax.twinx()
-    ax2.plot(MU, 100 * P, color="C2", lw=2.0)
-    ax2.set_ylabel("thermocurrent spin pol. (%)", color="C2")
+    ax2.plot(MU, 100 * P, color="C2", lw=2.0, label=r"$P_{PF}$")
+    # conductance polarization P_G: well defined everywhere the ribbon conducts, = 100%
+    # over the whole half-metallic window (referee round 1: quoted in text, now plotted)
+    Gtot = up["G"] + dn["G"]
+    PG = np.where(Gtot > 1e-3 * 3.874e-5, (up["G"] - dn["G"]) / np.where(Gtot > 0, Gtot, 1.0),
+                  np.nan)
+    ax2.plot(MU, 100 * PG, color="C4", lw=1.4, ls="-.", label=r"$P_G$")
+    ax2.set_ylabel("spin polarization (%)", color="C2")
     ax2.tick_params(axis="y", labelcolor="C2")
     ax2.set_ylim(-115, 115)
     ax2.axhline(0, color="C2", lw=0.5, ls=":")
+    ax2.legend(frameon=False, fontsize=8, loc="center right")
 
     fig.tight_layout()
     out = os.path.join(FIGDIR, "fig_spinseebeck.png")

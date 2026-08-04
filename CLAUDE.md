@@ -1,3 +1,15 @@
+---
+type: project
+journal: "Physica E: Low-dimensional Systems and Nanostructures"
+issn: 1386-9477
+stage: drafting
+origin_journal: physicaE
+novelty_checked: 2026-07-14
+last_activity: 2026-07-27
+adopted: 2026-07-27
+repo: "https://github.com/tomas0821/crn-nanoribbon-thermoelectric"
+---
+
 # CLAUDE.md — CrN nanoribbon thermoelectric project
 
 ## What this project is
@@ -54,3 +66,15 @@ analysis run on 2026-07-14.
 Read `00_Master_Notebook.md` (current state + honest headline results), then check the
 AI-handoff list there. Remaining pre-submission items: make the GitHub repo public (data
 statement promises it), run the final novelty re-check, submit.
+
+## Session protocol
+
+**At session start, before anything else:** read the top of `00_Master_Notebook.md` and give a
+one-paragraph orientation: where the project stands, and the top 3 open items. Do this even if
+the user's first message is a specific task — one paragraph, then the task.
+
+**Before ending a work block** (or whenever asked to wrap up): record what was done in
+`00_Master_Notebook.md` — dated, checklist style (`- [x] ... — done YYYY-MM-DD: result`).
+New open items go in as `- [ ]`. Results must never live only in the conversation.
+If the block produced a headline result or figure, also post it to Discord:
+`discord-post crn_nanoribbon_thermoelectric "<one-line result>" <figure.png>`.

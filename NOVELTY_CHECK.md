@@ -122,3 +122,17 @@ cite and differentiate. The "first thermoelectric / phase-coherent Landauer stud
 nanoribbons" claim stands. NOTE (post-audit): the manuscript's headline is now the HONEST
 result (extended model, ZT 0.04–0.15, spin-filter emphasis + manifold caution) — novelty claim
 unchanged by the correction.
+
+---
+
+## Final pre-submission re-check — 2026-07-27 · VERDICT: CLEAN (all four DBs)
+Re-ran the toolkit with the recorded queries ("CrN nanoribbon thermoelectric",
+"CrN nanoribbon Landauer"). Crossref, OpenAlex and Semantic Scholar (authenticated): clean —
+every hit is the known non-colliding prior art (Quintela APL 2009; ammonia-annealed CrN films;
+CrN alloy-film Linköping thesis 2025; nanoribbon-thermoelectric papers on *other* materials,
+incl. two 2025 Physica E ones confirming the format is welcome; the DMRG PRB 107, 205418
+(2023) paper we cite). The toolkit's arXiv leg timed out / rate-limited ("Rate exceeded" from
+this IP even after 10 min of backoff), so arXiv was checked via the arxiv.org search UI
+instead: **"CrN nanoribbon" → exactly 1 result** (arXiv:2408.06754, the DMRG paper);
+**"CrN nanoribbon thermoelectric" → 0 results**. The "first thermoelectric / phase-coherent
+Landauer study of CrN nanoribbons" claim stands on all four databases as of submission.

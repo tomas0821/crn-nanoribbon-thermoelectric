@@ -2,7 +2,7 @@ Highlights
 (Elsevier: 3-5 bullet points, each <= 85 characters including spaces)
 
 - First thermoelectric (Landauer) study of CrN nanoribbons, no ab-initio input.
-- Minority channel gapped over 4 eV: transport is 100% spin-polarized when gated.
-- Honest ZT = 0.01-0.15 at 300 K; the optimum sits at the minority band edge.
+- Minority channel gapped over ~4 eV: transport is 100% spin-polarized when gated.
+- Honest ZT = 0.04-0.15 at 300 K; armchair N=8 peaks inside the polarized window.
 - A minimal orbital basis fabricates a sharp edge and overestimates ZT eightfold.
 - Antiparallel magnetizations switch the thermocurrent off: a thermal spin valve.
