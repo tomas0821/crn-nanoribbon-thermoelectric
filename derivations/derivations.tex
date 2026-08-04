@@ -371,11 +371,13 @@ required by the Wiedemann--Franz analogy).
 $T\to0$ limit (four gapless ribbon modes). The production estimate (\texttt{crnte.phonon})
 counts modes from the \emph{monolayer phonon dispersion} digitized from the published DFPT
 spectrum (Modarresi et al., PRApplied 11, 064015 (2019), Fig.~4(a)): acoustic branches with
-$v_{\rm LA}\simeq8.5$, $v_{\rm TA}\simeq4.3$~km/s and zone-edge maxima $4.7$--$10.4$~THz (ZA
-quadratic near $\Gamma$), plus three optical branches ($13.7\!\to\!7.2$, $13.2\!\to\!10.8$,
-$16.85\!\to\!15.1$~THz from $\Gamma$ to zone edge), each represented by a monotone sine-form
-interpolation (whose zone-edge value and slope reproduce the digitized velocities---an internal
-consistency check). For an isotropic branch $b$, a ribbon of width $W$ has
+$v_{\rm LA}\simeq8.5$, $v_{\rm TA}\simeq4.3$~km/s and zone-edge maxima $4.7$--$10.4$~THz,
+plus three optical branches ($13.7\!\to\!7.2$, $13.2\!\to\!10.8$,
+$16.85\!\to\!15.1$~THz from $\Gamma$ to zone edge). LA, TA and the optical branches are
+monotone sine-form interpolations between their anchors (whose zone-edge value and slope
+reproduce the digitized velocities---an internal consistency check); the flexural ZA branch is
+quadratic near $\Gamma$, $\nu_{\rm ZA}(q)=\min\!\big(\alpha q^2,\,\nu_{\rm max}\sin(\pi
+q/2q_{\rm ZB})\big)$ with $\alpha\simeq44$~THz\,\AA$^2$, as in the manuscript. For an isotropic branch $b$, a ribbon of width $W$ has
 $M_b(\omega)=(W/\pi)\,q_b(\omega)$ propagating channels, with $q_b(\omega)$ the iso-frequency
 radius; the total $M(\omega)$ is floored at 4 in the acoustic region. Then
 $\kappa_{\rm ph}(T)=\frac1{2\pi}\int d\omega\,\hbar\omega\,(\partial n_B/\partial T)M(\omega)$.
