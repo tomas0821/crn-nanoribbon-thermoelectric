@@ -624,14 +624,21 @@ the composite minority gap, $1.43$~eV ($h$-CrN/MoSe$_2$) to $1.71$~eV
 ($h$-CrN/MoS$_2$)~\cite{Kuklin2017}---still $\sim$$55\,k_BT$ at room temperature. Second,
 above the minority band edge the AP transmission computed in our model is suppressed by the
 symmetry decoupling of the effective conduction orbital, so we restrict the quantitative claim
-to the OFF window. The one ingredient no published calculation supplies is the
-\emph{intrinsic} (unconstrained) wall width of $h$-CrN, $\lambda_{\rm int}=\pi\sqrt{A/K}$: the
-magnetocrystalline anisotropy $K$ requires spin--orbit coupling, which is absent from our
-model and, to our knowledge, unreported for $h$-CrN. A first-principles determination of $K$,
-combined with the exchange stiffness $A$ from the DMRG couplings~\cite{CrNdmrg2023}, would fix
-$\lambda_{\rm int}$; we leave it to future work, noting that in soft $3d$ magnets
-$\lambda_{\rm int}$ far exceeds $1$~nm---which is precisely why the constriction and spacer
-geometries are the working designs rather than one option among several.
+to the OFF window. Finally, the \emph{intrinsic} (unconstrained) wall width of $h$-CrN can be
+estimated entirely from published first-principles numbers. The magnetocrystalline anisotropy
+of the freestanding monolayer is reported in Ref.~\cite{Modarresi2019}: $K\simeq0.73$~meV per
+Cr at $U=3$~eV ($0.47$~meV at $U=0$), easy axis out of plane---the same value adopted as the
+single-ion anisotropy in the DMRG analysis~\cite{CrNdmrg2023}. For a uniaxial Heisenberg
+magnet the wall-width parameter is $\delta_{\rm int}\simeq a\sqrt{J_1/2K}$, so with
+$J_1\simeq10$--$12$~meV~\cite{CrNdmrg2023} (or Ref.~\cite{Modarresi2019}'s own
+$J=7.8$~meV) the intrinsic width is
+$\lambda_{\rm int}=\pi\delta_{\rm int}\simeq2.4$--$3$~nm---an order-of-magnitude estimate,
+but one that lands a factor of $\sim$3 \emph{above} the full-transparency scale of
+Fig.~\ref{fig:wall} and a factor of $\sim$30 above $\lambda_{1/2}$. An unconstrained wall in
+$h$-CrN is therefore fully transparent, and the constriction and spacer geometries are not
+merely prudent but \emph{required} by the published exchange and anisotropy scales; a
+dedicated noncollinear DFT+$U$+SOC determination of the full angular dependence of $K$ would
+refine, but is unlikely to overturn, this conclusion.
 
 \begin{figure}[t]
 \centering
@@ -768,8 +775,9 @@ quantification (quantized, $100\%$-polarized transmission across the accessible 
 in width and edge type) and the spin-resolved thermoelectric trade-off at the minority edge.
 (iii)~The same gap powers a thermally driven spin valve with an \emph{exact} collinear OFF
 state; the noncollinear domain-wall calculation shows that any continuous magnetization
-texture leaks (half transparency already at $9$~\AA), singling out geometrically constrained
-or spacer-separated junctions as the working geometries. (iv)~Methodologically, the minimal
+texture leaks (half transparency already at $9$~\AA), and since the published exchange and
+anisotropy values place the intrinsic wall width at $2.4$--$3$~nm---fully transparent---
+geometrically constrained or spacer-separated junctions are required, not merely preferred. (iv)~Methodologically, the minimal
 orbital manifold suggested by the states at $E_F$ fabricates a sharp band edge and an almost
 order-of-magnitude overestimate of $ZT$ ($0.33\to0.040$ for the zigzag $N=14$ ribbon)---an
 artifact invisible to parameter-sensitivity analysis---a concrete caution for minimal-basis

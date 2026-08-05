@@ -72,6 +72,15 @@
       order). Rebuilt clean: 26 pp, 0 undefined refs, remaining overfulls ≤5.8 pt (cosmetic,
       incl. the pre-existing Eq. (1) matrix). Still pending: repo public + tag (user), then
       cite the tag name in the data statement.
+- [x] **λ_int closed with zero DFT (2026-08-04):** the planned MAE run's target number was in
+      our own cited literature all along — Modarresi 2019 reports K = Δ = 0.73 meV/Cr (U=3;
+      0.47 at U=0, easy axis out-of-plane), the same value the DMRG paper reuses as its
+      single-ion anisotropy. λ_int = πa√(J₁/2K) ≈ 2.4–3 nm (J₁ = 7.8–12 meV) ≫ λ_1/2 = 9 Å →
+      intrinsic walls fully transparent; constriction/spacer designs are REQUIRED by
+      published numbers. Manuscript §3.7 "unreported" sentence (wrong, missed by both
+      panels) fixed; conclusions claim (iii) strengthened. If any DFT is ever run for this
+      line of work, the best target is now the monolayer PBE+U band structure (kills the
+      digitization/π* systematic — post-submission insurance or follow-up seed), not the MAE.
 - [ ] **User GUI step (remaining):** regenerate the still-pinned `Author_Year` citekeys
       (17 items incl. Kuklin, Modarresi, Liechtenstein — the rest got clean keys via your
       merges), add the missing year `1974` to the Cabrera item, then verify the three

@@ -192,8 +192,10 @@ flagship result survived every stress test unchanged.
   regeneration (17 pinned keys, Cabrera year); Editorial Manager upload.
 - Stated future work: second conduction band/anticrossing above +0.5 eV; site-dependent
   exchange fed back into transport; explicit phonon transport through disorder (the
-  enhancement route); self-consistent screening at μ ≈ +1 eV; first-principles K of h-CrN →
-  intrinsic wall width λ_int.
+  enhancement route); self-consistent screening at μ ≈ +1 eV. *(Closed 2026-08-04: the
+  intrinsic wall width no longer needs DFT — K ≈ 0.73 meV/Cr was in Modarresi 2019 all along,
+  giving λ_int ≈ 2.4–3 nm ≫ λ_1/2; the manuscript's "unreported" sentence was wrong and is
+  fixed — constriction/spacer junctions are now* required *by published numbers.)*
 - Git: both panel rounds and all fixes committed (`a91952f`) and pushed 2026-08-04.
 
 ## Understanding risks (kind but honest)
