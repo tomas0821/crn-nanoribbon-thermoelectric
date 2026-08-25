@@ -7,6 +7,45 @@
 
 ## 📥 AI Handoff & Next Actions
 
+- [x] **Repo made public + tagged (2026-08-25):** GitHub repo `tomas0821/crn-nanoribbon-thermoelectric`
+      switched to public and tagged `v1.0-submission` (pushed). **M1 blocker from round 3 is
+      now resolved** — the Data and code availability statement is accurate. Also removed two
+      genuinely-unused legacy scripts (`fig2_monolayer_bands.py`, `fig3_transmission.py`) and
+      dead code (`crnte.thermo.kappa_ph_ballistic`) as a public-repo footgun cleanup — verified
+      via `scripts/verify.py` (Wiedemann-Franz + monolayer/ribbon consistency, both pass) that
+      `crnte/monolayer.py` and `crnte/ribbon.py` are NOT dead (they're live imports of
+      `monolayer_sk.py`/`ribbon_sk.py`) so those were restored after an initial wrong deletion.
+      README refreshed to 2026-08-25 status (spin valve, λ_int, referee history added).
+- [x] **Cross-model referee panel (2026-08-25):** first non-same-model review — Kimi,
+      Antigravity, DeepSeek-reasoner (via opencode), Codex, all read-only against
+      manuscript.tex → `cross_model_review_2026-08-25.md`. Kimi timed out mid-verification
+      (10 min) without emitting a formatted report; its one fully-reasoned finding (phonon
+      mode-count) is credited via independent convergence with DeepSeek. Verdict: minor
+      revisions. 3 genuinely new catches missed by all 3 same-model rounds: (1) quoted
+      T_AP≈0.7 at λ≈1 Å didn't match `data/wall_sweep.txt` (actually ≈0.62); (2) Fig. 3's
+      caption claimed "100% spin polarized throughout the accessible doping window" while its
+      own plotted range extends past the point (+1.0 eV) where §3.6 says polarization is
+      already lost; (3) the μ-scan window defining every "global optimum" claim
+      (`MU=linspace(-0.6,1.2,...)` in `fig6_width_edge_vacancy.py`) was never disclosed in the
+      text. Also surfaced a real open physics question (phonon.py's 4-gapless-mode floor is a
+      3D-beam result; a strictly 2D sheet should have 3 acoustic branches — not fixed, flagged
+      as an explicit caveat pending a possible follow-up recomputation) and a genuine
+      SOC-vs-"exact"-OFF-state internal-consistency point. Several other MAJORs raised by
+      Antigravity/Codex turned out to already be explicit numbered caveats in the manuscript's
+      own Scope section (T_C≈209K, rigid-band/no-screening) — downgraded, not fresh gaps; one
+      (c-orbital "unphysical scattering artifacts" at edges/walls) was refuted on a mirror-
+      symmetry argument. **All surviving findings fixed same day** in manuscript.tex: wall
+      value corrected (0.7→0.6, both occurrences), Fig. 3 caption bounded to the actual
+      polarized window, μ-scan domain disclosed + CB2-unresolved-region caveat added near
+      Table 2, abstract ZT-floor clause added for the π*-pinned degradation, SOC caveat added
+      to §3.7, phonon 4-mode-floor caveat added to §2.5 (code/data NOT changed — this is a
+      disclosed open question, not a confirmed bug, and changing the floor would require
+      regenerating every cached κ_ph/ZT number), LKAG J2-sign wording fixed (§3.8 +
+      Conclusions), Fig. 6(d) caption reworded to match the §2.3 100K convergence caveat,
+      κ_ph-bracket ordering standardized to ascending. Recompiled clean: 28 pp, 0 undefined
+      refs, overfulls ≤5.8 pt (unchanged, pre-existing). Also deleted two stale build logs
+      (`manuscript/build.log`, `build_last.log`) flagged as clutter by the pre-review audit.
+
 - [x] **Referee panel round 3 (2026-08-14):** re-review of the round-2-fixed draft, focused
       on the new §3.7 λ_int (intrinsic domain-wall width) addition never previously refereed.
       1 new MAJOR confirmed: both comparison factors in "$\lambda_{\rm int}$...lands a factor
@@ -103,9 +142,9 @@
       predicted-key folders (`kuklinTwodimensionalHexagonalCrN2017`,
       `modarresiLateralSpinValve2019`, `liechtensteinLocalSpinDensity1987`) match and rename
       if they differ.
-- [ ] **Before submission:** make the GitHub repo public (or archive on Zenodo) — the Data and
-      code availability statement promises it; upload to Editorial Manager with
-      highlights.txt + cover letter.
+- [x] **Repo public + tagged (2026-08-25):** done — see entry at the top. The only remaining
+      pre-submission step is uploading to Editorial Manager with highlights.txt + cover letter.
+- [ ] **Before submission:** upload to Editorial Manager with highlights.txt + cover letter.
 
 ### Still open (future work, stated in the paper)
 - [ ] Second conduction band + CB1/CB2 anticrossing above +0.5 eV (single effective band now).

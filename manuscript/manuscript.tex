@@ -35,7 +35,8 @@ phonon-Landauer thermal conductance---no fresh ab-initio computation. Restoring 
 minimal out-of-plane orbital manifold misses collapses the apparent figure of merit of the
 zigzag $N{=}14$ ribbon from $ZT\simeq0.33$ to an honest $0.04$ at $300$~K---a basis-truncation
 artifact that parameter sensitivity cannot detect; across widths and edges the honest optima
-are $ZT\simeq0.04$--$0.15$. For most geometries the optimum sits at the minority
+are $ZT\simeq0.04$--$0.15$ in the baseline model (as low as $0.03$ for three of six geometries
+under a targeted systematic check, Sec.~3.5). For most geometries the optimum sits at the minority
 conduction-band edge ($\mu-E_F\simeq+1$~eV), where spin polarization is lost; the narrow
 armchair $N{=}8$ ribbon is the exception, reaching its best $ZT=0.15$ ($0.08$--$0.24$ phonon
 bracket) inside the fully spin-polarized window. The ribbons quantify, in the phase-coherent
@@ -319,7 +320,16 @@ temperature and saturates once all branches are populated ($T\gtrsim500$~K). At 
 gives $\kappa_{\rm ph}=0.6$--$1.7$~nW/K for the ribbons studied here ($W=10$--$32$~\AA),
 growing with width. This is a deliberately simple, transparent estimate---coherent ballistic
 transport, no anharmonicity or edge roughness---so we report $ZT$ for $\tfrac12$, $1$ and
-$2\times\kappa_{\rm ph}$ throughout.
+$2\times\kappa_{\rm ph}$ throughout. One further modelling choice deserves an explicit caveat:
+the low-frequency floor of four gapless modes follows the Rego--Kirczenow result for a
+three-dimensional elastic beam (one dilatational, one torsional and two flexural branches),
+whereas a strictly two-dimensional sheet supports only three gapless acoustic branches (LA, TA,
+ZA), and it is not established that a fourth, beam-like torsional mode survives for a ribbon
+cut from a planar 2D crystal. We have not re-derived the low-temperature floor appropriate to
+this specific geometry; the effect on the tabulated $300$~K values is expected to be modest,
+since the floor constrains only the low-frequency tail of the spectrum rather than its
+thermally populated bulk, but a floor of three rather than four modes is a natural follow-up
+check.
 
 %% ------------------------------------------------------------------
 \section{Results and discussion}
@@ -373,9 +383,10 @@ zigzag edges by semiclassical transport~\cite{CrNdmrg2023}.
 \centering
 \includegraphics[width=\columnwidth]{fig3_transmission.png}
 \caption{Spin-resolved Landauer transmission $T_\sigma(E)$ of zigzag (left) and armchair (right)
-CrN ribbons ($N=14$). The minority channel (dashed) is gapped over more than $4$~eV around
-$E_F$ while the majority channel (solid) conducts: the current is $100\%$ spin polarized
-throughout the accessible doping window.}
+CrN ribbons ($N=14$). The minority channel (dashed) is gapped over nearly $4$~eV around
+$E_F$ while the majority channel (solid) conducts: the current is $100\%$ spin polarized up to
+the minority conduction edge ($\mu-E_F\simeq+1.0$~eV), beyond which the conductance
+polarization degrades (Sec.~\ref{sec:polar}).}
 \label{fig:transmission}
 \end{figure}
 
@@ -421,7 +432,7 @@ channel opens: the sharp minority edge supplies a large partial thermopower
 ($S_\uparrow\simeq+4~\mu$V/K), giving a charge thermopower of a few tens of $\mu$V/K and the
 global maximum of the power factor and $ZT$ [Fig.~\ref{fig:zt}]. For zigzag $N=14$ we obtain
 peak $ZT=0.040$ at $300$~K at $\mu-E_F=+1.08$~eV, with the $\tfrac12\times$/$2\times
-\kappa_{\rm ph}$ bracket spanning $0.047$--$0.030$ [Fig.~\ref{fig:zt}(b)]; the
+\kappa_{\rm ph}$ bracket spanning $0.030$--$0.047$ [Fig.~\ref{fig:zt}(b)]; the
 parameter-sensitivity spread is wider, $[0.014,0.079]$ (Sec.~\ref{sec:scope}), and the two
 brackets measure different things---phonon-model versus electronic-parameter uncertainty. At
 the same doping $ZT$ rises to $0.065$ at $700$~K, subject to the magnetic-order caveat of
@@ -466,11 +477,18 @@ $\tfrac12\times$/$1\times$/$2\times$ $\kappa_{\rm ph}$ bracket.}
 \label{sec:widths}
 Table~\ref{tab:results} and Fig.~\ref{fig:designrules} collect the peak values for
 $N=8,14,20$ and both edges, each ribbon with its own $\kappa_{\rm ph}(W)$ and its own
-$\tfrac12\times$/$2\times$ bracket. Three observations replace the naive design rules that the
+$\tfrac12\times$/$2\times$ bracket, each optimum located by scanning
+$\mu-E_F\in[-0.6,+1.2]$~eV; "global optimum" below is global \emph{within this window}, which
+covers the full minority gap and the metallic majority background but not the deeper valence
+side. Three observations replace the naive design rules that the
 reduced manifold would have suggested. (i)~In the baseline model the global optimum sits, for
 most geometries, at the minority band edge ($+1.05$ to $+1.09$~eV), i.e.\ at heavy electron
 doping, reaching $ZT=0.04$--$0.14$ there (this is the rule the $\pi^*$-pinned systematic
-weakens; see below). (ii)~Armchair ribbons consistently outperform zigzag ribbons at
+weakens; see below); this doping range already sits inside the window where
+Sec.~\ref{sec:methods} flags the second conduction band and its anticrossing with the fitted
+one as unresolved, so these particular optima should be read as conditional on that unresolved
+spectral weight rather than as fully converged predictions---the armchair $N=8$ in-window value
+of observation (iii) below is the one optimum immune to this caveat. (ii)~Armchair ribbons consistently outperform zigzag ribbons at
 matched width (e.g.\ $0.14$ versus $0.04$ at $N=14$), and $ZT$ does not grow with width---it
 decreases (armchair) or is non-monotonic (zigzag), because narrow ribbons benefit from subband
 gaps that sharpen the transmission while $\kappa_{\rm ph}$ grows with $W$. (iii)~The narrow
@@ -538,8 +556,9 @@ armchair & 20 & 31.7 & 0.104 [0.074--0.132] ($+1.07$) & 0.029 [0.020--0.038] ($-
 \caption{Width, edge and temperature dependence. (a) $ZT$ versus doping for zigzag widths
 $N=8,14,20$ at $300$~K, each with its own $\kappa_{\rm ph}(W)$. (b) Peak $ZT$ versus width for
 both edge types. (c) Zigzag versus armchair at matched width $N=14$. (d) $ZT(T)$ at the $300$-K
-optimal doping for the three zigzag widths (plotted from $100$~K, below which the production
-energy grid is not converged, Sec.~2.3).}
+optimal doping for the three zigzag widths (plotted from $100$~K, the lowest point shown; this
+point itself still carries the $\sim$$6\%$ grid-convergence caveat of Sec.~2.3, so only
+$T\gtrsim150$~K should be read as converged to $<1\%$).}
 \label{fig:designrules}
 \end{figure*}
 
@@ -554,6 +573,7 @@ the star marks the optimum at $\mu-E_F=-0.34$~eV quoted in Table~\ref{tab:result
 \end{figure*}
 
 \subsection{Spin caloritronics}
+\label{sec:polar}
 Because the minority channel is gapped over the whole accessible window, the thermoelectric
 current below $+1.0$~eV is carried entirely by majority carriers: the ribbons are natural
 spin-Seebeck elements, with the caveat that the total thermopower there is modest.
@@ -583,7 +603,12 @@ $E-E_F\in[-3.2,+1.0]$~eV [Fig.~\ref{fig:valve}(a)]---a lead-spectrum zero (our n
 machine zero), not the large-but-finite suppression of the heterostructure and
 non-half-metallic devices above---and both the electrical conductance and the thermally driven
 current switch off [Fig.~\ref{fig:valve}(b)]: the single-material, thermally driven
-counterpart of the CrN/P/CrN lateral spin valve~\cite{Modarresi2019}.
+counterpart of the CrN/P/CrN lateral spin valve~\cite{Modarresi2019}. This exactness is a
+property of the collinear, spin-orbit-free Hamiltonian used here---spin remains a strictly
+good quantum number, so nothing mixes the channels; a real junction retains a (likely tiny)
+spin-orbit-mediated leakage even in the fully collinear geometry, of the same origin as the
+magnetocrystalline anisotropy $K$ invoked below for $\lambda_{\rm int}$, so "exact" should be
+read as the SOC-free limit rather than a guarantee for the physical material.
 
 How sharp must the magnetization reversal be? A real junction hosts a domain wall of finite
 width $\lambda$, and a noncollinear texture mixes the spin channels: carriers can rotate their
@@ -600,7 +625,7 @@ it by four further periods changes $T_{\rm AP}(E_F)$ by less than $10^{-6}$ at
 $\lambda=10$~\AA\ and by less than $3\times10^{-4}$ (fractionally $3\times10^{-5}$) at
 $\lambda=30$~\AA, the widest-wall (longest-tail) case. Figure~\ref{fig:wall} shows the result, and it is a collapse rather than a threshold: the exact
 zero exists only at the collinear point $\lambda=0$. Already the sharpest possible texture
-($\lambda\simeq1$~\AA) leaks $T_{\rm AP}\simeq0.7$---an ON/OFF ratio of order ten---half
+($\lambda\simeq1$~\AA) leaks $T_{\rm AP}\simeq0.6$---an ON/OFF ratio of order ten---half
 transparency is reached at $\lambda_{1/2}\simeq9$~\AA, and walls wider than $\sim$$3$~nm are
 fully transparent ($T_{\rm AP}\to T_{\rm P}$, the adiabatic limit, reached exactly in our
 numerics). The crossover scale is consistent with the mistracking length
@@ -662,7 +687,7 @@ $N=14$). (a) Antiparallel transmission versus wall width $\lambda$ at $E_F$ and 
 $+0.5$~eV; dotted lines mark the parallel-configuration values reached in the adiabatic
 (wide-wall) limit. (b) Same at $E_F$ on a log scale: the exact zero exists only at the
 collinear point $\lambda=0$; the sharpest finite texture ($\lambda\simeq1$~\AA) already
-transmits $T_{\rm AP}\simeq0.7$ (ON/OFF $\sim$$10$), and $\lambda_{1/2}\simeq9$~\AA\ marks
+transmits $T_{\rm AP}\simeq0.6$ (ON/OFF $\sim$$10$), and $\lambda_{1/2}\simeq9$~\AA\ marks
 half transparency. The exact OFF state therefore requires a junction with no continuous
 texture---a geometrically constrained wall~\cite{Bruno1999} or a nonmagnetic
 spacer~\cite{Modarresi2019}.}
@@ -688,11 +713,12 @@ $\eta=20$~meV, $120$ $k$ points, the perturbation acting on the three retained C
 orbitals; the script is part of the repository)---for the zigzag edge
 are $J_1=+59$~meV and $J_2=+0.8$~meV (unit-vector convention, $J>0$ ferromagnetic):
 ferromagnetic $J_1$---consistent with the ferromagnetic edge being the stable self-consistent
-solution---and the strong hierarchy $|J_1|\gg|J_2|$ reproduce the sign and hierarchy of the
-DMRG couplings ($J_1\simeq10$--$12$, $J_2\simeq-2$--$0$~meV/Cr~\cite{CrNdmrg2023}), with the
-reduced manifold overestimating $J_1$ by a factor of $\sim$5---the semi-quantitative agreement
-expected of an analytic model with no ab-initio input (the sign of the small $J_2$ is not
-resolved at this level). Interestingly, the armchair edge shows an almost vanishing intra-edge
+solution---reproduces the sign of the dominant DMRG coupling and the strong hierarchy
+$|J_1|\gg|J_2|$ reproduces its qualitative structure ($J_1\simeq10$--$12$,
+$J_2\simeq-2$--$0$~meV/Cr~\cite{CrNdmrg2023}); this is only semi-quantitative agreement, as
+expected of an analytic model with no ab-initio input, since the reduced manifold overestimates
+$J_1$ by a factor of $\sim$5 and gives the small $J_2$ the opposite sign. Interestingly, the
+armchair edge shows an almost vanishing intra-edge
 coupling ($|J_1|<1$~meV), reflecting the larger Cr--Cr spacing ($\sqrt3\,a$) along that edge.
 
 \begin{figure}[t]
@@ -743,7 +769,11 @@ finite-temperature order of the ribbon \emph{edges} has been analysed by
 DMRG~\cite{CrNdmrg2023}; results at and above room temperature therefore presuppose that
 magnetic order survives (stabilized, e.g., by a substrate or anisotropy), and the $ZT(T)$
 curves up to $700$~K in Figs.~\ref{fig:designrules} should be read as ordered-phase transport
-with $\Delta_{\rm ex}(T)$ softening neglected. Finally, transport at
+with $\Delta_{\rm ex}(T)$ softening neglected. A related caveat is that phase coherence itself
+is an idealization at high temperature: electron--phonon dephasing shortens the coherent mean
+free path well before $700$~K in a real device, so the $ZT(T)$ trend above room temperature is
+best read as the coherent-transport projection rather than a quantitative prediction for a
+partially incoherent device at those temperatures. Finally, transport at
 $\mu-E_F\simeq+1$~eV assumes a rigid band structure under heavy electron doping or gating, an
 approximation that a self-consistent treatment of screening would refine.
 
@@ -785,8 +815,8 @@ orbital manifold suggested by the states at $E_F$ fabricates a sharp band edge a
 order-of-magnitude overestimate of $ZT$ ($0.33\to0.040$ for the zigzag $N=14$ ribbon)---an
 artifact invisible to parameter-sensitivity analysis---a concrete caution for minimal-basis
 nanoribbon thermoelectric studies in general. Supporting these claims, the self-consistent
-mean-field treatment reproduces the magnetic edges and the sign and hierarchy of their
-exchange couplings found by DMRG.
+mean-field treatment reproduces the magnetic edges and, semi-quantitatively, the dominant
+exchange coupling's sign and its hierarchy over the sub-leading one found by DMRG.
 
 %% ------------------------------------------------------------------
 \section*{CRediT authorship contribution statement}
