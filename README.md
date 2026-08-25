@@ -34,7 +34,7 @@ Run everything with `~/venvs/crn-te/bin/python`.
   units, Mott / Wiedemann–Franz, two-spin combination incl. the bipolar κ term, the
   phonon-Landauer κ_ph, mean-field magnetism + LKAG exchange).
 
-## Status (2026-07-18): manuscript complete
+## Status (2026-08-25): submission-ready
 **Model:** extended 5-orbital SK (Cr d_z², d_xz, d_yz + effective conduction orbital c | N p_z).
 The reduced d+p_z manifold misses Kuklin's majority conduction pocket at K and fabricates a
 sharp transmission edge → ~8× overestimated ZT; the paper quantifies this as a methodological
@@ -45,3 +45,17 @@ at the minority band edge (μ−E_F ≈ +1.05 eV); armchair N=8 uniquely combine
 (0.145, at −0.34 eV) with 100% spin polarization. The ribbons are outstanding spin filters
 (minority gap [−3.2, +1.0] eV). Edge magnetism: interior moment 2.64 μ_B, edges +6–8%;
 zigzag intra-edge exchange J1 = +59 meV (FM), J2 = +0.8 meV.
+
+**Thermally driven spin valve & domain walls:** the antiparallel (collinear, abrupt-wall)
+configuration gives an exact OFF state over the whole half-metallic window
+(`fig_spinvalve.png`). A full noncollinear domain-wall calculation shows continuous walls leak
+well before that: half-transparency already at $\lambda_{1/2}\approx9$~\AA
+(`fig_wall.png`). The published exchange and anisotropy scales (Modarresi 2019, the DMRG
+paper) place the intrinsic wall width at $\lambda_{\rm int}\approx2.4$–$3$~nm — comparable to
+the full-transparency scale and $\sim$3$\times$ above $\lambda_{1/2}$ — so geometrically
+constrained or spacer-separated junctions are required for a working OFF state, not merely
+preferred.
+
+**Review history:** the manuscript has been through three rounds of adversarial referee-panel
+review (`referee_report_2026-07-29.md`, `referee_report_2026-08-04.md`, round 3 logged in
+`00_Master_Notebook.md`); all majors resolved.

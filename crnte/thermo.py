@@ -102,17 +102,3 @@ def ZT(coef_total, T_K, kappa_ph=0.0):
     denom = coef_total["kappa_e"] + kappa_ph
     denom = np.where(denom > 0, denom, np.inf)
     return coef_total["S"] ** 2 * coef_total["G"] * T_K / denom
-
-
-# universal thermal conductance quantum coefficient: kappa_0(T) = KAPPA0 * T  [W/K per mode]
-KAPPA0 = np.pi ** 2 * KB ** 2 / (3.0 * H)     # = 9.464e-13 W/K^2
-
-
-def kappa_ph_ballistic(T_K, n_modes=4):
-    """Lightweight ballistic (phonon-Landauer) estimate of the ribbon phonon thermal conductance.
-
-    kappa_ph = n_modes * kappa_0(T), the quantum upper bound for n_modes acoustic-like branches
-    (a nanoribbon has ~4). This is an ESTIMATE, not DFT-computed (see the paper's stated scope);
-    ZT should be reported for a bracket around it.
-    """
-    return n_modes * KAPPA0 * T_K

@@ -7,6 +7,22 @@
 
 ## 📥 AI Handoff & Next Actions
 
+- [x] **Referee panel round 3 (2026-08-14):** re-review of the round-2-fixed draft, focused
+      on the new §3.7 λ_int (intrinsic domain-wall width) addition never previously refereed.
+      1 new MAJOR confirmed: both comparison factors in "$\lambda_{\rm int}$...lands a factor
+      of $\sim$3 above the full-transparency scale...and a factor of $\sim$30 above
+      $\lambda_{1/2}$" were wrong by roughly one rung on the scale ladder — λ_int (24–30 Å) is
+      actually *comparable to* (0.8–1.0×) the ~3 nm full-transparency scale and only ~3× (not
+      ~30×) above λ_1/2 = 9 Å. **Fixed same day** in §3.7 and Conclusions (iii): reworded to
+      "comparable to (0.8–1.0×) the full-transparency scale...factor of ~3 above λ_1/2" and
+      "transmits at least T_AP≈0.95 T_P at the lower end...reaching the exact adiabatic limit
+      at the upper end" — the physical conclusion (constriction/spacer required) is unchanged
+      and still supported. Recompiled clean: 0 undefined refs, no overfull hboxes >10pt.
+      **M1 (repo public + tagged release) still unresolved** — URL and tags API both 404 as of
+      2026-08-14; this remains the only blocker before submission. R2/R3 verification passes
+      hit the session token limit mid-run; re-run if a full round-3 report is wanted before
+      submitting.
+
 - [x] Full pre-submission audit (2026-07-17): every calculation, claim, reference and the
       cluster checked. Found one MAJOR flaw (missing majority conduction band) + κ_ph concern +
       a list of smaller issues. All fixed the same day (see the two run entries below).

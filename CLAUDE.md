@@ -4,10 +4,11 @@ journal: "Physica E: Low-dimensional Systems and Nanostructures"
 issn: 1386-9477
 stage: drafting
 origin_journal: physicaE
-novelty_checked: 2026-07-14
-last_activity: 2026-07-27
+novelty_checked: 2026-07-27
+last_activity: 2026-08-14
 adopted: 2026-07-27
 repo: "https://github.com/tomas0821/crn-nanoribbon-thermoelectric"
+scoop_watched: 2026-08-14
 ---
 
 # CLAUDE.md — CrN nanoribbon thermoelectric project
