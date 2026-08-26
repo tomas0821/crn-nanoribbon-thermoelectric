@@ -2,7 +2,8 @@
 type: cross-model-review
 draft: manuscript/manuscript.tex
 date: 2026-08-25
-referees: [kimi (model id not printed by CLI; incomplete run), antigravity/agy (model id not printed by CLI), deepseek-reasoner (via opencode), codex (gpt-5.6-terra)]
+referees: [kimi (model id not printed by CLI; incomplete run), antigravity/agy (model id not printed by CLI), deepseek-reasoner (via opencode), codex (gpt-5.6-terra), glm-4.6 (via opencode, added later same day), qwen (added later same day; first attempt failed on free-tier quota, retry succeeded once quota reset)]
+second_pass_verifier: fable-5 (used for the GLM and Qwen addition rounds)
 verdict: minor revisions
 ---
 
@@ -180,3 +181,99 @@ MAJOR that a same-model panel might have deferred to without the domain-specific
   multiple referees — both are already substantially hedged in the current text ("an
   order-of-magnitude estimate", "to our knowledge") and did not seem to warrant further
   investigation within this pass's scope.
+
+## Addition round — GLM and Qwen, 2026-08-25 (later same day)
+
+The skill was updated to add two more model families (Qwen Code, and GLM/Zhipu via opencode).
+Between the original four-referee pass above and this addition, the manuscript was revised
+(commit `c32321b`) to implement the original pass's 3 confirmed catches and 5 caveats — so
+these two new referees reviewed a materially different, already-improved draft, not the one
+Codex/Antigravity/DeepSeek/Kimi saw.
+
+**R-Qwen failed.** `qwen -p` exited 0 but its captured stdout contained only a closing
+meta-summary ("the background data-verification agent has completed... None of these change
+any finding in the review above. The review as printed is the final product.") with no
+extractable `severity:`-formatted findings — the actual review content never reached the
+captured output. A retry via `qwen -c` (resume + re-print) returned
+`API Error: 403 The free quota has been exhausted`, confirming this was a free-tier quota
+failure mid-run, not a transient capture bug. No R-Qwen findings are included in this report.
+
+**R-GLM (glm-4.6) completed** with 8 MAJOR + 3 MINOR findings. Per Step 3, every MAJOR was
+checked against the current manuscript text myself, then independently re-checked by a Fable 5
+subagent given only the raw findings (no access to my own verdicts), tasked with trying to
+refute each one. **Both passes agree: 0 of 8 MAJOR findings survive.** The dominant pattern was
+GLM quoting the manuscript's own already-added caveats/disclosures back as if they were
+unaddressed admissions:
+- Finding on the μ-scan window being "never disclosed" quoted the exact sentence
+  (§3.5, "each optimum located by scanning μ−E_F∈[−0.6,+1.2] eV...") that discloses it —
+  self-refuting.
+- Finding on Fig. 6(d) plotting "unconverged" 100 K data ignored that the figure's own caption
+  now explicitly flags the 100 K point's ~6% convergence caveat.
+- Finding on the phonon 4-mode floor being "acknowledged but not corrected" quoted the
+  manuscript's own added caveat paragraph (§2.5) verbatim as the complaint; both my check and
+  Fable 5's independently bounded the worst-case impact (~1 thermal-conductance quantum, well
+  inside the already-reported ½×/2× κ_ph bracket, and in the ZT-conservative direction).
+- Finding on J₁="reproduces" DMRG misleadingly truncated its own quote one clause before the
+  sentence's already-added qualifier ("this is only semi-quantitative agreement... overestimates
+  J₁ by a factor of ~5 and gives the small J₂ the opposite sign").
+- Finding on T_AP≃0.6 "not matching" `data/wall_sweep.txt` (~0.62) is one-significant-figure
+  rounding, not a discrepancy — re-confirmed against the data file by both passes.
+- The remaining three (hand-fit reproducibility, ±0.3 eV digitization "rendering predictions
+  meaningless", and the abstract's basis-truncation framing being "self-congratulatory") are
+  subjective-severity restatements of points the manuscript already discloses and quantifies
+  (Table 1's published parameters, the ±10% sensitivity sweep, the π*-pinned systematic, the
+  explicit "semi-quantitative"/factor-of-2 language) — not new information.
+
+GLM's MINOR findings (Xiang2023 1D-vs-2D "conflation" — the text already says "one-dimensional
+CrN nanostructure", distinguishing it; a novelty-framing point about the DMRG paper's
+conductivity data) were spot-checked as similarly weak or already addressed and are not added
+to the Minor points list above.
+
+**Net effect of the GLM sub-round: no manuscript changes warranted.** This is itself a useful
+signal — it suggests the earlier four-referee pass's fixes closed the gaps a fifth model family
+could find.
+
+## Qwen re-run — 2026-08-25 (same day, after quota reset)
+
+The user reported Qwen's free-tier quota had reset; R-Qwen was re-run against the same
+brief and the same (already-revised) manuscript. It returned a full report this time: 4 MAJOR
++ 4 MINOR findings, with an overall recommendation of **rejection** — markedly harsher than
+any of the other five referees, all of which converged on "minor revisions."
+
+Per Step 3, all 4 MAJORs were checked against the current manuscript myself and independently
+re-checked by a fresh Fable 5 subagent (no access to my verdicts, tasked with trying to refute
+each one). **Both passes agree: 0 of 4 MAJOR findings survive**, continuing the exact pattern
+seen with GLM — Qwen is citing text the manuscript already contains as if it were missing:
+- The "ZT=0.04 renders the material non-viable, undermining the paper's motivation" finding
+  is refuted by the manuscript's own §3.4 sentence: "These are honest but modest values:
+  pristine CrN nanoribbons are not competitive thermoelectrics in the coherent ballistic
+  picture" — stated in exactly the location the referee says is silent on this.
+- The hand-fit-parameters finding is refuted the same way as GLM's equivalent finding
+  (published Table 1, stated residuals, the ±10% sensitivity sweep, the deposited c-orbital
+  fit script) — Qwen's "reproducibility impossible" claim is contradicted by all of that being
+  in the paper.
+- The μ-scan-window-undisclosed finding is refuted by the same §3.5 disclosure sentence that
+  refuted GLM's identical finding.
+- **The phonon 4-mode-floor finding contains a genuine physics-direction error**, caught
+  independently by both verification passes: Qwen claims the 4-mode floor "underestimates
+  κ_ph and artificially inflates ZT," but a spurious extra gapless mode *over*-estimates κ_ph
+  (adds a channel that shouldn't be there), and since ZT=S²GT/(κ_e+κ_ph), an over-estimated
+  κ_ph makes the reported ZT values *lower*, i.e. conservative — the opposite of what the
+  referee claims. This is the clearest single case in either addition round of a referee
+  finding that is not just "already addressed" but factually backwards.
+
+Qwen's 4 MINOR findings were spot-checked: the Fig. 6(d)/100K point and the "exact OFF state"
+SOC-caveat findings are both already addressed verbatim in the current text (the latter by the
+same §3.7 SOC-free-limit sentence noted in the original report's Minor points above); the J1
+factor-5/J2-sign finding is likewise already stated explicitly. The one arguably-fresh point —
+that $\Delta^c_\downarrow=\Delta_{\rm ex}$ (the effective conduction orbital's minority shift)
+is asserted rather than derived — has a one-clause justification already in the text ("consistent
+with its dominantly Cr-$d$ character," line 204) but no sensitivity check specific to that
+assumption; this is a legitimate, low-priority request for an additional sensitivity entry
+rather than an unaddressed gap, and is not added to the Major/Minor points lists above.
+
+**Net effect of the Qwen sub-round: no manuscript changes warranted.** Combined with the GLM
+sub-round, both new model families independently converged on "the manuscript already
+addresses what I'm flagging" once checked — including one clear-cut physics error in Qwen's
+own critique — which is a stronger form of the same signal: the post-first-round manuscript
+holds up under two more, materially different models than it was revised against.

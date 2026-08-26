@@ -46,6 +46,24 @@
       refs, overfulls ≤5.8 pt (unchanged, pre-existing). Also deleted two stale build logs
       (`manuscript/build.log`, `build_last.log`) flagged as clutter by the pre-review audit.
 
+- [x] **Cross-model panel extended to 6 model families (2026-08-25, same day):** skill updated
+      to add Qwen Code and GLM (glm-4.6, via opencode). Ran both against the already-revised
+      manuscript from the entry above → merged into `cross_model_review_2026-08-25.md`. Qwen's
+      first attempt failed (free-tier quota exhausted, confirmed via `qwen -c` retry: `403`);
+      user reported the quota reset and it was re-run successfully. GLM: 8 MAJOR + 3 MINOR.
+      Qwen: 4 MAJOR + 4 MINOR, with an outlier overall "reject" recommendation (every other
+      referee across both rounds converged on "minor revisions"). **0 of 12 combined MAJOR
+      findings survived verification** — checked twice per finding (my own read + an
+      independently-briefed Fable 5 subagent explicitly tasked to refute, per the skill's new
+      optional Step 3b, opted into by the user for this run). Dominant pattern: both models
+      quoted the manuscript's own already-added caveats/disclosures from the entry above back
+      as if they were unaddressed (e.g. one finding quoted the exact μ-scan disclosure sentence
+      while claiming the window was "never disclosed"). One finding (Qwen, phonon 4-mode floor
+      "underestimates κ_ph and inflates ZT") contained a clear physics-direction error, caught
+      independently by both verification passes: an extra spurious mode *over*-estimates κ_ph,
+      which makes reported ZT *lower*/conservative, not inflated. **No manuscript changes made**
+      — this round is a clean validation of the prior round's fixes, not a source of new ones.
+
 - [x] **Referee panel round 3 (2026-08-14):** re-review of the round-2-fixed draft, focused
       on the new §3.7 λ_int (intrinsic domain-wall width) addition never previously refereed.
       1 new MAJOR confirmed: both comparison factors in "$\lambda_{\rm int}$...lands a factor
