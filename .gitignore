@@ -33,3 +33,8 @@ overviews/
 
 # elsarticle byproduct
 *.spl
+
+# publisher page renders and working copies (never public)
+data/kuklin_p4_300dpi*.png
+manuscript/*.bak
+manuscript/manuscript_polished.tex

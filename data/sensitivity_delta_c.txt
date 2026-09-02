@@ -1,0 +1,7 @@
+# delta_c (= Delta^c_down) +/-10% sensitivity, 300 K: global peak ZT(mu) | polarized-window peak ZT(mu)
+zigzag   N=14 delta_c=3.600 (x1.0): global 0.0399 (+1.08) | polarized 0.0140 (-0.12)
+zigzag   N=14 delta_c=3.240 (x0.9): global 0.0399 (+1.08) | polarized 0.0140 (-0.12)
+zigzag   N=14 delta_c=3.960 (x1.1): global 0.0399 (+1.08) | polarized 0.0140 (-0.12)
+armchair N= 8 delta_c=3.600 (x1.0): global 0.1450 (-0.34) | polarized 0.1450 (-0.34)
+armchair N= 8 delta_c=3.240 (x0.9): global 0.1450 (-0.34) | polarized 0.1450 (-0.34)
+armchair N= 8 delta_c=3.960 (x1.1): global 0.1450 (-0.34) | polarized 0.1450 (-0.34)

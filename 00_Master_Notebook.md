@@ -7,6 +7,53 @@
 
 ## 📥 AI Handoff & Next Actions
 
+- [x] **Language polish pass (2026-09-02):** `/polish-manuscript` on manuscript.tex →
+      `manuscript/manuscript_polished.tex` + `manuscript/POLISH_REPORT_2026-09-02.md`.
+      **Original untouched; not applied in place** — adopt after the author's own read:
+      `cp manuscript.tex manuscript.tex.bak && cp manuscript_polished.tex manuscript.tex`.
+      Language-only contract verified mechanically (numbers, \cite/\ref/\label, every inline
+      math span, equations, tables, headings, graphics all identical) and semantically (52
+      paragraphs drift-checked by fresh agents; 2 minor drifts found and reverted). Builds
+      clean: 27 pp, 0 undefined refs. Changes: 70 prose em-dashes → 0, \emph 28 → 6, "honest"
+      ×4 removed, 13 UK spellings → US (Elsevier), 9 trailing participles → clauses, 12 long
+      sentences split, straight quotes fixed, "Figs." → "Fig.", "Two practical remarks" →
+      "Three" (First/Second/Finally). **Word count did NOT drop** (6878 → 6910): the
+      frozen-content contract forbids cutting numbers/caveats, and the paper is caveat-dense
+      after three referee rounds. The report lists 17 author queries and five content-level
+      cuts (mainly §3.9 restating §2.1/§3.1/§3.5 caveats, ≈150 words; §3.4 disorder
+      paragraph duplicating §3.9 Third) that would deliver a real 10–15 % reduction.
+- [x] **Polish adopted in place + structural/content edits (2026-09-02, same session):** user
+      approved; `manuscript.tex` ← polished text (backup `manuscript/manuscript.tex.bak`).
+      Then: merged §3.2 into §3.1 ("Monolayer bands and ribbon transmission") and §3.6 into
+      §3.7 ("Spin caloritronics and a thermally driven spin valve", labels `sec:valve` +
+      `sec:polar` both kept) → §3 now 7 subsections; dropped the hard-coded "Sec.~3.5" from
+      the abstract; §3.9 Second/Third shortened to pointers (§2.1/§3.1/§3.5 already state
+      them); intro ¶2 Xiang/thin-film items compressed. Builds clean: 27 pp, 0 undefined, 0
+      multiply-defined. ~6915 words.
+- [x] **Phonon 3-mode floor quantified (2026-09-02):** `crnte/phonon.py` gained `N_FLOOR`
+      (default 4, production unchanged); `scripts/phonon_floor3.py` → `data/phonon_floor3.txt`.
+      Floor 3 vs 4 on cached T(E): κ_ph(300 K) −0.7…−6.1 % (narrowest ribbons most), Table-2
+      ZT +0.3…+3.5 % (armchair N=8 0.145→0.150), low-T limit 3κ₀ vs 4κ₀ verified (2.99/3.99).
+      §2.5 caveat replaced by these numbers; four-mode floor kept in the tables (conservative).
+- [x] **p-type μ-scan extension — done 2026-09-02:** `scripts/ptype_scan.py` (T(E) extended to
+      −2.0 eV, cached `data/*_TE_ext.npz`; μ ∈ [−1.5, +1.2] eV, 300 K) → `data/ptype_scan.txt`.
+      **No entry changes:** all six global and polarized optima identical to Table 2; the best
+      value on the p side (μ−E_F < −0.6 eV) is ZT ≤ 0.028 (zigzag N=8 at −1.43 eV, S ≈ −41
+      μV/K; armchair ≤ 0.027 at ≈ −0.95 eV). "Global optimum" is now unconditional over
+      [−1.5, +1.2] eV; §3.4 scan-window sentence updated accordingly.
+- [x] **Δ^c_↓ sensitivity — done 2026-09-02:** `scripts/sensitivity_delta_c.py` (delta_c ±10 %,
+      zigzag N=14 + armchair N=8) → `data/sensitivity_delta_c.txt`. **Zero effect** (all optima
+      identical to four digits): the minority replica of c sits at ε_c+Δ^c ≈ 4.5 eV, outside the
+      window. One sentence added to §3.7 (Scope) First.
+- [ ] **NEXT (ready to go): second effective conduction band CB2 + anticrossing.** Five of six
+      global optima sit at +1.05–1.09 eV where the single band c is declared unresolved.
+      Prepared: `data/kuklin_p4_300dpi-04.png` (Kuklin Fig. 2(d) render, same calibration as
+      the CB1 digitization in `kuklin_targets.py`: E_F y=1091 px, 66.2 px/eV, Γ/M/K/Γ' columns
+      646/750/853/957) and `scripts/fit_cb2.py` (two-orbital c1/c2 model with V12
+      anticrossing, joint weighted LSQ scaffold; five steps documented in its docstring:
+      digitize CB2 → fit → wire 6×6 into monolayer_sk/ribbon_sk → regenerate all T(E) (back up
+      `data/` first) → update manuscript). ~1 day.
+
 - [x] **Repo made public + tagged (2026-08-25):** GitHub repo `tomas0821/crn-nanoribbon-thermoelectric`
       switched to public and tagged `v1.0-submission` (pushed). **M1 blocker from round 3 is
       now resolved** — the Data and code availability statement is accurate. Also removed two

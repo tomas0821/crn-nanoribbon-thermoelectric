@@ -35,6 +35,7 @@ Q_ZONE = 1.20            # average zone-boundary |q| (1/Angstrom): Gamma-M 1.114
 
 # branch anchors, THz (nu, not omega): (value at Gamma, value at zone boundary)
 ZA_ALPHA = 44.0          # ZA ~ alpha q^2 at small q (THz Angstrom^2)
+N_FLOOR = 4.0            # gapless-ribbon-mode floor (4 = Rego-Kirczenow 3D beam; 3 = strictly-2D LA,TA,ZA)
 ZA_MAX = 4.7
 TA_MAX = 5.4
 LA_MAX = 10.4
@@ -69,7 +70,7 @@ def modes(nu_thz, W_angstrom):
     """Propagating phonon channel count M(nu) for a ribbon of transverse width W (Angstrom)."""
     nu = float(nu_thz)
     if nu <= 0:
-        return 4.0
+        return N_FLOOR
     Wpi = W_angstrom / np.pi
     m = 0.0
     # acoustic branches (monotone increasing)
@@ -79,7 +80,7 @@ def modes(nu_thz, W_angstrom):
             m += Wpi * _q_of_nu(nu, f, _QGRID)
     # gapless-ribbon-mode floor (LA, TA, ZA, twist) below the acoustic region top
     if nu <= TA_MAX:
-        m = max(m, 4.0)
+        m = max(m, N_FLOOR)
     # optical branches: sine-form decrease from nu_G (Gamma) to nu_Z (zone edge), so the
     # iso-frequency radius is q(nu) = (2 q_zone / pi) arcsin[(nu_G - nu)/(nu_G - nu_Z)]
     for nu_G, nu_Z in OPTICAL:
