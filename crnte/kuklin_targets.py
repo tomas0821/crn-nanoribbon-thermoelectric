@@ -42,9 +42,23 @@ CB1_DIGITIZED = [  # (s, E-E_F [eV])
     (1.75, -0.07), (1.90, -0.20), (2.00, -0.21), (2.10, -0.14), (2.25, 0.34),
     (2.50, 1.12), (2.75, 2.57), (2.90, 2.44),
 ]
-# Weighted least-squares fit (weights favouring the transport window E < 1 eV) of a
+# SUPERSEDED single-band fit (kept for the record; production up to 2026-09-02). Weighted
+# least-squares fit (weights favouring the transport window E < 1 eV) of a
 # Cr-triangular-sublattice band eps_c + t_c1*S1 + t_c2*S2 + t_c3*S3:
 CB1_FIT = {"eps_c": 0.9147, "t_c1": 0.2852, "t_c2": -0.0278, "t_c3": 0.0297}
+
+# --- CB1 + CB2 two-band fit (production from 2026-09-02) -------------------------------------
+# CB2 (second majority conduction band: min ~+0.68 eV at M, max ~+1.2 eV at K, dip ~+0.72 eV
+# at s~2.3 on K-Gamma) was traced AUTOMATICALLY from the same 300-dpi render with the same
+# calibration (scripts/digitize_cb2.py -> data/kuklin_fig2d_traces.npz; the trace reproduces
+# CB1_DIGITIZED, validating the calibration). scripts/fit_cb2.py fits two Cr-sublattice
+# orbitals c1, c2 (on-site + 1st-3rd shell hoppings each) coupled on-site by v_c12, assigning
+# bands by energy order at each path point. RMS residual in the transport window (E < 1.2 eV):
+# 0.044 eV (single band: 0.171 eV); anticrossing gap ~0.13 eV; c2 at Gamma is unconstrained
+# (~7.5 eV, no traced points there) but far outside the transport window.
+CB2_FIT = {"eps_c": 1.2220, "t_c1": 0.3257, "t_c2": -0.0930, "t_c3": -0.0214,
+           "eps_c2": 1.5050, "t_c21": 0.5475, "t_c22": 0.3095, "t_c23": 0.1494,
+           "v_c12": 0.0657}
 
 # --- digitized top majority valence band VB1 (same calibration; for reference/plotting) --------
 # Peaks at ~0 inside the Gamma-M and K-Gamma intervals (Kuklin text: VB touches E_F there),

@@ -29,7 +29,7 @@ E_GRID = np.linspace(-0.8, 1.5, 461)     # dE = 0.005 eV; covers the in-window o
 MU = np.linspace(-0.6, 1.2, 361)
 T0 = 300.0
 PARAMS = ["eps_dz2", "eps_pi", "eps_pz", "pdpi", "t_zz", "delta_ex",
-          "eps_c", "t_c1", "t_c2", "t_c3"]
+          "eps_c", "t_c1", "t_c2", "t_c3", "eps_c2", "t_c21", "t_c22", "t_c23", "v_c12"]
 
 
 def peak_zt(p, W):

@@ -1,3 +1,8 @@
+---
+artifact_url: https://claude.ai/code/artifact/92e8054c-afb0-49a9-ad98-522f85d7c552
+results_deck_url: https://claude.ai/code/artifact/446f6e00-3fc0-4fcf-8cad-43edf81775b5
+---
+
 # 📓 Lab Notebook — CrN Nanoribbon Thermoelectric
 
 **Started:** 2026-07-14
@@ -45,7 +50,50 @@
       zigzag N=14 + armchair N=8) → `data/sensitivity_delta_c.txt`. **Zero effect** (all optima
       identical to four digits): the minority replica of c sits at ε_c+Δ^c ≈ 4.5 eV, outside the
       window. One sentence added to §3.7 (Scope) First.
-- [ ] **NEXT (ready to go): second effective conduction band CB2 + anticrossing.** Five of six
+- [x] **CB2 done (2026-09-13; see Run: cb2_two_band_model):** CB2 traced automatically from the Kuklin render
+      (`scripts/digitize_cb2.py`, calibration validated: traces land on the hand CB1 points;
+      `figures/digitize_cb2_check.png`). Two-orbital fit `scripts/fit_cb2.py` →
+      `data/cb2_fit.txt`: eps_c1 1.222, t_c1 0.326/−0.093/−0.021; eps_c2 1.505, t_c2
+      0.548/0.310/0.149; v_c12 0.066 eV; rms in the transport window 0.044 eV (single band
+      0.171), CB2 min 0.73 eV at M, max 1.27 at K, anticrossing gap 0.13 eV; caveat: c2
+      unconstrained above 2.8 eV, reaches 7.5 eV at Γ (outside the window). Wired into
+      monolayer_sk (6×6), ribbon_sk (norbs 5), valve.py (norbs 10), kuklin_targets, fig2
+      asserts — all six checks passed (minority gap unchanged; zigzag N14 T↑ at
+      −0.5/0/0.5/0.9/1.2 eV = 5/8/9/13/9 vs old 5/8/5/5/4; T_AP=0 exact; wall adiabatic limit
+      7.92 at 30 Å). Production caches backed up to `data_backup_4band/` (git-ignored).
+      `scripts/regenerate_all.sh` ran 2026-09-02 15:14→17:02 (49 min for the six T(E)) and
+      was stopped mid-`pistar_pinned`; **resumed 2026-09-13 10:48** (detached; log
+      `data/regenerate_all.log`) for π*-pinned, sensitivity (+5 params), sensitivity_armchair8,
+      fig_wall, verify, figure copies.
+      **Preview from the new T(E) (Table 2 recomputed, 300 K, production κ_ph):** every global
+      optimum now lies INSIDE the fully polarized window, at the CB2 onset (+0.47–0.71 eV):
+      zigzag 8/14/20 → 0.093/0.063/0.083 (old 0.062/0.040/0.048 at +1.08); armchair 8 →
+      0.145 at −0.34 (unchanged); armchair 14/20 → 0.072/0.100 at +0.71/+0.70 (old
+      0.138/0.104 at the minority edge). p-type scan re-run: unchanged (p-side ≤0.028);
+      Δ^c: zero effect again; phonon-floor check re-run (`data/phonon_floor3.txt`). Manifold
+      caution becomes 0.33 → 0.06 (zigzag N=14). Narrative change for abstract/§3.4/
+      conclusions: "optimum at the minority edge, polarization lost" → "optimum at the
+      second-conduction-band onset, fully polarized for all six geometries" — pending the
+      π*-pinned and sensitivity robustness numbers.
+      Manuscript already updated (number-independent parts): §2.1 two-orbital model + tracing/
+      fit description, block-form Eq. (1) 6×6, Table 1 (nine conduction parameters), §2.2
+      pocket filling 0.06 e, §3.1 residuals (CB residual gone), §3.9 Second; Fig. 2 regenerated
+      with traced CB1/CB2 overlay. Builds clean.
+- [x] **Manuscript rewritten for the two-band model — done 2026-09-13:** abstract, §2.3
+      (convergence numbers; 100 K now converged, caveat dropped), §3.2 (0.33→0.063, fivefold),
+      §3.3 (two features: CB2 onset at +0.47 eV is the global max; minority edge secondary,
+      ZT<0.02, S↓ −150 vs S↑ +9, charge S −13), Fig. 5 caption, §3.4 (i)–(iii) rewritten, π*-pinned
+      paragraph (no optimum changes), Table 2 (κ_ph + ZT(700 K) columns, single ZT column),
+      Fig. 6(d)/armchair-8 captions, spin-caloritronics P_G numbers, wall ℓ_mt 0.5 Å / v_F
+      3×10⁵ m/s, Scope First (spread, largest excursions, ε_c1 ±0.12 eV), Conclusions (i)/(ii)/(iv),
+      highlights.txt, cover letter, graphical abstract regenerated. Builds clean: 28 pp, 0
+      undefined, 0 overfull >10 pt, abstract 217 words.
+- [ ] **Before submission (unchanged):** author read-through of the rewritten sections; optional
+      4th referee/cross-model pass on the CB2 version (the §3.4/abstract narrative is new and
+      unreviewed); Zotero citekey GUI step; final novelty re-check; Editorial Manager upload.
+      The audio deck (`audio_deck/`, 2026-09-01) is pre-CB2 — regenerate with the
+      manuscript-audio-deck skill if it is still wanted.
+- [x] ~~**NEXT (ready to go): second effective conduction band CB2 + anticrossing.**~~ (started) Five of six
       global optima sit at +1.05–1.09 eV where the single band c is declared unresolved.
       Prepared: `data/kuklin_p4_300dpi-04.png` (Kuklin Fig. 2(d) render, same calibration as
       the CB1 digitization in `kuklin_targets.py`: E_F y=1091 px, 66.2 px/eV, Γ/M/K/Γ' columns
@@ -252,6 +300,64 @@ phonons from Modarresi et al., *PRApplied* 11, 064015 (2019)
 
 ## Simulation Logs
 
+### Run: cb2_two_band_model — 2026-09-13 ⭐ PRODUCTION (complete; pipeline finished 13:42)
+
+Second majority conduction band (CB2) and its anticrossing with CB1 added to the model:
+two effective Cr-sublattice orbitals c₁, c₂ (each ε + 1st–3rd-shell hoppings) coupled on
+site by v₁₂. CB1+CB2 traced automatically from the 300-dpi render of
+[[kuklinTwodimensionalHexagonalCrN2017]] Fig. 2(d) (`scripts/digitize_cb2.py`; calibration
+validated against the hand-digitized CB1 points), nine parameters fitted jointly
+(`scripts/fit_cb2.py`). All transport regenerated on the 6-orbital model
+(`scripts/regenerate_all.sh`; production T(E) on E ∈ [−1.2, +1.5] eV, dE = 5 meV).
+
+| Parameter | Value |
+|-----------|-------|
+| ε_c1, t_c11, t_c12, t_c13 (eV) | 1.222, 0.326, −0.093, −0.021 |
+| ε_c2, t_c21, t_c22, t_c23 (eV) | 1.505, 0.548, 0.310, 0.149 |
+| v₁₂ (eV) | 0.066 |
+| Δ^c_↓ (both c) | 3.6 (= Δ_ex) |
+| fit rms, transport window E < 1.2 eV | 0.044 eV (single band: 0.171) |
+| CB2 min / max; anticrossing gap | 0.73 eV (M) / 1.27 eV (K); 0.13 eV |
+| minority gap | [−3.2, +1.0] eV (unchanged) |
+| conduction-pocket filling | 0.063 e/cell (was 0.068) |
+
+**Final values (300 K, production κ_ph(W), μ scan [−0.6, +1.2] eV):**
+| Geometry | peak ZT @ μ−E_F | previous (single c) | polarized? |
+|------------|-------|-------|---|
+| zigzag N=8 | 0.093 @ +0.48 | 0.062 @ +1.08 | yes |
+| zigzag N=14 | 0.063 @ +0.47 | 0.040 @ +1.08 | yes |
+| zigzag N=20 | 0.083 @ +0.71 | 0.048 @ +1.09 | yes |
+| armchair N=8 | 0.145 @ −0.34 | 0.145 @ −0.34 | yes |
+| armchair N=14 | 0.072 @ +0.71 | 0.138 @ +1.05 | yes |
+| armchair N=20 | 0.100 @ +0.70 | 0.104 @ +1.07 | yes |
+| T↑(E_F) zigzag N=14; T↓ in gap | 8; 0 | 8; 0 | — |
+| manifold caution, zigzag N=14 | 0.33 (reduced) → 0.063 | 0.33 → 0.040 | — |
+| p-type scan to −1.5 eV | no entry changes; p-side ZT ≤ 0.028 | same | — |
+| 3-mode phonon floor | ZT +0.3…+3.5 % | same | — |
+| Δ^c_↓ ±10 % | zero effect | same | — |
+| sensitivity ±10 % × 15 params, zigzag N=14 | [0.029, 0.114] about 0.063 (Δ_ex, t_c22, V_pdπ largest) | [0.014, 0.079] about 0.040 | — |
+| sensitivity, armchair N=8 | [0.135, 0.267]; stays polarized for every variation | [0.13, 0.28], one exception | — |
+| π*-pinned variant | **no optimum changes** (armchair N=8 μ −0.34→−0.45 only) | 4/6 optima relocated | — |
+| convergence dE 20/10/5/2.5 meV | 0.0685/0.0632/0.0632/0.0636; 100 K drift 0.6 % (was 6 %) | — | — |
+| wall: λ_1/2, T_AP(≈1 Å), ħv_F, ℓ_mt | 9.24 Å, 0.58, 1.91 eV·Å, 0.53 Å | 9.11 Å, 0.62, 1.35, 0.37 | — |
+| ZT(700 K) at the optimum | zz 0.106/0.062/0.044; ac 0.089/0.042/0.053 | — | — |
+| P_G past the edge (zz N=14) | 73 % @+1.05, 56 % @+1.08, 44 % @+1.10 (no zero crossing ≤1.2) | 49 % @+1.05, zero near +1.1 | — |
+
+**Notes:** with CB2 resolved, every global optimum moves off the minority edge (+1.05–1.09 eV,
+polarization lost) to the onset of the second conduction band (+0.47–0.71 eV) — all six
+geometries now peak inside the fully spin-polarized window, and the π*-pinned check no longer
+touches any optimum (they sit on conduction-band features, outside the [0, +0.19] eV misfit).
+Zigzag values rise ~1.5–1.7×; armchair N=14 loses its minority-edge peak (0.138 → 0.072);
+armchair N=8 is untouched. Manuscript rewritten accordingly (abstract, §2.3, §3.2–3.5, Table 2
+with κ_ph and ZT(700 K) columns, Scope, Conclusions, highlights, cover letter); builds clean,
+28 pp. Posted to Discord.
+
+![Global optimum per geometry, single-c vs two-band model](figures/fig_cb2_table2_compare.png)
+
+![Two-band fit to the traced Kuklin CB1/CB2 bands](figures/fit_cb2_check.png)
+
+![Manifold caution: reduced d+p_z vs extended model, zigzag N=14](figures/fig_manifold.png)
+
 ### Run: wall_leakage_spinful — 2026-07-18 ⭐ KEY QUANTIFICATION (supersedes the "robust to
 wall details" wording of the first valve entry)
 
@@ -275,7 +381,11 @@ the one unbacked number:** single-unit-cell noncollinear DFT+U+SOC magnetocrysta
 anisotropy K of h-CrN (VASP/QE, few orientations, ~few hundred core-hours on HPC@UCR);
 with exchange stiffness A from DMRG J1 → intrinsic wall width λ_int = π√(A/K), deciding
 whether unconstrained walls exceed λ_1/2 (almost certainly yes → constriction/spacer designs
-required, as the paper already prescribes).
+required, as the paper already prescribes). *(2026-08-04: K was published all along — see the
+λ_int handoff entry; 2026-09-13: being re-run on the 6-orbital model, spot check at 30 Å gave
+7.92 vs 7.94 before.)*
+
+![Domain-wall leakage of the OFF state vs wall width](figures/fig_wall.png)
 
 ### Run: thermal_spin_valve — 2026-07-18 ⭐ NEW RESULT
 
@@ -290,7 +400,11 @@ e²/h vs G_AP = 0 → thermally driven spin valve. Claim restricted to the OFF w
 self-consistency is unreliable for that ΔE; the valve premise is external control (exchange
 bias), standard for spin valves. Graphical abstract added (`graphical_abstract.png`, 1660×550).
 
+![Thermal spin valve: P vs collinear AP transmission and the 300 K conductance switch](figures/fig_spinvalve.png)
+
 ### Run: honest_landscape_extended_model — 2026-07-17 ⭐ PRODUCTION
+
+**Status:** superseded by [[Run: cb2_two_band_model]]
 
 All transport regenerated on the extended model (5-orbital: d_z², d_xz, d_yz, c | p_z), unified
 fine grid E ∈ [−1.2, +1.5] eV, dE = 5 meV, both edges, N = 8/14/20, plus the reduced-manifold
@@ -327,6 +441,8 @@ T-dependence).
 
 ### Run: model_extension_conduction_pocket — 2026-07-17 ⚠ MAJOR CORRECTION
 
+**Status:** superseded by [[Run: cb2_two_band_model]]
+
 Pre-submission audit found the reduced d+p_z manifold **misses Kuklin's majority conduction
 band** (electron pocket at K, CBM −0.2 eV; states fill +0.4…+1.2 eV) — the "sharp majority edge
 at +0.2 eV" and everything built on it (ZT ≈ 0.23, doping design rule, ±100% polarization
@@ -342,11 +458,36 @@ DFT peak ~0 inside the Γ–M / K–Γ intervals). SCF magnetism module stays in
 
 ### Run: N-convention correction — 2026-07-15 ⚠ (superseded numbers)
 
+**Status:** superseded by [[Run: cb2_two_band_model]]
+
 `width` was not the atomic-row count (29-row "N=14" zigzag vs 15-row armchair). Fixed so
 width = N rows exactly; reran everything. This corrected the spurious "zigzag 2× armchair"
 edge rule. (Numbers from this run are themselves superseded by the 2026-07-17 model extension.)
 
+### Run: edge_magnetism_scf — 2026-07-15 (still current)
+
+Self-consistent unrestricted mean-field moments in the d+p_z manifold (U_eff = 1.346 eV,
+N_e = 4.717, 60 k, mixing 0.3, tol 1e−4 μ_B; `crnte/scf.py`, `data/edgemag.npz`) and LKAG
+exchange (`data/edge_exchange.txt`). Unaffected by the conduction-orbital changes (c orbitals
+stay out of the moments loop).
+
+**Final values:**
+| Observable | Value |
+|------------|-------|
+| interior Cr moment | 2.63 μ_B (monolayer 2.67) |
+| zigzag edge enhancement (N- / Cr-terminated) | +4.8 % / +6.1 % |
+| armchair edge enhancement | +8.3 % (width-independent, N=14 vs 20) |
+| zigzag intra-edge J₁, J₂ (LKAG) | +59 meV, +0.8 meV (DMRG: 10–12, −2…0; [[kupczynskiDMRGAnalysisMagnetic2023]]) |
+| armchair intra-edge J₁ | < 1 meV |
+
+**Notes:** sign and hierarchy of the DMRG couplings reproduced, magnitude of J₁ overestimated ~5×
+(semi-quantitative, as stated in the paper).
+
+![Self-consistent Cr moment profile across the ribbon](figures/fig_edgemag.png)
+
 ### Runs: 2026-07-14/15 (superseded)
+
+**Status:** superseded by [[Run: cb2_two_band_model]]
 
 Initial cartoon model → reduced SK model, first transport + thermoelectrics, sensitivity,
 convergence, edge magnetism (fig_edgemag; SCF in d+p_z manifold — still current), LKAG J1/J2

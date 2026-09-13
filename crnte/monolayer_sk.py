@@ -38,11 +38,19 @@ class SKParams:
     # the digitized dispersion (least squares, 1st-3rd neighbour hoppings; see
     # crnte/kuklin_targets.py CB1_DIGITIZED). It is symmetry-decoupled from N p_z in a planar
     # sheet (s- or d-like on Cr; Kuklin Fig. 3a puts Cr d_xy/d_x2-y2 + s weight above E_F).
-    eps_c: float = 0.9147   # effective conduction orbital on-site (eV, rel. E_F, majority)
-    t_c1: float = 0.2852    # c-c 1st-neighbour hopping (dist a) on the Cr triangular lattice
-    t_c2: float = -0.0278   # c-c 2nd-neighbour hopping (dist sqrt(3) a)
-    t_c3: float = 0.0297    # c-c 3rd-neighbour hopping (dist 2a)
-    delta_c: float = 3.6    # exchange shift of c for the minority spin (assumed d-dominated)
+    # Two-band fit to Kuklin Fig. 2(d) CB1+CB2 (scripts/fit_cb2.py, 2026-09-02): c1 carries the
+    # electron pocket at K, c2 the second conduction band (min ~+0.7 eV at M, max ~+1.2 eV at K);
+    # v_c12 is a k-independent on-site coupling that opens the CB1/CB2 anticrossing (~0.13 eV).
+    eps_c: float = 1.2220   # c1 on-site (eV, rel. E_F, majority)
+    t_c1: float = 0.3257    # c1-c1 1st-neighbour hopping (dist a) on the Cr triangular lattice
+    t_c2: float = -0.0930   # c1-c1 2nd-neighbour hopping (dist sqrt(3) a)
+    t_c3: float = -0.0214   # c1-c1 3rd-neighbour hopping (dist 2a)
+    eps_c2: float = 1.5050  # c2 on-site (eV, rel. E_F, majority)
+    t_c21: float = 0.5475   # c2-c2 1st-neighbour hopping
+    t_c22: float = 0.3095   # c2-c2 2nd-neighbour hopping
+    t_c23: float = 0.1494   # c2-c2 3rd-neighbour hopping
+    v_c12: float = 0.0657   # on-site c1-c2 coupling (eV)
+    delta_c: float = 3.6    # exchange shift of c1 and c2 for the minority spin (assumed d-dominated)
 
     def cr_shift(self, spin: int) -> float:
         """Exchange shift on Cr d: 0 for majority (+1), +delta_ex for minority (-1)."""
@@ -67,50 +75,55 @@ def cr_shells(a1, a2):
 
 
 def build_H(k, p: SKParams, spin: int) -> np.ndarray:
-    """5x5 Bloch Hamiltonian. Orbital order: [d_z2, d_xz, d_yz, c] (Cr), [p_z] (N).
+    """6x6 Bloch Hamiltonian. Orbital order: [d_z2, d_xz, d_yz, c1, c2] (Cr), [p_z] (N).
 
-    c is the effective majority conduction orbital (Cr triangular sublattice, electron pocket
-    at K); it is symmetry-decoupled from N p_z in the planar sheet and carries its own
-    1st-3rd-neighbour hoppings t_c1..t_c3.
+    c1 and c2 are the two effective majority conduction orbitals (Cr triangular sublattice):
+    c1 carries the electron pocket at K, c2 the second conduction band; both are
+    symmetry-decoupled from N p_z in the planar sheet, carry their own 1st-3rd-neighbour
+    hoppings, and are coupled on-site by v_c12 (the CB1/CB2 anticrossing).
     """
     a1, a2, deltas, _, _ = lattice_geometry(p.a)
     d = p.a / np.sqrt(3.0)
     shift = p.cr_shift(spin)
+    cshift = p.c_shift(spin)
     sh1, sh2, sh3 = cr_shells(a1, a2)
     S = lambda sh: np.real(sum(np.exp(1j * np.dot(k, tau)) for tau in sh))
 
-    H = np.zeros((5, 5), dtype=complex)
-    # on-site (Cr d shifted by exchange; c by its own shift; N p_z unshifted)
+    H = np.zeros((6, 6), dtype=complex)
+    # on-site (Cr d shifted by exchange; c1, c2 by their own shift; N p_z unshifted)
     H[0, 0] = p.eps_dz2 + shift
     H[1, 1] = p.eps_pi + shift
     H[2, 2] = p.eps_pi + shift
-    H[3, 3] = p.eps_c + p.c_shift(spin)
-    H[4, 4] = p.eps_pz
+    H[3, 3] = p.eps_c + cshift
+    H[4, 4] = p.eps_c2 + cshift
+    H[3, 4] = H[4, 3] = p.v_c12
+    H[5, 5] = p.eps_pz
 
-    # Cr-Cr same-sublattice hoppings: d_z2 (1st shell only) and c (three shells)
+    # Cr-Cr same-sublattice hoppings: d_z2 (1st shell only), c1 and c2 (three shells each)
     H[0, 0] += p.t_zz * S(sh1)
     H[3, 3] += p.t_c1 * S(sh1) + p.t_c2 * S(sh2) + p.t_c3 * S(sh3)
+    H[4, 4] += p.t_c21 * S(sh1) + p.t_c22 * S(sh2) + p.t_c23 * S(sh3)
 
     # Cr-N nearest-neighbour pd_pi: p_z couples only to d_xz (l) and d_yz (m)
     f_xz = sum((dv[0] / d) * np.exp(1j * np.dot(k, dv)) for dv in deltas)  # sum l_delta * phase
     f_yz = sum((dv[1] / d) * np.exp(1j * np.dot(k, dv)) for dv in deltas)  # sum m_delta * phase
-    H[1, 4] = p.pdpi * f_xz
-    H[2, 4] = p.pdpi * f_yz
-    H[4, 1] = np.conj(H[1, 4])
-    H[4, 2] = np.conj(H[2, 4])
+    H[1, 5] = p.pdpi * f_xz
+    H[2, 5] = p.pdpi * f_yz
+    H[5, 1] = np.conj(H[1, 5])
+    H[5, 2] = np.conj(H[2, 5])
     return H
 
 
 def build_H_dp(k, p: SKParams, spin: int) -> np.ndarray:
-    """4x4 Bloch Hamiltonian of the d+p_z manifold ONLY (no effective c orbital).
+    """4x4 Bloch Hamiltonian of the d+p_z manifold ONLY (no effective c orbitals).
 
     This is the original reduced manifold used by the mean-field magnetism module (crnte.scf):
     the c pocket holds only ~0.03 e/Cr and is neglected there. Orbital order:
     [d_z2, d_xz, d_yz] (Cr), [p_z] (N).
     """
-    H5 = build_H(k, p, spin)
-    idx = [0, 1, 2, 4]          # drop the c orbital (index 3)
-    return H5[np.ix_(idx, idx)]
+    H6 = build_H(k, p, spin)
+    idx = [0, 1, 2, 5]          # drop the c1, c2 orbitals (indices 3, 4)
+    return H6[np.ix_(idx, idx)]
 
 
 def bands_along_path(frac_points, p: SKParams, spin: int, n_per_seg: int = 200):

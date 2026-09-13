@@ -6,8 +6,9 @@ junction between oppositely magnetized segments hosts a domain wall of finite wi
 noncollinear texture mixes the spin channels: carriers can rotate ("track") their spin with the
 local exchange field and leak through. This module quantifies that leakage.
 
-Model: the full spinful Hamiltonian, Cr sites carry 4 orbitals x 2 spins, N sites 1 x 2. The
-local exchange field of magnitude Delta_orb = (Delta_ex on d, Delta_c on c, 0 on p_z) points
+Model: the full spinful Hamiltonian, Cr sites carry 5 orbitals x 2 spins (d_z2, d_xz, d_yz,
+c1, c2), N sites 1 x 2. The local exchange field of magnitude
+Delta_orb = (Delta_ex on d, Delta_c on c1 and c2, 0 on p_z) points
 along the unit vector n(x) of a Walker wall profile,
 
     theta(x) = 2 arctan exp[(x - x0)/delta],   n = (sin theta, 0, cos theta),
@@ -41,7 +42,7 @@ _SZ = np.array([[1, 0], [0, -1]], dtype=complex)
 def _lattice_spinful(a: float):
     d = a / _SQRT3
     prim = [(a, 0.0), (a * 0.5, a * _SQRT3 / 2.0)]
-    lat = kwant.lattice.general(prim, [(0.0, 0.0), (0.0, d)], norbs=[8, 2], name="crn_s")
+    lat = kwant.lattice.general(prim, [(0.0, 0.0), (0.0, d)], norbs=[10, 2], name="crn_s")
     cr, nn = lat.sublattices
     return lat, cr, nn, d
 
@@ -55,8 +56,10 @@ def build_wall_valve(edge: str, width: int, p: SKParams, wall_delta: float,
     """
     a = p.a
     lat, cr, nn, d = _lattice_spinful(a)
-    E_cr = np.diag([p.eps_dz2, p.eps_pi, p.eps_pi, p.eps_c]).astype(complex)
-    D_cr = np.diag([p.delta_ex, p.delta_ex, p.delta_ex, p.delta_c]).astype(complex)
+    # orbital order: d_z2, d_xz, d_yz, c1, c2 (E_cr carries the on-site c1-c2 coupling v_c12)
+    E_cr = np.diag([p.eps_dz2, p.eps_pi, p.eps_pi, p.eps_c, p.eps_c2]).astype(complex)
+    E_cr[3, 4] = E_cr[4, 3] = p.v_c12
+    D_cr = np.diag([p.delta_ex, p.delta_ex, p.delta_ex, p.delta_c, p.delta_c]).astype(complex)
     E_n = np.array([[p.eps_pz]], dtype=complex)
 
     def theta_of(x, x0):
@@ -75,15 +78,16 @@ def build_wall_valve(edge: str, width: int, p: SKParams, wall_delta: float,
         if site1.family == cr:
             bond = site2.pos - site1.pos
             l, m = bond[0] / d, bond[1] / d
-            blk = p.pdpi * np.array([[0.0], [l], [m], [0.0]], dtype=complex)
+            blk = p.pdpi * np.array([[0.0], [l], [m], [0.0], [0.0]], dtype=complex)
         else:
             bond = site1.pos - site2.pos
             l, m = bond[0] / d, bond[1] / d
-            blk = p.pdpi * np.array([[0.0, l, m, 0.0]], dtype=complex)
+            blk = p.pdpi * np.array([[0.0, l, m, 0.0, 0.0]], dtype=complex)
         return np.kron(_S0, blk)
 
     crcr = [np.kron(_S0, np.diag(v).astype(complex)) for v in
-            ([p.t_zz, 0, 0, p.t_c1], [0, 0, 0, p.t_c2], [0, 0, 0, p.t_c3])]
+            ([p.t_zz, 0, 0, p.t_c1, p.t_c21], [0, 0, 0, p.t_c2, p.t_c22],
+             [0, 0, 0, p.t_c3, p.t_c23])]
     SHELLS = ((crcr[0], ((1, 0), (0, 1), (1, -1))),
               (crcr[1], ((1, 1), (2, -1), (-1, 2))),
               (crcr[2], ((2, 0), (0, 2), (2, -2))))

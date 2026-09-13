@@ -31,12 +31,14 @@ E_GRID = np.linspace(-0.6, 1.5, 421)     # dE = 0.005 eV; covers the minority-ed
 MU = np.linspace(-0.4, 1.2, 321)
 T0 = 300.0
 PARAMS = ["eps_dz2", "eps_pi", "eps_pz", "pdpi", "t_zz", "delta_ex",
-          "eps_c", "t_c1", "t_c2", "t_c3"]
+          "eps_c", "t_c1", "t_c2", "t_c3", "eps_c2", "t_c21", "t_c22", "t_c23", "v_c12"]
 LABELS = {"eps_dz2": r"$\varepsilon_{d_{z^2}}$", "eps_pi": r"$\varepsilon_\pi$",
           "eps_pz": r"$\varepsilon_{p_z}$", "pdpi": r"$V_{pd\pi}$",
           "t_zz": r"$t_{zz}$", "delta_ex": r"$\Delta_{ex}$",
           "eps_c": r"$\varepsilon_{c}$", "t_c1": r"$t_{c1}$",
-          "t_c2": r"$t_{c2}$", "t_c3": r"$t_{c3}$"}
+          "t_c2": r"$t_{c2}$", "t_c3": r"$t_{c3}$",
+          "eps_c2": r"$\varepsilon_{c2}$", "t_c21": r"$t_{c21}$", "t_c22": r"$t_{c22}$",
+          "t_c23": r"$t_{c23}$", "v_c12": r"$v_{c12}$"}
 
 
 def peak_zt(p, W):

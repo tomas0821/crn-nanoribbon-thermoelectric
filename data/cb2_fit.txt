@@ -1,0 +1,14 @@
+# two-band fit of Kuklin Fig. 2(d) majority conduction bands (energies eV, rel. E_F)
+eps_c1 = 1.2220
+t_c11 = 0.3257
+t_c12 = -0.0930
+t_c13 = -0.0214
+eps_c2 = 1.5050
+t_c21 = 0.5475
+t_c22 = 0.3095
+t_c23 = 0.1494
+v_c12 = 0.0657
+rms residual lower band = 0.170 eV; upper band = 0.136 eV; transport window (E<1.2) = 0.044 eV
+single-band CB1_FIT rms on the same lower targets (E<1.2) = 0.171 eV
+lower/upper at Gamma = [2.489 7.544], at M = [0.586 0.73 ], at K = [-0.252  1.274], at s=0.75 = [0.469 1.178]
+anticrossing gap min over s = 0.131 eV

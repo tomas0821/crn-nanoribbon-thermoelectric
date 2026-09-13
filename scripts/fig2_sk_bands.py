@@ -24,11 +24,13 @@ def sanity_checks(p):
     for _ in range(20):
         k = rng.normal(size=2)
         for spin in (+1, -1):
-            H = build_H(k, p, spin)   # orbital order: d_z2, d_xz, d_yz, c | p_z
+            H = build_H(k, p, spin)   # orbital order: d_z2, d_xz, d_yz, c1, c2 | p_z
             assert np.allclose(H, H.conj().T), "H not Hermitian"
-            assert abs(H[0, 4]) < 1e-12, "d_z2 should be non-bonding w.r.t. p_z"
-            assert abs(H[3, 4]) < 1e-12, "c should be decoupled from p_z"
-    print("sanity: Hermitian OK, d_z2/c - p_z decoupling OK")
+            assert abs(H[0, 5]) < 1e-12, "d_z2 should be non-bonding w.r.t. p_z"
+            assert abs(H[3, 5]) < 1e-12, "c1 should be decoupled from p_z"
+            assert abs(H[4, 5]) < 1e-12, "c2 should be decoupled from p_z"
+            assert abs(H[3, 4] - p.v_c12) < 1e-12, "c1-c2 on-site coupling missing"
+    print("sanity: Hermitian OK, d_z2/c1/c2 - p_z decoupling OK, c1-c2 coupling OK")
 
 
 def main():
@@ -49,7 +51,14 @@ def main():
     def s_to_x(s):
         seg = min(int(s), 2)
         return ticks[seg] + (s - seg) * (ticks[seg + 1] - ticks[seg])
-    for pts, lab in ((kt.CB1_DIGITIZED, "digitized Kuklin CB1/VB1"),
+    # automatically traced Kuklin CB1 + CB2 (scripts/digitize_cb2.py; conduction tracks only)
+    tr_path = os.path.join(os.path.dirname(FIGDIR), "data", "kuklin_fig2d_traces.npz")
+    if os.path.exists(tr_path):
+        tr = np.load(tr_path)
+        keep = np.isin(tr["track"].astype(int), [0, 2, 4, 5, 6, 8, 9])
+        ax.plot([s_to_x(s) for s in tr["s"][keep]], tr["E"][keep], ".", ms=2.5, color="C0",
+                alpha=0.6, label="traced Kuklin CB1/CB2", zorder=3)
+    for pts, lab in ((kt.CB1_DIGITIZED, "hand-digitized CB1/VB1"),
                      (kt.VB1_DIGITIZED, None)):
         xs = [s_to_x(s) for s, _ in pts]
         es = [E for _, E in pts]

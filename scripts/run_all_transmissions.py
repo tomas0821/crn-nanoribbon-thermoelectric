@@ -44,7 +44,8 @@ def main():
         for N in (8, 14, 20):
             compute(f"{edge}_N{N}_TE", p, edge, N)
     # reduced-manifold comparison (c orbital pushed out of the window -> old 4-orbital model)
-    p_nc = dataclasses.replace(p, eps_c=50.0, t_c1=0.0, t_c2=0.0, t_c3=0.0)
+    p_nc = dataclasses.replace(p, eps_c=50.0, t_c1=0.0, t_c2=0.0, t_c3=0.0,
+                              eps_c2=50.0, t_c21=0.0, t_c22=0.0, t_c23=0.0, v_c12=0.0)
     compute("zigzag_N14_TE_noc", p_nc, "zigzag", 14)
 
 
