@@ -260,7 +260,9 @@ results_deck_url: https://claude.ai/code/artifact/446f6e00-3fc0-4fcf-8cad-43edf8
 - [ ] **Before submission:** upload to Editorial Manager with highlights.txt + cover letter.
 
 ### Still open (future work, stated in the paper)
-- [ ] Second conduction band + CB1/CB2 anticrossing above +0.5 eV (single effective band now).
+- [x] Second conduction band + CB1/CB2 anticrossing — done 2026-09-13 (two effective orbitals
+      c₁, c₂ + v₁₂; see Run: cb2_two_band_model). Remaining band-structure limitation: c₂ is
+      unconstrained above 2.8 eV (outside the window).
 - [ ] Site-dependent exchange fed back into transport (edge moments differ by only 6–8%).
 - [ ] Explicit phonon-transport calculation (edge disorder / anharmonicity) — the
       phonon-engineering route to higher ZT.
@@ -286,15 +288,20 @@ phonons from Modarresi et al., *PRApplied* 11, 064015 (2019)
 **Environment:** isolated Kwant venv at `~/venvs/crn-te` (Python 3.12, numpy<2). System Python
 3.14 cannot build Kwant. Run code with `~/venvs/crn-te/bin/python`. See `requirements.txt`.
 
-**Honest headline (2026-07-17, extended model):**
-- Pristine CrN nanoribbons are **modest thermoelectrics**: peak ZT = 0.04–0.15 at 300 K
-  (phonon-Landauer κ_ph), global optimum pinned to the **minority band edge** (μ−E_F ≈ +1.05 eV).
+**Headline (2026-09-13, two-conduction-band model):**
+- Pristine CrN nanoribbons are **modest thermoelectrics**: peak ZT = 0.06–0.15 at 300 K
+  (phonon-Landauer κ_ph). With both majority conduction bands resolved, **every global
+  optimum lies inside the fully spin-polarized window** — at the second-band onset
+  (μ−E_F ≈ +0.5–0.7 eV) for five geometries, at −0.34 eV for armchair N=8 (best, 0.145).
+  The minority edge (+1.05 eV, polarization lost) is never the optimum.
 - They are **outstanding spin filters**: minority channel gapped over [−3.2, +1.0] eV → 100%
-  spin-polarized transport for any gating below +1 eV.
-- **Armchair N=8** is special: best ZT (0.145 at −0.34 eV) *inside* the polarized window.
+  spin-polarized transport for any gating below +1 eV; thermal spin valve with exact
+  collinear OFF state; intrinsic domain walls (2.4–3 nm) are ≥95 % transparent.
 - **Methodological caution (a paper contribution):** the minimal d+p_z manifold misses the
-  majority conduction pocket and fabricates ZT ≈ 0.33 — an ~8× artifact that parameter
-  sensitivity cannot detect.
+  majority conduction bands and fabricates ZT ≈ 0.33 — a fivefold artifact (0.33 → 0.063)
+  that parameter sensitivity cannot detect.
+- Robustness: ±10 % on all 15 parameters → [0.029, 0.114] about 0.063 (zigzag N=14);
+  π*-pinned variant changes no optimum; 3-mode phonon floor +0.3–3.5 %; p-type side ≤ 0.03.
 
 ---
 
@@ -322,6 +329,7 @@ validated against the hand-digitized CB1 points), nine parameters fitted jointly
 | conduction-pocket filling | 0.063 e/cell (was 0.068) |
 
 **Final values (300 K, production κ_ph(W), μ scan [−0.6, +1.2] eV):**
+
 | Geometry | peak ZT @ μ−E_F | previous (single c) | polarized? |
 |------------|-------|-------|---|
 | zigzag N=8 | 0.093 @ +0.48 | 0.062 @ +1.08 | yes |
@@ -472,6 +480,7 @@ exchange (`data/edge_exchange.txt`). Unaffected by the conduction-orbital change
 stay out of the moments loop).
 
 **Final values:**
+
 | Observable | Value |
 |------------|-------|
 | interior Cr moment | 2.63 μ_B (monolayer 2.67) |
