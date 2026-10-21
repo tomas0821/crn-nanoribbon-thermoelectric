@@ -27,7 +27,7 @@ Run everything with `~/venvs/crn-te/bin/python`.
 - `scripts/` — `run_all_transmissions.py` (regenerates every production T(E) on one 5-meV
   grid), `digitize_cb2.py` + `fit_cb2.py` (band tracing and the two-orbital fit), one script
   per manuscript figure, plus `verify.py`, `sensitivity.py`, `sensitivity_armchair8.py`,
-  `pistar_pinned.py`, `polarization_margin.py`, `phonon_floor3.py`, `ptype_scan.py`,
+  `pistar_pinned.py`, `polarization_margin.py`, `cb2_subbands.py`, `phonon_floor3.py`, `ptype_scan.py`,
   `convergence.py`, `edge_exchange_run.py`; `regenerate_all.sh` runs the whole pipeline.
 - `figures/`, `data/` — generated figures and data: the text outputs quoted in the paper
   (`data/*.txt`) are tracked; the transmission caches (`data/*.npz`) are git-ignored and regenerable.

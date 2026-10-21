@@ -39,6 +39,7 @@ def main():
     kph = kappa_ph(T0, W)
 
     fig, axs = plt.subplots(1, 2, figsize=(9.6, 3.8))
+    report = []
 
     axs[0].plot(red["E"], red["T_up"], color="C3", lw=1.6, ls="--",
                 label="reduced manifold (no pocket)")
@@ -59,14 +60,16 @@ def main():
         zt = th.ZT(tot, T0, kph)
         axs[1].plot(MU, zt, color=col, ls=ls, lw=1.8, label=lab)
         i = int(np.argmax(zt))
-        print(f"{lab:18s}: peak ZT(300K) = {zt[i]:.4f} at mu-E_F = {MU[i]:+.2f} eV")
+        onset = d["E"][np.argmax((d["E"] > 0) & (d["T_dn"] > 0.5))]
+        report.append(f"{lab:18s}: peak ZT(300K) = {zt[i]:.4f} at mu-E_F = {MU[i]:+.2f} eV; "
+                      f"minority onset (T_dn > 0.5) {onset:+.3f} eV")
         if d is red:
             # the empty majority window has two edges: the truncation edge near +0.19 eV
             # and the unshunted minority onset; report the first and the polarization at the peak
             k = int(np.argmax(np.where(MU < 0.5, zt, -1.0)))
             pg = (up["G"][i] - dn["G"][i]) / (up["G"][i] + dn["G"][i])
-            print(f"{'':18s}  truncation-edge peak ZT = {zt[k]:.4f} at {MU[k]:+.2f} eV; "
-                  f"P_G at the global peak = {100 * pg:+.0f}%")
+            report.append(f"{'':18s}  truncation-edge peak ZT = {zt[k]:.4f} at {MU[k]:+.2f} eV; "
+                          f"P_G at the global peak = {100 * pg:+.0f}%")
     axs[1].axvline(0, color="0.7", lw=0.6, ls=":")
     axs[1].set_xlabel(r"$\mu - E_F$ (eV)")
     axs[1].set_ylabel(r"$ZT$ (300 K)")
@@ -76,7 +79,11 @@ def main():
     fig.tight_layout()
     out = os.path.join(FIGDIR, "fig_manifold.png")
     fig.savefig(out, dpi=200)
-    print(f"wrote {out}")
+    print("\n".join(report))
+    with open(os.path.join(DATADIR, "manifold.txt"), "w") as fh:
+        fh.write("# reduced (d+p_z) vs extended manifold, zigzag N=14, 300 K "
+                 "(scripts/fig_manifold_comparison.py)\n" + "\n".join(report) + "\n")
+    print(f"wrote {out}, data/manifold.txt")
 
 
 if __name__ == "__main__":

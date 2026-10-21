@@ -256,3 +256,43 @@ text edits plus regenerating one figure.
 - The ε_c1 +10 % half of Major 2: that optimum really is 100 % polarized.
 - The internal-contradiction reading of "insensitive to Δ_ex" (Codex): true of the −0.34 eV
   feature itself. Kept only as a wording minor.
+
+---
+
+## Delta check of the fixes (Codex, post-fix) — 2026-10-21
+
+**Scope:** only the text changed in `ad296ec..3e801bd` (the fixes above), numbers checked against
+`data/*.txt`. **Referee:** Codex (`codex exec -s read-only`, gpt-5.6-terra); first attempt
+hung on stdin to the 40-min timeout (backgrounded without `< /dev/null`), the re-run completed.
+The other three referees were not re-run. **Result:** no wrong number; 0 new majors after
+verification. All numbers that have a `data/*.txt` source match it (cb2_fit, table2,
+sensitivity_armchair8, polarization_margin, wall_sweep).
+
+**Codex MAJORs, verified and downgraded to MINOR (wording overclaims in the Conclusions):**
+- (i) "this landscape is unchanged … by a 0.2 eV shift of the minority edge": optimum dopings
+  are unchanged, but the peak ZT moves by up to 2.3 % (zigzag N=20 0.0830→0.0849) and P_G is
+  99.6–99.8 % for zigzag N=20 and armchair N=14/20 (`polarization_margin.txt` 76, 78–79).
+  *Fix:* "preserved (same optimum dopings, P_G ≥ 99.6 %)".
+- (ii) "the coincidence of the thermoelectric optimum with full polarization" is unqualified,
+  and the Conclusions never mention the Δ_ex −10 % exception (0.36 eV edge shift, optima
+  56 %/68 % polarized), which lies beyond the stated 0.2 eV margin. *Fix:* one clause in (i)
+  naming the exception.
+
+**Reproducibility gap (Codex MINORs, consolidated):** several numbers added in the fixes exist
+only in script stdout or in session scratch scripts, not in tracked `data/*.txt`, although the
+data statement says the tagged release reproduces every number:
+- only in scratch scripts: c2 subbands entering at +0.45–0.50 eV in all six ribbons; the
+  Δ_ex −10 % minority edges (+0.67 eV zigzag N=14, +0.72 eV armchair N=8); majority mode
+  count 3→9 at +0.43–0.49 eV;
+- only in stdout of tracked scripts: reduced-manifold 0.26 at +0.19 eV and the +1.03 eV onset
+  (`fig_manifold_comparison.py`); S ≈ −48 µV/K and the PF values (`fig45_thermoelectric.py`);
+- the 300/500/700 K series in §3.4 (0.098/0.089, 0.063/0.067/0.062, 0.093→0.106) has no text
+  source.
+- Not a gap: the 0.12–0.36 eV range is 10 % of the Table 1 parameters.
+*Fix:* move the two scratch computations into `scripts/` and write these values to a tracked
+`data/*.txt`, then re-tag.
+
+**Disposition (2026-10-21):** both Conclusions fixes applied; every flagged number now written by a
+tracked script to `data/*.txt` (`cb2_subbands`, `fig5_zigzag14`, `manifold`, extended `table2`,
+minority-onset column in `polarization_margin`). Tracking corrected two values: c2 entry
++0.48–0.50 eV (was +0.45–0.50) and mode count 3 at +0.44 eV (was +0.43). Tagged `v1.2-submission`.

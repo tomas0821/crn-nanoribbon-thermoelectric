@@ -1,0 +1,7 @@
+# zigzag N=14 thermoelectric summary (scripts/fig45_thermoelectric.py)
+W = 18.6 A, kappa_ph(300K) = 1.026 nW/K
+peak |S| (300K)          = -49.1 uV/K at mu-E_F=+0.46 eV
+peak PF  (300K)          = 0.591 pW/K^2 at mu-E_F=+0.71 eV
+peak ZT  (300K)          = 0.0632 at mu-E_F=+0.47 eV
+at the ZT optimum        : S = -48.3 uV/K, PF = 0.582 pW/K^2 (98.6% of peak PF)
+ZT(700K) at same doping  = 0.0619

@@ -29,6 +29,8 @@ run sensitivity_delta_c.py
 run pistar_pinned.py
 run sensitivity.py
 run sensitivity_armchair8.py
+run polarization_margin.py
+run cb2_subbands.py
 run fig_wall.py
 run verify.py
 

@@ -75,16 +75,23 @@ def main():
     ipf = int(np.argmax(tot["PF"]))
     iS = int(np.argmax(np.abs(tot["S"])))
     imax = int(np.argmax(ZT_300))
-    print(f"W = {W:.1f} A, kappa_ph(300K) = {kph*1e9:.3f} nW/K")
-    print(f"peak |S| (300K)          = {tot['S'][iS]*1e6:+.1f} uV/K at mu-E_F={mu[iS]:+.2f} eV")
-    print(f"peak PF  (300K)          = {tot['PF'][ipf]*1e12:.3f} pW/K^2 at mu-E_F={mu[ipf]:+.2f} eV")
-    print(f"peak ZT  (300K)          = {ZT_300[imax]:.4f} at mu-E_F={mu[imax]:+.2f} eV")
-    zt700 = None
     u = th.sweep_mu(E, T_up, np.array([mu_opt]), 700.0)
     dd = th.sweep_mu(E, T_dn, np.array([mu_opt]), 700.0)
     zt700 = float(th.ZT(th.combine_spins(u, dd, 700.0), 700.0, kappa_ph(700.0, W))[0])
-    print(f"ZT(700K) at same doping  = {zt700:.4f}")
-    print("wrote figures/fig4_seebeck.png, figures/fig5_zt.png")
+    lines = [
+        f"W = {W:.1f} A, kappa_ph(300K) = {kph*1e9:.3f} nW/K",
+        f"peak |S| (300K)          = {tot['S'][iS]*1e6:+.1f} uV/K at mu-E_F={mu[iS]:+.2f} eV",
+        f"peak PF  (300K)          = {tot['PF'][ipf]*1e12:.3f} pW/K^2 at mu-E_F={mu[ipf]:+.2f} eV",
+        f"peak ZT  (300K)          = {ZT_300[imax]:.4f} at mu-E_F={mu[imax]:+.2f} eV",
+        f"at the ZT optimum        : S = {tot['S'][imax]*1e6:+.1f} uV/K, PF = {tot['PF'][imax]*1e12:.3f} pW/K^2"
+        f" ({100 * tot['PF'][imax] / tot['PF'][ipf]:.1f}% of peak PF)",
+        f"ZT(700K) at same doping  = {zt700:.4f}",
+    ]
+    print("\n".join(lines))
+    with open(os.path.join(DATADIR, "fig5_zigzag14.txt"), "w") as fh:
+        fh.write("# zigzag N=14 thermoelectric summary (scripts/fig45_thermoelectric.py)\n")
+        fh.write("\n".join(lines) + "\n")
+    print("wrote figures/fig5_zt.png, data/fig5_zigzag14.txt")
 
 
 if __name__ == "__main__":

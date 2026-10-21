@@ -42,6 +42,13 @@ def zt_of_mu(E, T_up, T_dn, W, T_K=T0, kfac=1.0):
     return th.ZT(tot, T_K, kfac * kappa_ph(T_K, W))
 
 
+def zt_at(E, T_up, T_dn, W, mu, T_K):
+    """ZT at one fixed chemical potential and temperature."""
+    up = th.sweep_mu(E, T_up, np.array([mu]), T_K)
+    dn = th.sweep_mu(E, T_dn, np.array([mu]), T_K)
+    return float(th.ZT(th.combine_spins(up, dn, T_K), T_K, kappa_ph(T_K, W))[0])
+
+
 def main():
     p = SKParams()
     rows = []  # Table 2
@@ -57,7 +64,11 @@ def main():
             zt = zt_of_mu(E, Tu, Td, W)
             i = int(np.argmax(zt))
             peak_zt[edge].append(zt[i])
-            rows.append((edge, N, W, zt[i], MU[i]))
+            # Table 2 extras: kappa_ph bracket (ZT at 2x / 0.5x kappa_ph) and ZT at 500 and 700 K,
+            # all at the same 300 K optimal doping
+            rows.append((edge, N, W, zt[i], MU[i], kappa_ph(T0, W),
+                         zt_of_mu(E, Tu, Td, W, kfac=2.0)[i], zt_of_mu(E, Tu, Td, W, kfac=0.5)[i],
+                         zt_at(E, Tu, Td, W, MU[i], 500.0), zt_at(E, Tu, Td, W, MU[i], 700.0)))
             if edge == "zigzag":
                 col = {8: "C0", 14: "C2", 20: "C3"}[N]
                 axs[0, 0].plot(MU, zt, color=col, lw=1.8, label=f"N = {N}")
@@ -86,11 +97,7 @@ def main():
         W = ribbon_width("zigzag", N, p.a)
         zt300 = zt_of_mu(E, Tu, Td, W, 300.0)
         mu_opt = MU[int(np.argmax(zt300))]
-        zt_t = []
-        for T2 in temps:
-            u = th.sweep_mu(E, Tu, np.array([mu_opt]), T2)
-            dd = th.sweep_mu(E, Td, np.array([mu_opt]), T2)
-            zt_t.append(float(th.ZT(th.combine_spins(u, dd, T2), T2, kappa_ph(T2, W))[0]))
+        zt_t = [zt_at(E, Tu, Td, W, mu_opt, T2) for T2 in temps]
         axs[1, 1].plot(temps, zt_t, color=col, lw=1.8, label=f"N = {N}")
     axs[1, 1].set_title("(d) ZT(T) at optimal doping (zigzag)")
     axs[1, 1].set_xlabel("temperature (K)"); axs[1, 1].set_ylabel("ZT")
@@ -100,13 +107,15 @@ def main():
     fig.savefig(os.path.join(FIGDIR, "fig6_width_edge_vacancy.png"), dpi=200)
 
     print("\nTable 2 (peak ZT @300K, phonon-Landauer kappa_ph(W)):")
-    print(f"{'edge':10s} {'N':>3s} {'W(A)':>6s} {'peakZT':>8s} {'mu-E_F':>7s}")
-    for r in rows:
-        print(f"{r[0]:10s} {r[1]:3d} {r[2]:6.1f} {r[3]:8.4f} {r[4]:+7.2f}")
+    head = "edge  N  W(A)  peakZT  mu-E_F(eV)  kph300(nW/K)  ZT[2xkph]  ZT[0.5xkph]  ZT500  ZT700"
+    print(head)
     with open(os.path.join(DATADIR, "table2.txt"), "w") as fh:
-        fh.write("edge  N  W(A)  peakZT  mu-E_F(eV)\n")
+        fh.write(head + "\n")
         for r in rows:
-            fh.write(f"{r[0]}  {r[1]}  {r[2]:.1f}  {r[3]:.4f}  {r[4]:+.2f}\n")
+            line = (f"{r[0]}  {r[1]}  {r[2]:.1f}  {r[3]:.4f}  {r[4]:+.2f}  {r[5] * 1e9:.2f}  "
+                    f"{r[6]:.4f}  {r[7]:.4f}  {r[8]:.4f}  {r[9]:.4f}")
+            print(line)
+            fh.write(line + "\n")
     print("wrote figures/fig6_width_edge_vacancy.png, data/table2.txt")
 
 

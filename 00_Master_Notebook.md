@@ -40,6 +40,25 @@ results_deck_url: https://claude.ai/code/artifact/446f6e00-3fc0-4fcf-8cad-43edf8
          and `scripts/fig_wall.py:64` has a stale `TP[0.5]=5`, should be 9.
       Plus about 14 minors (K pocket −0.20 → −0.25, 0.088 → 0.089, design rule (ii) armchair
       N=14, PF vs ZT peak, screening caveat at +1 eV, …).
+- [x] **Codex delta check of the fixes — done 2026-10-21:** read-only Codex pass over
+      `ad296ec..3e801bd` only. No wrong number, 0 new majors after verification. Two
+      Conclusions overclaims (minor): "landscape unchanged" by the 0.2 eV shift (ZT moves ≤2.3 %,
+      P_G ≥99.6 %), and "coincidence … with full polarization" without the Δ_ex −10 % exception.
+      Logged in `cross_model_review_2026-10-21.md` (Delta check section).
+- [x] **Fix the two Conclusions overclaims — done 2026-10-21:** (i) now "survives … a 0.2 eV
+      downward shift (same optimum dopings, P_G ≥ 99.6 %); only a larger shift, such as the 0.36 eV
+      of a 10 % smaller exchange splitting, lets a partly polarized peak take over"; (ii) "within
+      the fitted model".
+- [x] **Every quoted number now has a tracked text source — done 2026-10-21:**
+      new `scripts/cb2_subbands.py` → `data/cb2_subbands.txt` (c2 entry per ribbon, mode counts);
+      `fig6` → `table2.txt` now carries κ_ph, the ½×/2× bracket (at fixed doping, as in the
+      table) and ZT at 500/700 K; `fig45` → `data/fig5_zigzag14.txt` (S, PF at the optimum, PF
+      peak); `fig_manifold_comparison` → `data/manifold.txt`; `polarization_margin` adds the
+      minority-onset column (Δ_ex −10 %: +0.665 / +0.720 eV). All figures byte-identical.
+      Two text corrections from the tracked sources: c2 subbands enter at **+0.48–0.50 eV**
+      (was +0.45–0.50; c2 weight > ½ criterion) and the mode count is 3 at **+0.44** eV (was
+      +0.43). Both scripts added to `regenerate_all.sh`. Build 29 pp clean. Tagged
+      `v1.2-submission` (new tag; `v1.1` left in place rather than force-moving a public tag).
 - [x] **2026-10-21 cross-model fixes implemented — done 2026-10-21:**
       - New `scripts/polarization_margin.py` → `data/polarization_margin.txt`.
         - Only Δ_ex −10 % gives a partly polarized optimum, in both sweeps. The fully polarized

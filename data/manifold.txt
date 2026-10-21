@@ -1,0 +1,4 @@
+# reduced (d+p_z) vs extended manifold, zigzag N=14, 300 K (scripts/fig_manifold_comparison.py)
+reduced manifold  : peak ZT(300K) = 0.3322 at mu-E_F = +1.03 eV; minority onset (T_dn > 0.5) +1.025 eV
+                    truncation-edge peak ZT = 0.2560 at +0.19 eV; P_G at the global peak = -100%
+extended model    : peak ZT(300K) = 0.0632 at mu-E_F = +0.47 eV; minority onset (T_dn > 0.5) +1.025 eV

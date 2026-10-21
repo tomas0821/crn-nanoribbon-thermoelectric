@@ -52,6 +52,11 @@ def polarization(E, Tu, Td, mu, T):
     return (gu - gd) / (gu + gd)
 
 
+def minority_onset(E, Td):
+    """First energy above E_F where the minority transmission exceeds 1/2."""
+    return E[np.argmax((E > 0) & (Td > 0.5))]
+
+
 def scan(E, Tu, Td, MU, T, kph):
     up = th.sweep_mu(E, Tu, MU, T)
     dn = th.sweep_mu(E, Td, MU, T)
@@ -82,7 +87,7 @@ def main():
            f"# 'pol' = best ZT where P_G > {100 * FULL:.1f}%", ""]
     for name, (pat, edge, N, E, MU) in SWEEPS.items():
         kph = kappa_ph(T0, ribbon_width(edge, N, a))
-        out.append(f"## sensitivity variants, {name}: variant | global ZT (mu) P_G | pol ZT (mu)")
+        out.append(f"## sensitivity variants, {name}: variant | global ZT (mu) P_G | pol ZT (mu) | minority onset")
         rows = []
         for f in sorted(glob.glob(os.path.join(DATADIR, pat))):
             if pat.startswith("sens_") and os.path.basename(f).startswith("sensA8_"):
@@ -91,10 +96,10 @@ def main():
                 continue
             d = np.load(f)
             zg, mg, pg, zp, mp = scan(E, d["Tu"], d["Td"], MU, T0, kph)
-            rows.append((variant_label(f), zg, mg, pg, zp, mp))
-        for lab, zg, mg, pg, zp, mp in sorted(rows):
+            rows.append((variant_label(f), zg, mg, pg, zp, mp, minority_onset(E, d["Td"])))
+        for lab, zg, mg, pg, zp, mp, eo in sorted(rows):
             flag = "" if pg > FULL else "   <-- not fully polarized"
-            out.append(f"{lab:14s} | {zg:.4f} ({mg:+.3f}) {100 * pg:5.1f}% | {zp:.4f} ({mp:+.3f}){flag}")
+            out.append(f"{lab:14s} | {zg:.4f} ({mg:+.3f}) {100 * pg:5.1f}% | {zp:.4f} ({mp:+.3f}) | {eo:+.3f}{flag}")
         pol = [r[4] for r in rows]
         out.append(f"spread of global optima [{min(r[1] for r in rows):.4f}, {max(r[1] for r in rows):.4f}];"
                    f" fully polarized optima [{min(pol):.4f}, {max(pol):.4f}]")
@@ -102,7 +107,7 @@ def main():
 
     MU = np.linspace(-0.6, 1.0, 321)
     out.append("## minority edge shifted down by dE (rigid shift of T_dn), production T(E), mu <= +1.0 eV")
-    out.append("# geometry | base opt ZT (mu) | dE: P_G at base opt 300 K / 700 K ; new global ZT (mu) P_G")
+    out.append("# geometry | minority onset | base opt ZT (mu) | dE: P_G at base opt 300 K / 700 K ; new global ZT (mu) P_G")
     for edge, N in GEOS:
         d = np.load(os.path.join(DATADIR, f"{edge}_N{N}_TE.npz"))
         E, Tu, Td = d["E"], d["T_up"], d["T_dn"]
@@ -115,7 +120,7 @@ def main():
             p700 = polarization(E, Tu, Ts, m0, 700.0)[0]
             zg, mg, pg, _, _ = scan(E, Tu, Ts, MU, T0, kph)
             cells.append(f"{dE:.1f}: {100 * p300:6.2f}/{100 * p700:5.1f}% ; {zg:.4f} ({mg:+.2f}) {100 * pg:5.1f}%")
-        out.append(f"{edge:8s} {N:2d} | {z0:.4f} ({m0:+.2f}) | " + " | ".join(cells))
+        out.append(f"{edge:8s} {N:2d} | {minority_onset(E, Td):+.3f} | {z0:.4f} ({m0:+.2f}) | " + " | ".join(cells))
 
     text = "\n".join(out) + "\n"
     print(text)
