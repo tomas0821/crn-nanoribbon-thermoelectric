@@ -36,7 +36,8 @@ conduction pocket that the minimal out-of-plane orbital manifold misses collapse
 figure of merit of the zigzag $N{=}14$ ribbon from $ZT\simeq0.33$ to $0.06$ at $300$~K, a
 basis-truncation artifact that parameter sensitivity cannot detect. With both majority
 conduction bands and their anticrossing resolved, every optimum lies inside the fully
-spin-polarized window: $ZT\simeq0.06$--$0.10$ at the onset of the second conduction band
+spin-polarized window, robustly against a $0.2$~eV shift of the minority band edge:
+$ZT\simeq0.06$--$0.10$ on subband edges of the second conduction band
 ($\mu-E_F\simeq+0.5$--$0.7$~eV) for five geometries, and $ZT=0.15$ ($0.08$--$0.24$ phonon
 bracket) on the hole-doped side for the narrow armchair $N{=}8$ ribbon, the best case; the
 minority band edge, where polarization is lost, is never the optimum. The ribbons
@@ -97,8 +98,9 @@ property and method, to the DMRG study of Ref.~\cite{CrNdmrg2023}, which compute
 spin-dependent semiclassical (Boltzmann) transport but no thermoelectric coefficients. Second,
 we document a methodological pitfall of direct relevance to this tradition: the minimal orbital
 manifold that suggests itself for $h$-CrN (the out-of-plane orbitals dominating the states at
-$E_F$) omits the majority conduction band, an electron pocket at $K$, and thereby fabricates a
-sharp transmission edge just above $E_F$ and a spuriously large figure of merit. We quantify
+$E_F$) omits the majority conduction bands, starting with an electron pocket at $K$, and thereby
+fabricates an empty majority window above $E_F$, bounded by sharp transmission edges, and a
+spuriously large figure of merit. We quantify
 the artifact and show that no parameter-sensitivity analysis within the reduced
 manifold can detect it.
 
@@ -155,15 +157,21 @@ Fig.~\ref{fig:bands} and are deposited, with the tracing and fit scripts, in the
 repository. The rms residual in the transport window is $0.04$~eV (a single effective band
 fitted to CB1 alone gives $0.17$~eV), smaller than the digitization uncertainty itself, so the
 single-number uncertainty of the conduction bands in the transport window is $\sim$$0.1$~eV.
-The fitted anticrossing gap is $0.13$~eV. Above $\simeq2.8$~eV, where CB2 leaves the traced
-range, the upper band is unconstrained and rises to $\simeq7.5$~eV at $\Gamma$; this lies far
-outside the transport window and has no consequence below.
+The fitted anticrossing gap is $0.13$~eV. In the fitted model the band of $c_2$ character is
+the lower of the two over the outer half of the $\Gamma$--M segment, with a local minimum of
+$+0.47$~eV three quarters of the way from $\Gamma$ to M, below the $\simeq0.7$~eV minimum of
+the upper band at M; the ribbon subbands built from these states enter between $+0.45$ and
+$+0.50$~eV in every ribbon studied, and we refer to them as the subbands of the second
+conduction band. Above $\simeq2.8$~eV, where CB2 leaves the traced range, the upper band is
+unconstrained and rises to $\simeq7.5$~eV at $\Gamma$; this lies far outside the transport
+window, but the parameters that place the $c_2$ minimum inside it ($\varepsilon_{c_2}$,
+$t_{c22}$) are among the largest sources of uncertainty of the peak values
+(Sec.~\ref{sec:scope}).
 
 The five $d$+$p_z$ parameters and the exchange splitting (Table~\ref{tab:params}) were adjusted
 by hand (there is no automated objective function for them) to reproduce explicit targets
 from Ref.~\cite{Kuklin2017}: the minority conduction-band edge at $+0.9$~eV
-and valence-band edge at $-3.0$~eV, the majority conduction-pocket minimum at $K$ ($-0.2$~eV),
-the majority $\pi^*$ valence band reaching $E_F$, and the non-bonding $d_{z^2}$ manifold at
+and valence-band edge at $-3.0$~eV, the majority $\pi^*$ valence band reaching $E_F$, and the non-bonding $d_{z^2}$ manifold at
 $-2.5$ to $-2.0$~eV. The residuals of this fit are stated in Sec.~\ref{sec:results}, and
 the sensitivity of every headline number to a $\pm10\%$ variation of each parameter is
 quantified in Fig.~\ref{fig:sensitivity}.
@@ -200,18 +208,20 @@ by solving the self-consistency for the uniform sheet. The mapping is transparen
 model: the minority valence-band top is the bare N~$p_z$ level, reached at $K$ where the Cr--N
 Bloch factor vanishes ($\varepsilon_{p_z}=-3.2$~eV), and the minority conduction-band minimum
 is $\varepsilon_\pi+\Delta_{\rm ex}=+1.0$~eV. Of the two reported edges we target the
-conduction edge ($+0.9$~eV~\cite{Kuklin2017}), to which the thermoelectric optimum is
-pinned, at the stated $\sim$$0.1$--$0.2$~eV digitization accuracy; the model gap then comes
+conduction edge ($+0.9$~eV~\cite{Kuklin2017}), which bounds the fully polarized window, at
+the stated $\sim$$0.1$--$0.2$~eV digitization accuracy; the model gap then comes
 out $4.2$~eV rather than the reported $3.9$~eV because $\varepsilon_{p_z}$ lands at $-3.2$
-instead of $-3.0$~eV, a residual on the far, transport-irrelevant side of the window. Because
-the optimal doping tracks the minority conduction edge one-for-one, the quoted optimal $\mu$
-values inherit the same $\sim$$0.1$--$0.2$~eV uncertainty (Sec.~\ref{sec:scope}). The
+instead of $-3.0$~eV, a residual on the far, transport-irrelevant side of the window. No
+optimum of Sec.~\ref{sec:widths} sits at this edge, and lowering it by up to $0.2$~eV leaves
+every optimum at the same doping and at least $99.6\%$ spin polarized at $300$~K
+(Sec.~\ref{sec:scope}); the optimal $\mu$ values instead inherit the uncertainty of the
+conduction-band fit. The
 effective orbitals $c_1,c_2$ are assigned the same minority shift
 ($\Delta^c_\downarrow=\Delta_{\rm ex}$), consistent with their dominantly Cr-$d$ character;
 their minority replicas then lie above $+3.3$~eV, far outside the transport window. The parameters
 (Table~\ref{tab:params}) reproduce the half-metallic character, the non-bonding $d_{z^2}$
 level below the valence-band top, the majority valence band that reaches $E_F$, and the
-majority conduction pocket at $K$ ($-0.20$~eV in the model versus $-0.2$~eV in the DFT
+majority conduction pocket at $K$ ($-0.25$~eV in the model versus $-0.2$~eV in the DFT
 reference). In the reduced $d$+$p_z$ manifold the Cr moment is $2.67\,\mu_B$, about $11\%$
 below the reported $3\,\mu_B$, because the deeper $\sigma$-bonded orbitals, which also carry
 moment, are not included; the conduction pocket adds a further $0.06$~electrons per cell to
@@ -351,7 +361,7 @@ four-mode floor in the tabulated values; the choice is conservative for $ZT$.
 Figure~\ref{fig:bands} compares the fitted spin-resolved band structure of the $h$-CrN monolayer
 with the digitized bands of Ref.~\cite{Kuklin2017}. The model reproduces the half-metal. The
 majority channel is metallic: the $\pi$-antibonding valence band reaches $E_F$ and the
-effective conduction band forms the electron pocket at $K$ ($-0.20$~eV). The minority channel
+lower effective conduction band forms the electron pocket at $K$ ($-0.25$~eV). The minority channel
 is gapped, with $E_F$ inside a $4.2$~eV gap spanning $[-3.2,+1.0]$~eV (reported: $3.9$~eV,
 $[-3.0,+0.9]$~\cite{Kuklin2017}). The flat non-bonding $d_{z^2}$ band sits $\sim\!2.5$~eV
 below $E_F$. Both majority conduction bands, including their anticrossing between $\Gamma$ and M, are
@@ -373,9 +383,9 @@ variant for every ribbon of Table~\ref{tab:results}.
 \centering
 \includegraphics[width=0.8\columnwidth]{fig2_bands.png}
 \caption{Spin-resolved tight-binding band structure of the $h$-CrN monolayer (majority: solid;
-minority: dashed) compared with the digitized majority conduction band (CB1) and valence band
-(VB1) of Ref.~\cite{Kuklin2017} (open circles) and the reported minority gap edges (dotted
-lines). The majority channel is metallic (note the electron pocket at $K$) while the minority
+minority: dashed) compared with Ref.~\cite{Kuklin2017}: the traced majority conduction bands
+CB1 and CB2 (dots), the hand-digitized CB1 and valence band VB1 (open circles), and the
+reported minority gap edges (dotted lines). The majority channel is metallic (note the electron pocket at $K$) while the minority
 channel is gapped across $E_F$: a half-metal.}
 \label{fig:bands}
 \end{figure}
@@ -405,12 +415,14 @@ polarization degrades (Sec.~\ref{sec:polar}).}
 Figure~\ref{fig:manifold} quantifies the central methodological point. In the reduced
 $d$+$p_z$ manifold the majority spectrum ends at $+0.19$~eV: the ribbon transmission drops
 from several quanta to zero within $\sim$$0.2$~eV of $E_F$ and stays zero up to the minority
-edge. That sharp edge is precisely what band-engineering
-arguments~\cite{Hicks1993,Mahan1996} seek; it yields a large thermopower and a peak
-$ZT\simeq0.33$ at $300$~K for the zigzag $N=14$ ribbon [Fig.~\ref{fig:manifold}(b)]. But the
-edge is an artifact of basis truncation: with the conduction bands restored, majority modes
-exist throughout the window, the transmission edge disappears, and the peak $ZT$ collapses by
-a factor of five, to $0.063$, on the same phonon background. Varying every
+edge. The empty majority window has two sharp edges of the kind band-engineering
+arguments~\cite{Hicks1993,Mahan1996} seek: the truncation edge itself ($ZT\simeq0.26$ at
+$+0.19$~eV) and, larger, the minority onset at $+1.03$~eV, which no majority background
+shunts, giving a peak $ZT\simeq0.33$ at $300$~K for the zigzag $N=14$ ribbon, carried
+entirely by minority carriers [Fig.~\ref{fig:manifold}(b)]. Both are artifacts of basis
+truncation: with the conduction bands restored, majority modes exist throughout the window,
+both edges are shunted, and the peak $ZT$ collapses by a factor of five, to $0.063$, on the
+same phonon background. Varying every
 retained parameter of the reduced manifold by $\pm10\%$ leaves the spurious result essentially
 unchanged, because no variation of retained parameters can create a missing band. The caution
 is generic rather than aimed at any published result. The standard single-$\pi$-orbital
@@ -425,8 +437,9 @@ character within a few $k_BT$ of that window.
 \includegraphics[width=\columnwidth]{fig_manifold.png}
 \caption{Orbital-manifold caution (zigzag $N=14$, $300$~K). (a) Majority transmission in the
 reduced $d$+$p_z$ manifold (dashed) and with the two effective conduction orbitals (solid):
-the sharp edge above $E_F$ is an artifact of the truncated basis. (b) Resulting $ZT(\mu)$ on
-the same phonon background: the apparent peak $ZT\simeq0.33$ collapses to $0.063$.}
+the empty majority window above $E_F$ is an artifact of the truncated basis. (b) Resulting
+$ZT(\mu)$ on the same phonon background: the apparent peaks at the truncation edge ($0.26$)
+and at the unshunted minority onset ($0.33$) collapse to a global $0.063$.}
 \label{fig:manifold}
 \end{figure}
 
@@ -436,9 +449,10 @@ Figure~\ref{fig:spin}(a) shows the Seebeck coefficient of the zigzag $N=14$ ribb
 half-metallic window the majority background is metallic and multichannel, so $S$ is small and
 oscillatory ($|S|\lesssim50$~$\mu$V/K at $300$~K) and changes sign as subband edges cross the
 Fermi window. Two features stand out. The larger is at $\mu-E_F\simeq+0.5$~eV, where the
-subbands of the second conduction band begin to enter: the majority mode count steps from
-$6$ to $9$ within $0.25$~eV, giving $S\simeq-48~\mu$V/K with the minority channel still
-closed, and the global maximum of the power factor and $ZT$ [Fig.~\ref{fig:zt}]. The second is
+subbands of the second conduction band begin to enter: the majority mode count rises from
+$3$ to $9$ between $+0.43$ and $+0.49$~eV, giving $S\simeq-48~\mu$V/K with the minority
+channel still closed and the global maximum of $ZT$; the power factor there
+($0.58$~pW/K$^2$) is within $2\%$ of its global maximum at $+0.71$~eV [Fig.~\ref{fig:zt}]. The second is
 the minority edge at $\simeq+1.05$~eV, where the sharp minority onset supplies a large partial
 thermopower ($S_\downarrow\simeq-150~\mu$V/K) against the smooth majority background
 ($S_\uparrow\simeq+9~\mu$V/K); because the majority channel now carries $13$ modes there, the
@@ -478,9 +492,10 @@ polarization.}
 \begin{figure}[t]
 \centering
 \includegraphics[width=\columnwidth]{fig5_zt.png}
-\caption{(a) Power factor $S^2G$ versus doping at $300$~K (zigzag $N=14$): the maximum sits at
-the onset of the second conduction band near $+0.7$~eV, inside the fully polarized window;
-the minority edge near $+1.1$~eV is a weaker secondary feature. (b) $ZT$ versus doping for the
+\caption{(a) Power factor $S^2G$ versus doping at $300$~K (zigzag $N=14$): a broad maximum
+spans the second-conduction-band subbands, $0.58$~pW/K$^2$ at their onset ($+0.47$~eV, where
+$ZT$ peaks) and $0.59$~pW/K$^2$ at $+0.71$~eV, inside the fully polarized window; the
+minority edge near $+1.05$~eV is a weaker secondary feature. (b) $ZT$ versus doping for the
 $\tfrac12\times$/$1\times$/$2\times$ $\kappa_{\rm ph}$ bracket.}
 \label{fig:zt}
 \end{figure}
@@ -498,32 +513,38 @@ $[-1.5,+1.2]$~eV. Three observations replace the naive design rules that the red
 suggested.
 
 (i)~Every global optimum lies inside the fully spin-polarized window. For five of the six
-geometries it sits at the onset of the second conduction band ($\mu-E_F=+0.47$ to
+geometries it sits on a subband edge of the second conduction band ($\mu-E_F=+0.47$ to
 $+0.71$~eV), where new majority subbands enter while the minority channel is still closed,
 and reaches $ZT=0.06$--$0.10$; the minority edge ($+1.05$ to $+1.1$~eV), which dominated in a
 model with a single conduction band, is now a secondary feature ($ZT\lesssim0.02$ for zigzag
 $N=14$) because the second band supplies a large majority background there. Heavy electron
 doping past the minority edge is therefore never the optimum, and the thermoelectric optimum
-and full spin polarization coincide for every width and edge.
+and full spin polarization coincide for every width and edge. The margin is about $0.3$~eV:
+lowering the minority edge by $0.2$~eV leaves every optimum in place and at least $99.6\%$
+polarized at $300$~K, whereas a $0.3$~eV shift lets partly polarized peaks at the minority
+onset take over (Sec.~\ref{sec:scope}).
 
 (ii)~$ZT$ does not grow with width: it is non-monotonic for both edges ($0.09$, $0.06$, $0.08$
 for zigzag $N=8,14,20$; $0.15$, $0.07$, $0.10$ for armchair), because the subband spacing that
 sharpens the transmission shrinks with $W$ while $\kappa_{\rm ph}$ grows with $W$, and the
-two effects do not cancel monotonically. At matched width the armchair ribbon is better for
-$N=8$ and $N=20$ and slightly worse for $N=14$.
+two effects do not cancel monotonically. At equal $N$ the armchair ribbon is better for all
+three widths, most clearly for $N=8$ ($0.145$ versus $0.093$).
 
 (iii)~The narrow armchair $N=8$ ribbon remains the best geometry, shown in full in
 Fig.~\ref{fig:armchair8}. Its optimum, $ZT=0.145$ $[0.082$--$0.235]$ at $300$~K, sits on a
 majority subband feature at $\mu-E_F=-0.34$~eV ($S=-114$~$\mu$V/K), on the hole-doped side
-and far from both conduction-band features. It is therefore insensitive to
-$\Delta_{\rm ex}$ and to all nine conduction-orbital parameters, and the $\pm10\%$ sweep used
+and far from both conduction-band features. This feature changes by at most $4\%$ when
+$\Delta_{\rm ex}$ or any conduction-orbital parameter is varied, and the $\pm10\%$ sweep used
 for the zigzag benchmark gives a strongly asymmetric spread: the optimum falls at most $7\%$
-below the baseline ($0.135$), rises to at most $0.27$ (largest excursion $V_{pd\pi}$), and
-stays inside the polarized window for every variation (for $\Delta_{\rm ex}{-}10\%$ and
-$\varepsilon_{c_1}{+}10\%$ the second-conduction-band optimum at $\simeq+0.7$~eV overtakes it,
-still fully polarized). Its $ZT$ decreases with temperature ($0.098$ at $500$~K, $0.088$ at
-$700$~K), as do the second-conduction-band optima of the wider ribbons; only the narrowest
-zigzag ribbon gains with temperature ($0.093\to0.106$ at $700$~K).
+below the baseline ($0.135$) and rises to at most $0.27$ (largest excursion $V_{pd\pi}$). In
+two variations a conduction-side peak overtakes it: for $\varepsilon_{c_1}{+}10\%$ a
+second-conduction-band peak ($0.148$ at $+0.75$~eV, fully polarized), and for
+$\Delta_{\rm ex}{-}10\%$, which lowers the minority edge to $+0.72$~eV, a peak at the minority
+onset ($0.209$ at $+0.71$~eV) that is only $68\%$ polarized; the hole-side optimum itself
+stays at $0.145$ in both. Its $ZT$ decreases with temperature ($0.098$ at $500$~K, $0.089$ at
+$700$~K), as do the conduction-side optima of the wider ribbons except zigzag $N=14$, which is
+nearly flat ($0.063$, $0.067$, $0.062$ at $300$, $500$, $700$~K); only the narrowest zigzag
+ribbon gains with temperature ($0.093\to0.106$ at $700$~K).
 
 How much of this picture survives the model's known $\pi^*$ systematic? Recomputing every
 entry of Table~\ref{tab:results} in the $\pi^*$-pinned variant of Sec.~\ref{sec:results}
@@ -568,7 +589,7 @@ armchair & 20 & 31.7 & 1.69 & 0.100 [0.074--0.121] ($+0.70$) & 0.053 \\
 \includegraphics[width=\textwidth]{fig6_designrules.png}
 \caption{Width, edge and temperature dependence. (a) $ZT$ versus doping for zigzag widths
 $N=8,14,20$ at $300$~K, each with its own $\kappa_{\rm ph}(W)$. (b) Peak $ZT$ versus width for
-both edge types. (c) Zigzag versus armchair at matched width $N=14$. (d) $ZT(T)$ at the $300$-K
+both edge types. (c) Zigzag versus armchair at equal $N=14$. (d) $ZT(T)$ at the $300$-K
 optimal doping for the three zigzag widths (plotted from $100$~K, where the production grid
 is converged to $<1\%$, Sec.~2.3).}
 \label{fig:designrules}
@@ -633,7 +654,7 @@ $\theta(x)=2\arctan e^{(x-x_0)/\delta}$ (width $\lambda=\pi\delta$) interpolates
 antiparallel leads, with the local exchange field
 $\tfrac{1}{2}\,\Delta_{\rm orb}\,\hat n(x)\cdot\boldsymbol\sigma$ acting with magnitude
 $\Delta_{\rm ex}$ on the Cr $d$ orbitals and $\Delta^c_\downarrow=\Delta_{\rm ex}$ on the
-effective conduction orbital (N $p_z$ carries no exchange field). The scattering region
+effective conduction orbitals $c_1,c_2$ (N $p_z$ carries no exchange field). The scattering region
 contains the wall core $\pm4\delta$ plus two lead periods of margin on each side; enlarging
 it by four further periods changes $T_{\rm AP}(E_F)$ by less than $10^{-6}$ at
 $\lambda=10$~\AA\ and by less than $3\times10^{-4}$ (fractionally $3\times10^{-5}$) at
@@ -641,8 +662,11 @@ $\lambda=30$~\AA, the widest-wall (longest-tail) case. Figure~\ref{fig:wall} sho
 collapse rather than a threshold: the exact zero exists only at the collinear point
 $\lambda=0$. Even the sharpest possible texture ($\lambda\simeq1$~\AA) leaks
 $T_{\rm AP}\simeq0.6$ (an ON/OFF ratio of order ten), half transparency is reached at
-$\lambda_{1/2}\simeq9$~\AA, and walls wider than $\sim$$3$~nm are fully transparent
-($T_{\rm AP}\to T_{\rm P}$, the adiabatic limit, reached exactly in our numerics). The
+$\lambda_{1/2}\simeq9$~\AA, and walls wider than $\sim$$3$~nm transmit $\gtrsim99\%$ of
+$T_{\rm P}$ at $E_F$, approaching the adiabatic limit $T_{\rm AP}\to T_{\rm P}$, which our
+numerics reach to within $0.2\%$ for $\lambda\gtrsim9$~nm. At the conduction-band energies of
+the thermoelectric optima the approach is slower ($T_{\rm AP}\simeq0.76\,T_{\rm P}$ at $3$~nm
+for $+0.5$~eV), but the leakage is large there too. The
 crossover scale is consistent with the mistracking length
 $\hbar v_F/\Delta_{\rm ex}\simeq0.5$~\AA\ (majority Fermi velocity $v_F\approx3\times10^5$~m/s
 of the fitted $\pi^*$ band) times the number of exchange precessions accumulated across the
@@ -673,10 +697,11 @@ magnet the wall-width parameter is $\delta_{\rm int}\simeq a\sqrt{J_1/2K}$, so w
 $J_1\simeq10$--$12$~meV~\cite{CrNdmrg2023} (or Ref.~\cite{Modarresi2019}'s own
 $J=7.8$~meV) the intrinsic width is
 $\lambda_{\rm int}=\pi\delta_{\rm int}\simeq2.4$--$3$~nm. This is an order-of-magnitude
-estimate, but it lands comparable to (roughly $0.8$--$1.0\times$) the full-transparency scale
-of Fig.~\ref{fig:wall} and a factor of $\sim$3 above $\lambda_{1/2}$. An unconstrained wall in
-$h$-CrN therefore transmits at least $T_{\rm AP}\simeq0.95\,T_{\rm P}$ at the lower end of this
-range and reaches the exact adiabatic limit at the upper end, so the constriction and spacer
+estimate, but it lands comparable to (roughly $0.8$--$1.0\times$) the $\sim$$3$~nm
+near-transparency scale of Fig.~\ref{fig:wall} and a factor of $\sim$3 above
+$\lambda_{1/2}$. An unconstrained wall in $h$-CrN therefore transmits
+$T_{\rm AP}\simeq0.95$--$0.99\,T_{\rm P}$ at $E_F$ across this range ($0.70$--$0.76\,T_{\rm P}$
+at $+0.5$~eV), so the constriction and spacer
 geometries are not merely prudent but required by the published exchange and anisotropy
 scales; a dedicated noncollinear DFT+$U$+SOC determination of the full angular dependence of
 $K$ would refine, but is unlikely to overturn, this conclusion.
@@ -752,17 +777,28 @@ published band structure (digitization uncertainty $0.1$--$0.3$~eV), so the resu
 semi-quantitative. Varying every model parameter by $\pm10\%$
 (Fig.~\ref{fig:sensitivity}) moves the peak $ZT$ of the zigzag $N=14$ ribbon between $0.029$
 and $0.114$ about the baseline $0.063$ (for the armchair $N=8$ optimum the same protocol gives
-the spread quoted in Sec.~\ref{sec:widths}). The order of magnitude
+the spread quoted in Sec.~\ref{sec:widths}). All but one variation keep the optimum fully
+polarized. The exception, $\Delta_{\rm ex}{-}10\%$, lowers the minority edge by $0.36$~eV to
+$+0.67$~eV, below the second-conduction-band feature at $+0.71$~eV, so the top of the spread
+($0.114$) is a peak at the minority onset with $P_G=56\%$; the fully polarized optimum of that
+variant stays at $0.063$ ($+0.47$~eV), and restricted to fully polarized optima the spread is
+$[0.029,0.094]$. A shift of the minority edge within the digitization accuracy is harmless:
+lowering it rigidly by $0.2$~eV leaves every optimum of Table~\ref{tab:results} at the same
+doping and at least $99.6\%$ polarized at $300$~K ($92\%$ at $700$~K), whereas a $0.3$~eV
+shift lets partly polarized peaks ($P_G\simeq85$--$89\%$) take over in the five
+conduction-side geometries (script and data in the repository). The order of magnitude
 ($ZT\sim10^{-2}$--$10^{-1}$) and the qualitative landscape (a modest multichannel background
-inside the fully polarized window and a dominant peak at the onset of the second conduction
-band) are robust, whereas individual peak heights are not converged beyond a factor of
-$\sim$2; the largest excursions come from $\Delta_{\rm ex}$, from the second-shell hopping
-$t_{c22}$ of the second conduction orbital, which sets the position of that band's onset, and
-from $V_{pd\pi}$. The $\pm10\%$ variation is a uniform convention, not a propagated error bar:
-for the on-site energies it corresponds to $0.2$--$0.35$~eV, comparable to the digitization
-uncertainty, but for $\varepsilon_{c_1}$ it is only $\pm0.12$~eV and for the weakest hoppings
-a few meV, smaller than their real uncertainties, and correlated variations along the
-least-squares covariance are not explored.
+inside the fully polarized window, with the dominant peaks on subband edges of the second
+conduction band, or on the hole-doped side for armchair $N=8$) are therefore robust, whereas
+individual peak heights are uncertain by a factor of $\sim$2 either way; for zigzag $N=14$
+the largest excursions come from $\Delta_{\rm ex}$, from the second-shell hopping $t_{c22}$ of
+the second conduction orbital, which sets the position of the $c_2$ minimum, and from
+$t_{c11}$ and $\varepsilon_{c_1}$ ($V_{pd\pi}$ dominates for armchair $N=8$). The $\pm10\%$
+variation is a uniform convention, not a propagated error bar: for the on-site energies and
+the exchange splitting it corresponds to $0.12$--$0.36$~eV, comparable to the digitization
+uncertainty, but for the weakest hoppings to a few meV, smaller than their real
+uncertainties, and correlated variations along the least-squares covariance are not
+explored.
 The one parameter outside the sweep, the minority shift $\Delta^c_\downarrow$ of the effective
 conduction orbitals (assumed equal to $\Delta_{\rm ex}$), has no effect: varying it by $\pm10\%$
 leaves every optimum of the zigzag $N=14$ and armchair $N=8$ ribbons unchanged to four digits,
@@ -791,17 +827,18 @@ that phase coherence itself is an idealization at high temperature: electron--ph
 dephasing shortens the coherent mean free path well before $700$~K in a real device, so the
 $ZT(T)$ trend above room temperature is best read as the coherent-transport projection rather
 than a quantitative prediction for a partially incoherent device at those temperatures.
-Finally, transport at $\mu-E_F\simeq+1$~eV assumes a rigid band structure under heavy
-electron doping or gating, an approximation that a self-consistent treatment of screening
-would refine.
+Finally, the electron-doped optima ($\mu-E_F\simeq+0.5$--$0.7$~eV) assume a rigid band
+structure under heavy gating or doping, an approximation that a self-consistent treatment of
+screening would refine.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.85\columnwidth]{fig7_sensitivity.png}
 \caption{Sensitivity of the peak figure of merit (zigzag $N=14$, $300$~K, global optimum) to a
 $\pm10\%$ variation of each model parameter, including those of the effective conduction
-orbitals. The spread is $[0.029,0.114]$ about the baseline $0.063$: the order of magnitude is
-robust; individual peak heights are semi-quantitative. The $\pm10\%$ variation is a uniform
+orbitals. The spread is $[0.029,0.114]$ about the baseline $0.063$; its upper end
+($\Delta_{\rm ex}{-}10\%$) is the only optimum that is not fully spin polarized ($P_G=56\%$,
+see text). The order of magnitude is robust; individual peak heights are semi-quantitative. The $\pm10\%$ variation is a uniform
 convention, not a propagated error bar (see text).}
 \label{fig:sensitivity}
 \end{figure}
@@ -815,11 +852,12 @@ nanoribbons, using a tight-binding plus Landauer approach parametrized entirely 
 first-principles data. The paper makes four claims. (i)~As thermoelectrics, pristine CrN
 nanoribbons are modest: $ZT\simeq0.06$--$0.15$ at $300$~K across widths and edges
 ($\kappa_{\rm ph}$ brackets in Table~\ref{tab:results}). Once both majority conduction bands
-are resolved, every global optimum lies inside the fully spin-polarized window, at the onset
-of the second conduction band ($\mu-E_F\simeq+0.5$--$0.7$~eV) for five geometries and on the
+are resolved, every global optimum lies inside the fully spin-polarized window, on subband
+edges of the second conduction band ($\mu-E_F\simeq+0.5$--$0.7$~eV) for five geometries and on the
 hole-doped side for the narrow armchair $N=8$ ribbon, which has the best figure of merit,
 $ZT=0.15$ $[0.08$--$0.24]$ (Fig.~\ref{fig:armchair8}); the minority edge is never the
-optimum, and this landscape is unchanged by the model's one known systematic misfit.
+optimum, and this landscape is unchanged by the model's one known systematic misfit and by a
+$0.2$~eV shift of the minority edge.
 (ii)~As spin filters they are outstanding: the minority channel is gapped over nearly
 $4$~eV. The half-metallicity itself, however, confirms the first-principles and semiclassical
 predictions~\cite{Kuklin2017,CrNdmrg2023}; what this work adds is its phase-coherent
@@ -830,11 +868,11 @@ polarization.
 (iii)~The same gap powers a thermally driven spin valve with an \emph{exact} collinear OFF
 state. The noncollinear domain-wall calculation shows that any continuous magnetization
 texture leaks (half transparency already at $9$~\AA). The published exchange and
-anisotropy values place the intrinsic wall width at $2.4$--$3$~nm, where the wall is at least $95\%$
-transparent and reaches the exact adiabatic limit at the upper end of that range;
+anisotropy values place the intrinsic wall width at $2.4$--$3$~nm, where the wall transmits
+$95$--$99\%$ of the parallel conductance at $E_F$ ($70$--$76\%$ at $+0.5$~eV);
 geometrically constrained or spacer-separated junctions are therefore required, not merely preferred. (iv)~Methodologically, the minimal
-orbital manifold suggested by the states at $E_F$ fabricates a sharp band edge and a fivefold
-overestimate of $ZT$ ($0.33\to0.063$ for the zigzag $N=14$ ribbon). The
+orbital manifold suggested by the states at $E_F$ fabricates an empty majority window bounded
+by sharp transmission edges and a fivefold overestimate of $ZT$ ($0.33\to0.063$ for the zigzag $N=14$ ribbon). The
 artifact is invisible to parameter-sensitivity analysis, a concrete caution for minimal-basis
 nanoribbon thermoelectric studies in general. Supporting these claims, the self-consistent
 mean-field treatment reproduces the magnetic edges and, semi-quantitatively, the dominant

@@ -60,6 +60,13 @@ def main():
         axs[1].plot(MU, zt, color=col, ls=ls, lw=1.8, label=lab)
         i = int(np.argmax(zt))
         print(f"{lab:18s}: peak ZT(300K) = {zt[i]:.4f} at mu-E_F = {MU[i]:+.2f} eV")
+        if d is red:
+            # the empty majority window has two edges: the truncation edge near +0.19 eV
+            # and the unshunted minority onset; report the first and the polarization at the peak
+            k = int(np.argmax(np.where(MU < 0.5, zt, -1.0)))
+            pg = (up["G"][i] - dn["G"][i]) / (up["G"][i] + dn["G"][i])
+            print(f"{'':18s}  truncation-edge peak ZT = {zt[k]:.4f} at {MU[k]:+.2f} eV; "
+                  f"P_G at the global peak = {100 * pg:+.0f}%")
     axs[1].axvline(0, color="0.7", lw=0.6, ls=":")
     axs[1].set_xlabel(r"$\mu - E_F$ (eV)")
     axs[1].set_ylabel(r"$ZT$ (300 K)")

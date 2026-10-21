@@ -1,7 +1,7 @@
 Highlights
 (Elsevier: 3-5 bullet points, each <= 85 characters including spaces)
 
-- First thermoelectric (Landauer) study of CrN nanoribbons, no ab-initio input.
+- First thermoelectric (Landauer) study of CrN nanoribbons, no new ab-initio runs.
 - Minority channel gapped over ~4 eV: transport is 100% spin-polarized when gated.
 - ZT = 0.06-0.15 at 300 K, every optimum inside the fully spin-polarized window.
 - A minimal orbital basis fabricates a sharp edge and overestimates ZT fivefold.

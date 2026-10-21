@@ -12,6 +12,70 @@ results_deck_url: https://claude.ai/code/artifact/446f6e00-3fc0-4fcf-8cad-43edf8
 
 ## 📥 AI Handoff & Next Actions
 
+- [x] **Project health check — done 2026-10-21:** Table 2, π*-pinned, sensitivity (zigzag N=14
+      [0.029, 0.114]; armchair N=8 [0.135, 0.267]) and wall numbers in manuscript.tex all match
+      `data/*.txt`; build clean (28 pp, 0 undefined); master in sync with origin. Novelty
+      re-check: Crossref/OpenAlex/S2 CLEAN (only the known DMRG PRB 2023 + Linköping 2025
+      thesis); **arXiv not checked** (HTTP 429 from the script and the API).
+- [x] **Release tag refreshed — done 2026-10-21:** `v1.0-submission` (b0d7756) predated the CB2
+      model. `v1.1-submission` now tags the commit that carries the 2026-10-21 fixes and is
+      pushed. The data statement ("a tagged release records the exact version") is accurate
+      again. Re-tag if the manuscript numbers change before upload.
+- [ ] Highlight 1 says "no ab-initio input", but the model is parametrized from published
+      ab-initio bands. Reword to "no new ab-initio calculations". Abstract is 217 words (round-2
+      target was ~200).
+- [ ] `audio_deck/` (141 MB, pre-CB2) is untracked: gitignore or delete it.
+- [x] **Cross-model review of the CB2 rewrite — done 2026-10-21:** Kimi, Antigravity,
+      DeepSeek-v4-pro, Codex (gpt-5.6-terra) + Fable 5 second-pass verifier →
+      `cross_model_review_2026-10-21.md`. Verdict: major revisions, but every fix is text-level
+      plus one figure regeneration. 4 verified majors:
+      1. §2.2 still says the optimum is pinned to the minority edge (all four referees).
+      2. Δ_ex −10 % breaks "every optimum fully polarized": armchair N=8 0.209 @ +0.71, P_G 68 %;
+         zigzag N=14 0.114 @ +0.71, P_G 56 %. Line 524 says "still fully polarized", which is
+         false. The claim holds (P_G ≥ 99.6 % at 300 K) for a minority edge within the stated
+         0.1–0.2 eV.
+      3. §3.2 credits the spurious 0.33 to the +0.19 eV edge; it is actually the unshunted
+         minority onset at +1.03 eV. This wording predates the rewrite.
+      4. Wall numbers are E_F-only ("exact limit at 3 nm" is really 99.2 %; at +0.5 eV ≈ 77 %),
+         and `scripts/fig_wall.py:64` has a stale `TP[0.5]=5`, should be 9.
+      Plus about 14 minors (K pocket −0.20 → −0.25, 0.088 → 0.089, design rule (ii) armchair
+      N=14, PF vs ZT peak, screening caveat at +1 eV, …).
+- [x] **2026-10-21 cross-model fixes implemented — done 2026-10-21:**
+      - New `scripts/polarization_margin.py` → `data/polarization_margin.txt`.
+        - Only Δ_ex −10 % gives a partly polarized optimum, in both sweeps. The fully polarized
+          zigzag N=14 spread is [0.029, 0.094]; armchair N=8 is unchanged.
+        - Lowering the minority edge rigidly by 0.2 eV: every Table-2 optimum stays at the same
+          μ with P_G ≥ 99.6 % (300 K) and ≥ 92 % (700 K).
+        - Lowering it by 0.3 eV: partly polarized peaks (P_G 85–89 %) take over in the five
+          conduction-side geometries.
+      - `fig_wall.py` now reads T_P from the production T(E). Its +0.5 eV reference line moved
+        5 → 9, the figure was regenerated, and `wall_sweep.txt` now records T_AP/T_P at
+        λ_int: 0.955/0.988 at E_F, 0.703/0.756 at +0.5 eV.
+      - `fig_manifold_comparison.py` now also reports the truncation-edge peak (0.256 at +0.19 eV)
+        and P_G = −100 % at the 0.33 peak.
+      - manuscript.tex edits:
+        - Abstract margin clause.
+        - §2.1: defines "second conduction band" by c₂ character; c₂ subbands enter at
+          +0.45–0.50 eV in all six ribbons.
+        - §2.2: the "pinned / tracks one-for-one" leftover rewritten.
+        - K pocket −0.25 eV.
+        - Fig. 2 caption now names CB1 and CB2.
+        - §3.2: both reduced-manifold peaks attributed correctly.
+        - §3.3: PF and ZT maxima separated; mode count 3 → 9 at +0.43–0.49 eV.
+        - Fig. 5 caption.
+        - §3.4: (i) margin sentence; (ii) armchair better at all N; (iii) Δ_ex/ε_c1
+          variants stated, 0.089 at 700 K, temperature trend.
+        - "c₁, c₂" plural in the wall paragraph; wall numbers 95–99 % at E_F, 70–76 % at +0.5 eV.
+        - §3.7: sensitivity paragraph rewritten.
+        - Screening caveat now refers to +0.5–0.7 eV.
+        - Fig. 6 and Fig. 7 captions.
+        - Conclusions (i), (iii), (iv).
+      - Highlight 1 now says "no new ab-initio runs" (82 characters). README updated to the
+        two-band model.
+      - Build: 29 pp, 0 undefined, no errors; abstract ≈ 227 words.
+- [ ] Abstract is ≈ 227 words (round 2 aimed for ~200); trim if Physica E enforces a limit.
+- [ ] `audio_deck/` is still untracked (141 MB, pre-CB2), and the audio deck is now two
+      revisions behind.
 - [x] **Language polish pass (2026-09-02):** `/polish-manuscript` on manuscript.tex →
       `manuscript/manuscript_polished.tex` + `manuscript/POLISH_REPORT_2026-09-02.md`.
       **Original untouched; not applied in place** — adopt after the author's own read:
@@ -300,7 +364,9 @@ phonons from Modarresi et al., *PRApplied* 11, 064015 (2019)
 - **Methodological caution (a paper contribution):** the minimal d+p_z manifold misses the
   majority conduction bands and fabricates ZT ≈ 0.33 — a fivefold artifact (0.33 → 0.063)
   that parameter sensitivity cannot detect.
-- Robustness: ±10 % on all 15 parameters → [0.029, 0.114] about 0.063 (zigzag N=14);
+- Robustness: ±10 % on all 15 parameters → [0.029, 0.114] about 0.063 (zigzag N=14; the 0.114
+  top is Δ_ex −10 %, the only partly polarized optimum, P_G 56 %; fully polarized spread
+  [0.029, 0.094]); minority edge lowered by 0.2 eV → every optimum still ≥ 99.6 % polarized;
   π*-pinned variant changes no optimum; 3-mode phonon floor +0.3–3.5 %; p-type side ≤ 0.03.
 
 ---

@@ -61,7 +61,9 @@ def main():
         np.savez(cache, deltas=DELTAS, lambdas=np.pi * DELTAS, energies=np.array(ENERGIES), T=T)
 
     lam = np.pi * DELTAS
-    TP = {0.0: 8.0, 0.5: 5.0}
+    # parallel-configuration (adiabatic-limit) reference from the production collinear T(E)
+    dP = np.load(os.path.join(DATADIR, "zigzag_N14_TE.npz"))
+    TP = {E: float(np.interp(E, dP["E"], dP["T_up"] + dP["T_dn"])) for E in ENERGIES}
     hbar_vF = fermi_velocity(p)
     ell_mt = hbar_vF / p.delta_ex
     # crossover: lambda where T = T_P/2 at E_F
@@ -100,6 +102,11 @@ def main():
         for dl, row in zip(DELTAS, T):
             fh.write(f"delta {dl:6.2f}  lambda {np.pi*dl:7.2f}  " +
                      "  ".join(f"T({E:+.1f})={t:.4e}" for E, t in zip(ENERGIES, row)) + "\n")
+        # transparency T_AP/T_P at the intrinsic wall width lambda_int = 2.4-3 nm (Sec. 3.5)
+        for L in (24.0, 30.0):
+            fh.write(f"# T_AP/T_P at lambda={L:.0f} A: " +
+                     "  ".join(f"E{E:+.1f}: {np.interp(L, lam, T[:, j]) / TP[E]:.3f} (T_P={TP[E]:.0f})"
+                               for j, E in enumerate(ENERGIES)) + "\n")
 
 
 if __name__ == "__main__":
