@@ -1,5 +1,7 @@
 # Novelty check log — CrN nanoribbon thermoelectric
 
+**Status (2026-10-21): CLEAN-pending-full-text** — deep re-check, every source; no collision. Two low-risk CrN papers unread (paywalled, VPN down). See `## Re-check 2026-10-21` at the end.
+
 **Date:** 2026-07-14 · **Tool:** `lit-gap-toolkit/check_novelty.py` (Crossref + OpenAlex + arXiv;
 Semantic Scholar was HTTP-429 rate-limited, so verdict rests on the other three, which agreed).
 
@@ -136,3 +138,89 @@ this IP even after 10 min of backoff), so arXiv was checked via the arxiv.org se
 instead: **"CrN nanoribbon" → exactly 1 result** (arXiv:2408.06754, the DMRG paper);
 **"CrN nanoribbon thermoelectric" → 0 results**. The "first thermoelectric / phase-coherent
 Landauer study of CrN nanoribbons" claim stands on all four databases as of submission.
+
+---
+
+## Re-check 2026-10-21 · VERDICT: CLEAN-pending-full-text (deep, every source)
+
+> First thermoelectric-transport study of hexagonal (honeycomb) CrN nanoribbons: tight-binding +
+> Landauer (Kwant) Seebeck / power factor / ZT of half-metallic zigzag and armchair h-CrN ribbons,
+> plus spin caloritronics (spin-resolved thermopower, thermally driven spin valve, domain-wall leakage).
+
+**Keyword sweep** — `check_novelty.py --rows 10`, Crossref + OpenAlex + Semantic Scholar + arXiv
+(arXiv lane worked this time; S2 returned HTTP 429 on the first query only):
+`"CrN nanoribbon thermoelectric"`, `"CrN nanoribbon Landauer"`, `"CrN nanoribbon"`,
+`"hexagonal CrN monolayer thermoelectric"`, `"CrN monolayer Seebeck"`,
+`"CrN nanoribbon spin caloritronics"`. Every CrN-nanoribbon hit is the DMRG paper
+(PRB 107, 205418; arXiv:2408.06754). CrN thermoelectrics = films/bulk only (Quintela 2009,
+ammonia-annealed films 2024, Linköping alloy-film thesis 2025). Monolayer CrN hits are magnetism
+only (Physica A 2023 ML spin model; Chin. Phys. B 2021; PRB 2025 flexomagnetism; Molecules 2024).
+Nanoribbon spin caloritronics is populated for other materials only (graphene, silicene, MoS2,
+antimonene — incl. Physica E 2020 — Janus MoSeTe 2025, silicene 2026).
+
+**Semantic sweep — Exa** (`category: research paper`, 10 results each, total **$0.028**):
+`"Thermoelectric transport in hexagonal CrN nanoribbons"`;
+`"Spin-dependent Seebeck effect and figure of merit of half-metallic transition-metal nitride nanoribbons from tight-binding Landauer transport"`;
+`"Thermoelectric properties of two-dimensional honeycomb chromium nitride monolayer"`;
+`"Thermally driven spin valve in a half-metallic nanoribbon with a magnetic domain wall"`.
+No collision. New format-adjacent 2026 work: h-NbN2H2 monolayer + nanoribbon spin
+thermoelectrics (DFT+NEGF, JPCC 2026, 10.1021/acs.jpcc.6c01014); TB+NEGF electronic ZT of
+Ti3C2O2/Sc3C2F2/Zr3C2O2 MXene nanoribbons (10.1016/j.chphma.2026.04.001). Neither is CrN.
+
+**Independent second opinions.** FastTrack `run_duplication_test` (claim as scope, 15 NN + semantic
+additions; all ~30 records screened): no CrN-ribbon or CrN-monolayer thermoelectric paper; surfaced
+Muntini 2022 (below) and a TI-nanoribbon domain-wall thermoelectric PRB 2020 (10.1103/physrevb.102.245412).
+FastTrack `check_gap_saturation("thermoelectric properties of CrN nanoribbons")`: 0 records 2016–2026.
+Consensus `"thermoelectric properties of hexagonal chromium nitride CrN monolayer or nanoribbon"`:
+3 hits, all CrN films. CORE `"CrN nanoribbon"`: only the DMRG paper (+ coatings noise).
+scholar-search Google Scholar `"CrN nanoribbon" OR "CrN nanoribbons"`: empty (lane unreliable, as
+on 2026-10-21 morning). WebSearch (extended) `CrN nanoribbon thermoelectric OR Seebeck OR "spin
+caloritronics" 2026`: no CrN result. **Scopus: not checked** (APIKEY_INVALID off the UCR VPN).
+
+**Lineage probe (one hop, OpenAlex):**
+- *Citations of Kuklin 2017* (W2552671966, 81 cites, all screened): magnetism / 2D-magnet reviews /
+  CrN heterobilayers / CrP nanoribbon half-metal (PCCP 2023) / CrN-GaN spin valve — no transport
+  or thermoelectric study of CrN ribbons.
+- *Citations of the DMRG paper* (W4378214596): **0** in OpenAlex and 0 in Semantic Scholar — nobody
+  has built on the CrN-nanoribbon line yet.
+- *Citations of Modarresi 2019 CrN/P/CrN spin valve* (W2955332336, ~46): 2D spin valves / MTJs, none
+  thermoelectric on CrN.
+- *Citations of Muntini 2022* (W4200631183, 22): Prayitno/Hasdeo group 2D-magnet thermoelectrics
+  (NiBr2, MBr2, MnF3, FeI2) — none CrN, none ribbon.
+
+**Full text read (Step 5):**
+- Muntini et al., PRMaterials 6, 064010 (2022), 10.1103/physrevmaterials.6.064010 — DFT + Boltzmann
+  (energy-dependent τ) thermoelectrics of monolayer CrX, **X = P, As, Sb, Bi only**; antiparallel
+  spin-valve setup raises ZT. Full text: no CrN, no nitride, no ribbon, no Landauer. *Not a
+  collision — but the closest conceptual prior art for "half-metal + antiparallel spin valve +
+  thermoelectric"; not cited in the manuscript.*
+- Rahangiar et al., PRB 110, 035150 (2024), 10.1103/physrevb.110.035150 — model half-metal
+  band-structure optimization of ZT and the spin-valve enhancement factor (Cahaya, Tretiakov & Bauer,
+  IEEE Trans. Magn. 51 (2015)); conclusion: the spin valve helps only poor-TE gapless half-metals; a
+  gap is needed for large ZT. Full text: no CrN, no ribbon, no Landauer. *Supports our "modest ZT"
+  conclusion; not cited.*
+- Both PDFs in `pdfs/` (git-ignored) and in Zotero collection `crn-nanoribbon-thermoelectric`.
+
+**Verdict: CLEAN-pending-full-text.** No paper computes thermoelectric, Landauer or spin-caloritronic
+transport of CrN nanoribbons (or of the h-CrN monolayer). The "first thermoelectric / phase-coherent
+Landauer study of CrN nanoribbons" claim stands. Capped below plain CLEAN only by the two unread
+papers below, both low risk by abstract.
+
+**ASSUMED (unread, no OA copy; added to Zotero by DOI):**
+- Gong, Tang & Yi, PRB 111, 094441 (2025), 10.1103/physrevb.111.094441 — assumed magnetism only
+  (strain-gradient DMI, skyrmions, domain walls in monolayer CrN; no transport). Relevant to our
+  wall paragraph (it reports DMI and domain-wall textures in monolayer CrN).
+- Xue et al., 10.1063/5.0165709 (2023) — assumed DFT band-structure/DOS spin-valve analysis of a
+  vertical CrN/GaN/CrN vdW stack; no thermoelectrics, no ribbons.
+Close them with the UCR VPN (`/fetch-paper`), then upgrade to CLEAN.
+
+**Citation gaps found (author's call):** Muntini 2022 and Cahaya 2015 (half-metal antiparallel
+spin-valve thermoelectrics) belong in Sec. 3.5 next to the thermal spin valve, with the distinction
+stated (they use the AP valve to raise ZT in diffusive Boltzmann transport; ours is a ballistic
+ON/OFF switch of charge and heat). Rahangiar 2024 fits the "modest thermoelectric" conclusion.
+Gong 2025 is a candidate for the wall-width paragraph (DMI in monolayer CrN).
+
+**Query traps (new):** `"CrN nanoribbon Landauer"` on Crossref returns Gustav Landauer (anarchist)
+literature; the scholar-search Google Scholar and arXiv lanes return empty even for the known DMRG
+paper (use the toolkit's arXiv leg or arxiv.org directly); FastTrack gap saturation returns 0 for any
+CrN-ribbon phrasing (over-specified, not evidence).

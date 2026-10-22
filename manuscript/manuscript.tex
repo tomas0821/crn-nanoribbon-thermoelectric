@@ -463,7 +463,9 @@ parameter-sensitivity spread is wider, $[0.029,0.114]$ (Sec.~\ref{sec:scope}); t
 brackets measure different things: phonon-model versus electronic-parameter uncertainty. At
 the same doping $ZT$ is $0.067$ at $500$~K and $0.062$ at $700$~K, subject to the
 magnetic-order caveat of Sec.~\ref{sec:scope}. These values are modest: in the coherent ballistic picture, pristine CrN
-nanoribbons are not competitive thermoelectrics. They sit at the level of pristine graphene
+nanoribbons are not competitive thermoelectrics, consistent with the model finding that a
+half-metal needs a band gap, not full spin polarization alone, to reach large
+$ZT$~\cite{Rahangiar2024}. They sit at the level of pristine graphene
 nanoribbons in the same ballistic framework~\cite{OuyangGuo2009}; there, an order-of-magnitude
 enhancement was achieved by edge disorder that suppresses phonons more strongly than
 electrons~\cite{Sevincli2010}. We deliberately do not compute the electronic side of that
@@ -628,8 +630,11 @@ magnetoresistance has been predicted for ferromagnetic graphene nanoribbon
 junctions~\cite{Zeng2011}, thermally driven spin currents for doped zigzag graphene and
 silicene ribbons~\cite{Song2020,Ghanbari2018}, and the magnetization-dependent thermopower
 readout such devices require is experimentally established in magnetic tunnel
-junctions~\cite{Walter2011,Liebing2011}. What the half-metallic gap adds is an \emph{exact}
-OFF state. Consider the same ribbon with the magnetizations of its two halves (and leads)
+junctions~\cite{Walter2011,Liebing2011}. For half-metals, the antiparallel configuration has
+been proposed as a way to raise $ZT$ in diffusive two-current transport~\cite{Cahaya2015}, and
+first-principles Boltzmann calculations find that it raises $ZT$ by up to almost a factor of two
+in monolayer CrAs, CrSb and CrBi~\cite{Muntini2022}. Here it plays a different role: what the
+half-metallic gap adds in the ballistic limit is an \emph{exact} OFF state. Consider the same ribbon with the magnetizations of its two halves (and leads)
 antiparallel, realizable by exchange bias or a local field on one segment. In a collinear
 junction spin is a good quantum number, so each spin species is majority on one side but sits
 inside the minority gap on the other, with no propagating states to transmit into. The
@@ -704,7 +709,9 @@ $T_{\rm AP}\simeq0.95$--$0.99\,T_{\rm P}$ at $E_F$ across this range ($0.70$--$0
 at $+0.5$~eV), so the constriction and spacer
 geometries are not merely prudent but required by the published exchange and anisotropy
 scales; a dedicated noncollinear DFT+$U$+SOC determination of the full angular dependence of
-$K$ would refine, but is unlikely to overturn, this conclusion.
+$K$ would refine, but is unlikely to overturn, this conclusion. The estimate also omits the
+Dzyaloshinskii--Moriya interaction, through which strain gradients modulate domain walls and
+N\'eel skyrmions in monolayer CrN~\cite{Gong2025}.
 
 \begin{figure}[t]
 \centering

@@ -40,6 +40,21 @@ results_deck_url: https://claude.ai/code/artifact/446f6e00-3fc0-4fcf-8cad-43edf8
          and `scripts/fig_wall.py:64` has a stale `TP[0.5]=5`, should be 9.
       Plus about 14 minors (K pocket −0.20 → −0.25, 0.088 → 0.089, design rule (ii) armchair
       N=14, PF vs ZT peak, screening caveat at +1 eV, …).
+- [x] **Deep novelty re-check — done 2026-10-21: CLEAN-pending-full-text.** Toolkit (4 DBs,
+      6 queries, arXiv lane worked), Exa ×4 ($0.028), FastTrack duplication + saturation, Consensus,
+      CORE, Google Scholar, WebSearch, one-hop lineage on Kuklin 2017 / DMRG (0 citing papers) /
+      Modarresi 2019 / Muntini 2022. No CrN nanoribbon (or h-CrN monolayer) thermoelectric or
+      Landauer paper exists. Scopus not checked (VPN down). Details in `NOVELTY_CHECK.md`.
+- [x] **Novelty-check citation gaps closed — done 2026-10-22:** four references added (32 → 36).
+      §3.3 "modest" sentence cites Rahangiar 2024 (a half-metal needs a gap, not just full
+      polarization, for large ZT). §3.5 cites Cahaya 2015 + Muntini 2022 (AP spin valve as a
+      diffusive ZT booster, up to ~2× in CrAs/CrSb/CrBi) and contrasts our ballistic exact-OFF
+      role. Wall paragraph cites Gong 2025 for the omitted DMI (strain gradients modulate walls
+      and Néel skyrmions in monolayer CrN) — abstract-level claim only. Build 30 pp, 0 undefined.
+      Tagged `v1.3-submission`.
+- [ ] **Close the two ASSUMED papers** (Gong 2025, Xue 2023 CrN/GaN spin valve) via UCR VPN
+      `/fetch-paper` → upgrade the verdict to CLEAN. Gong 2025 is now cited (abstract-level
+      sentence in the wall paragraph), so check its full text supports that sentence.
 - [x] **Codex delta check of the fixes — done 2026-10-21:** read-only Codex pass over
       `ad296ec..3e801bd` only. No wrong number, 0 new majors after verification. Two
       Conclusions overclaims (minor): "landscape unchanged" by the 0.2 eV shift (ZT moves ≤2.3 %,
