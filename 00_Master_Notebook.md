@@ -107,7 +107,10 @@ results_deck_url: https://claude.ai/code/artifact/446f6e00-3fc0-4fcf-8cad-43edf8
       - Highlight 1 now says "no new ab-initio runs" (82 characters). README updated to the
         two-band model.
       - Build: 29 pp, 0 undefined, no errors; abstract ≈ 227 words.
-- [ ] Abstract is ≈ 227 words (round 2 aimed for ~200); trim if Physica E enforces a limit.
+- [x] Physica E format limits — checked 2026-10-22: Guide for Authors caps the abstract at
+      250 words (ours 226, no trim needed). Highlights are 78–80 characters each without the
+      "- " bullet, under Elsevier's standard 85-character rule; the excerpt I found did not show
+      Physica E's own highlights wording. Six keywords.
 - [ ] `audio_deck/` is still untracked (141 MB, pre-CB2), and the audio deck is now two
       revisions behind.
 - [x] **Language polish pass (2026-09-02):** `/polish-manuscript` on manuscript.tex →
