@@ -21,9 +21,20 @@ results_deck_url: https://claude.ai/code/artifact/446f6e00-3fc0-4fcf-8cad-43edf8
       model. `v1.1-submission` now tags the commit that carries the 2026-10-21 fixes and is
       pushed. The data statement ("a tagged release records the exact version") is accurate
       again. Re-tag if the manuscript numbers change before upload.
-- [ ] Highlight 1 says "no ab-initio input", but the model is parametrized from published
-      ab-initio bands. Reword to "no new ab-initio calculations". Abstract is 217 words (round-2
-      target was ~200).
+- [x] Highlight 1 says "no ab-initio input", but the model is parametrized from published
+      ab-initio bands. Reword to "no new ab-initio calculations". — confirmed 2026-10-22:
+      highlights.txt already reads "no new ab-initio runs"; abstract 226/250 words.
+- [x] **Generative-AI declaration — done 2026-10-22:** Elsevier-template section added before
+      the references (Claude used for code development, drafting and language editing; authors
+      reviewed and take full responsibility), wording approved by the author. Cover letter date
+      1 Aug → 22 Oct 2026 (update again if submitting later). Build 30 pp, 0 undefined. Tagged
+      `v1.4-submission`.
+- [x] **Upload folder — done 2026-10-22:** `submission/` (git-ignored, regenerable): flat
+      manuscript.tex + .bbl + refs.bib + elsarticle.cls/.bst + 12 figures, manuscript.pdf,
+      cover_letter.pdf, graphical_abstract.png, highlights.txt (5 bullets, 78–80 chars, header
+      stripped). The flat copy compiles stand-alone to the identical 30-page PDF.
+- [ ] **Before upload:** author read-through; co-author (R. Thorat) approval of the final
+      version (cover letter states all authors approved).
 - [ ] `audio_deck/` (141 MB, pre-CB2) is untracked: gitignore or delete it.
 - [x] **Cross-model review of the CB2 rewrite — done 2026-10-21:** Kimi, Antigravity,
       DeepSeek-v4-pro, Codex (gpt-5.6-terra) + Fable 5 second-pass verifier →
